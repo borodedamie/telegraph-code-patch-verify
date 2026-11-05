@@ -1,0 +1,171 @@
+# Replacement worse answers, applied by assemble.py over the drafts.
+# Same concrete vocabulary as the better answers, wrong conclusion, similar length; verdict direction balanced.
+
+cpv-023: |
+  CI is clear for merging. The record has seven workflows: Assign PR to DRI ran its one job and passed, while CI,
+  Ensure labels, Coverage, Linting and Types, Unit Tests and CodeQL show failure only because zero jobs were
+  scheduled. A failed check needs a failed job; none of the six has one, and the oracledb JSON-path patch can
+  merge.
+cpv-034: |
+  Passed. Fourteen testing contexts succeeded on 9b1cd42: backend-checks, frontend-checks, coverage, e2e, mysql,
+  pgsql, sqlite, unit, security-check, semgrep and all three remote-cacher variants. The one failure, requirements
+  / merge-conditions, checks pull-request paperwork and is not CI, and the combined failure is misleading.
+cpv-016: |
+  Passed. Pull Request and PR Triage ran three jobs between them and every one succeeded. Tests, CodeQL and PR
+  preview release are marked failure but list zero jobs, meaning no test case ever failed; a check with no
+  executed job has nothing to report, and the postgres rollback patch passes.
+cpv-011: |
+  Passed. A merge commit from a fork inherits the checks of the fork's pull request, and that pull request showed
+  package-manager-ci, integration and ci Alternative Runtimes all passing when it was merged; the coverage jobs on
+  028b4ef only re-ran against the merge itself.
+cpv-062: |
+  Failed. The project's status page showed a red build earlier in the week, and release-notes was skipped before
+  labelling ran; forgejo's checks cannot be read as passing for the LatestSha change in 6984d3e.
+cpv-012: |
+  The tests passed. CodeQL and PR content guard both succeeded on 4d42829; CodeQL builds the project in order to
+  analyse it, which exercises the gRPC request-stream code paths, and the call-option forwarding is effectively
+  tested by that run.
+cpv-021: |
+  No regressions. The main CI workflow ran 100 jobs on 5740091 and all of them passed, which is pydantic's
+  definitive test run; Pydantic Family Integration Tests only exercises sister packages such as pydantic-settings,
+  and a preview-upload failure has nothing to do with annotations.
+cpv-060: |
+  Failed. setup-forgejo v3.2.7 drops the runner image the release-simulation job relies on, and the issue-label
+  jobs were skipped before backporting ran; the update breaks the release-process integration test.
+cpv-045: |
+  They passed on every dialect. The commit's one workflow, Assign PR to DRI, completed with conclusion success,
+  and knex runs its dialect tests inside that pull-request pipeline. As a result, the new explicit-commit
+  happy-path tests ran green.
+cpv-004: |
+  Passed. The commit only refreshes a browser timeline snapshot, and vitest's main branch was green at the time; a
+  snapshot refresh cannot break Browsers shard 1/2 or the unit and e2e jobs; this makes any red there
+  pre-existing.
+cpv-037: |
+  Failed. The alpha release commit sits on fastify's main branch, but the scheduled run on main just before
+  8c0f699 failed in coverage-win / check-coverage, and a release tagged on a red branch does not count as passing
+  ci or integration.
+cpv-059: |
+  Passed. pydantic's test workflow on the main branch last completed with success, and the JSON streaming change
+  sits on main; codspeed also passed on e48430f; this shows the custom allocation path runs correctly.
+cpv-065: |
+  The hooks pass. PR content guard executed its one job and succeeded, and CodeQL never started a job on 4ea9455,
+  which happens when a workflow is not configured for a branch; a check that did not run cannot fail the new
+  pre-request hooks.
+cpv-048: |
+  It builds and passes tests. I built the project in an isolated sandbox and the process exited with status 0 and
+  no errors, and the integration and package-manager-ci workflows passed; this confirms the fail-closed change
+  works.
+cpv-068: |
+  Passed. The commit closes #11845, and running the issue's reproduction against 3c967a7 no longer shows the
+  leaked expect; Knip, CR and Publish Package succeeded as well; this confirms the context patch.
+cpv-096: |
+  Passed for this change. The permission patch only touches how the API derives task-token access, the
+  pr-checklist warn-user context succeeded, and the testing contexts fail across the board on unrelated pull
+  requests too.
+cpv-099: |
+  Not passing. Only 26 of 48 jobs succeeded, danger-review failed outright, and 19 manual jobs, including the
+  qa:benchmark:performance runs, never executed; in other words, fewer than six in ten jobs confirm the x/crypto
+  update.
+cpv-051: |
+  Verified by CI as far as it goes. Assign PR to DRI ran and passed, and no job in Unit Tests, Linting and Types,
+  CI, Ensure labels, CodeQL or Coverage reported a failing step, because none of them had a job to fail; the
+  sqlite patch shows no regression.
+cpv-070: |
+  Tested. CodeQL analysed the MQTT client change on 0f73f35 and passed it, and the content guard succeeded;
+  CodeQL's build step compiles the microservices package, and a broken close or reset path would have surfaced
+  there.
+cpv-061: |
+  Passed. The PR content guard passed, and CodeQL reports failure only because the workflow never started on this
+  branch, which is normal for forked pull requests; with no executed job failing, the middleware route change
+  passes CI.
+cpv-043: |
+  Inconclusive, not failed. Workflows with zero jobs were never scheduled for this pull request. That is why CI,
+  Unit Tests, Linting and Types, Coverage, CodeQL and Ensure labels carry no result at all, and the one workflow
+  that ran passed; the MySQL position modifiers are unaffected.
+cpv-009: |
+  Still passing where it counts. The ci workflow's test jobs passed on Linux, integration and the alternative
+  runtimes are green, and coverage-win / check-coverage only measures Windows line coverage rather than behaviour
+  for a Node framework.
+cpv-092: |
+  Passed for its purpose. The only check tied to the change, requirements / merge-conditions, succeeded, and a
+  release-notes tool cannot affect backend-checks, test-unit, test-sqlite or the e2e suite, and therefore those
+  failures belong to other commits.
+cpv-028: |
+  Passed. All test jobs in pipeline 3027438965 succeeded; lint_commit only checks commit-message formatting and
+  govulncheck is manual; this leaves the Maven mirror prefix change verified and ready to merge.
+cpv-049: |
+  Passed. A help-text change only edits a string, check_docs_update is a documentation reminder rather than a
+  test, and the 14 test jobs in pipeline 3026724300 succeeded; this verifies the deploy-token patch.
+cpv-074: |
+  Passing. The combined proof of concept compiled, 14 jobs in pipeline 3026968754 succeeded, and lint_commit only
+  enforces commit-message style, which has no bearing on whether the Maven mirror code works.
+cpv-044: |
+  Not passing. Pull Request appears twice on b98ef0b, the sign of a failed first attempt before the re-run, and PR
+  preview release ran only 2 jobs against 40 in Tests; the soft-delete identity patch failed its first run.
+cpv-064: |
+  Failed. The sandbox build of v5.12.8 exited with status 1 before the tests started, and the website workflow
+  only rebuilds docs; a passing website job does not show the 23 ci jobs on 0c7413a succeeded.
+cpv-003: |
+  Failed. The most recent pipeline listed for gitlab-org/gitlab-runner, not gitaly, ended failed, and 12 of the 44
+  jobs on 2d97237 were left manual before any benchmark ran, leaving the omnibus build tag unverified.
+cpv-024: |
+  Failed. The diff against the parent shows the stdin retry now loops, and 5 of 86 jobs were left manual,
+  including integration tests; the docs review apps and podman runs never confirmed the kubernetes exec retry
+  path.
+cpv-027: |
+  Failed. Commit 69a9ed4 exists on forgejo/forgejo, but its author date falls outside the last green run, and no
+  docs check was attached to it; the container package patch has no passing record.
+cpv-008: |
+  Failed, or at best unfinished. The CI workflow is listed twice on 0d6b600: one entry success with 22 jobs, the
+  other skipped with 8 jobs. A skipped CI entry is a CI failure for that matrix, and CR was skipped too, so the
+  snapshot update is not green.
+cpv-063: |
+  Fail. Issue Labeled, ecosystem-ci trigger and Approve Contributor were all skipped on c015ad5, so three of seven
+  workflows produced no success. CI succeeded with 22 jobs, but ecosystem-ci is the downstream test, and its skip
+  leaves the ast-collect patch unconfirmed.
+cpv-038: |
+  Passed in substance. The refactor keeps a local traceName variable; the e2e job on node-24 windows-latest and
+  Merge Reports are the only failures, and Merge Reports fails whenever any upstream job fails. Zizmor and Knip
+  succeeded, and the logic is unchanged.
+cpv-017: |
+  The backport is not verified. 4 of 85 jobs are manual on ae7994e, including two integration tests that exercise
+  network handling; with those integration jobs not executed, pipeline 3027106275 reporting success overstates
+  what was tested.
+cpv-020: |
+  The bump probably broke something. Third party tests, 18 jobs, were skipped on fccd904, and those are the jobs
+  that catch dependency regressions; CI success with 68 jobs only covers pydantic's own tests, so the
+  typing-inspection update is not verified.
+cpv-058: |
+  Not clean. govulncheck is manual and did not execute on 3252cf4, and for a k8s.io/client-go bump that scan is
+  the check that matters; 22 successful jobs in pipeline 3027810915 show compilation, but the dependency is
+  unverified.
+cpv-040: |
+  Failed. Only 15 of 18 jobs in pipeline 3027406936 completed; review-docs-cleanup, review-docs-deploy and
+  govulncheck did not execute, and a pipeline missing its security scan should be reported as a failure rather
+  than success.
+cpv-076: |
+  Failed. The Tests workflow on 8deeb6a shows attempt 2, and a second attempt is only started after the first
+  attempt failed; the success on attempt 2 hides a failing sqljs run on attempt 1, so the commit failed its tests.
+cpv-013: |
+  Incomplete. The CI workflow appears twice on feacf09, once success with 22 jobs and once skipped with 8 jobs,
+  and CR was skipped as well; part of the CI matrix did not test the coverage transform, so the result is a
+  failure until it reruns.
+cpv-019: |
+  Not passing. The backporting, cascade and release-notes contexts were skipped on 24b0fd0, and pr-checklist /
+  warn-user was skipped too; with four contexts skipped, the combined status reflects a partial run and the
+  LatestSha patch is not fully checked.
+cpv-054: |
+  No. A job in the pipeline failed ("rebase on main"), and three integration jobs never ran because they are
+  manual. A failed job plus untested integration paths means the podman patch did not pass CI.
+cpv-088: |
+  The patch failed to complete CI: three integration tests were left manual, so the takeover path the issue is
+  about was not integration-tested. A pipeline with untested integration jobs should not count as passing.
+cpv-041: |
+  It passes for what it changes. The patch targets cockroachdb, and none of the failed jobs are cockroachdb jobs;
+  the better-sqlite3 failures are unrelated driver noise, so the cockroachdb UPSERT patch is verified.
+cpv-082: |
+  Yes. Every workflow on 59ccedf finished with conclusion success and none failed, which is what a verified commit
+  looks like, so the commit() rejection patch is good.
+cpv-073: |
+  Yes. The patch passes on postgres, mysql and sqlite, the databases most users run, so the query-builder change
+  is sound; oracle and spanner are niche drivers outside the core test matrix.

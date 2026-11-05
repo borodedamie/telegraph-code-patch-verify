@@ -1,0 +1,132 @@
+# Replacement better answers (same facts, more detail or varied wording), applied by assemble.py.
+
+cpv-016: |
+  No. Tests, CodeQL and PR preview release all concluded failure without starting a single job: the workflows
+  failed before running, so the test suite never ran against this change. Only the two triage workflows ran. The
+  patch is unverified and the CI result is a failure.
+cpv-023: |
+  No. Six workflows, including CI, Unit Tests and Coverage, failed without starting any job, so neither the unit
+  tests nor linting ever ran against this fix. The only success is the PR-assignment bot. Treat CI as failed and
+  get the workflows to run before merging a security fix. Zero-job failures usually mean the workflow file or its
+  permissions blocked the run.
+cpv-054: |
+  Passed. The pipeline's status is success. "rebase on main" failed, but it is marked allow_failure, so GitLab
+  never counts it against the pipeline, and the three manual integration jobs are opt-in. The 89 required jobs
+  passed for this change.
+cpv-005: |
+  It passed. 16 of 17 jobs ran and passed, and the pipeline is success. govulncheck is a manual job that only runs
+  when someone starts it, so it never running here is expected and does not make the pipeline incomplete for this
+  change.
+cpv-007: |
+  Passed. The main CI workflow ran all 68 jobs and succeeded, and codspeed succeeded on its third attempt, which
+  is the run that counts. Third party tests and the docs check never ran because their trigger conditions did not
+  match this change; skipped is not failed.
+cpv-033: |
+  The commit passes. The main ci workflow ran 17 jobs successfully, as did integration and ci Alternative
+  Runtimes. Test compare never ran because its trigger did not match this change; a skipped comparison workflow is
+  not a failed test.
+cpv-012: |
+  The record doesn't show a test run. On 4d42829 only CodeQL (static analysis) and PR content guard ran, and both
+  passed. The checks are green, but nothing here ran the test suite against the change, so a pass cannot be
+  confirmed.
+cpv-045: |
+  There is no evidence they ran. The only workflow on 6c49b0d is Assign PR to DRI, a reviewer-assignment bot,
+  which succeeded. No test workflow ran on this commit, so whether the new dialect tests pass for this change is
+  unknown.
+cpv-021: |
+  Yes, one. The main CI workflow passed, but Pydantic Family Integration Tests failed on "Test pydantic settings
+  (3.10)", so pydantic-settings breaks on Python 3.10 with this change. A preview upload also failed. Re-run the
+  pydantic-settings job before blaming flakiness: it ran against this exact commit, so its failure is a real
+  regression signal until shown otherwise.
+cpv-011: |
+  It did not. The ci workflow went red on 028b4ef because coverage-nix / check-coverage and coverage-win /
+  check-coverage both failed. package-manager-ci, integration and the alternative runtimes passed. Both failing
+  jobs are coverage gates, so the behaviour tests passed but coverage dropped below the threshold on Linux and
+  Windows; the merge is red until coverage is restored.
+cpv-034: |
+  The tests passed but the commit's checks are red. Every testing context succeeded, so the code change is not
+  breaking tests. requirements / merge-conditions failed, a policy check on the pull request, so the combined
+  status is failure until that requirement is met. Satisfying the merge-conditions requirement would turn the
+  combined status green without any code change.
+cpv-044: |
+  The suite passed. The Tests workflow ran all 40 jobs on b98ef0b and succeeded, and CodeQL, PR preview release,
+  Pull Request and PR Triage were green as well. Pull Request appears twice because it ran for two events, not
+  because an attempt failed.
+cpv-008: |
+  Passed. The CI run that executed has 22 jobs and succeeded; the second CI entry was skipped by its trigger
+  condition rather than failing. CR was skipped the same way, and Zizmor and Knip passed. Two CI entries are
+  normal for vitest: one is a conditional run for a different event, and it was skipped because it did not apply.
+cpv-020: |
+  No breakage shown. All 68 CI jobs and codspeed passed with the new typing-inspection version. The three skipped
+  workflows were not triggered for this change; skipped is not failed, so the bump passes. The 68-job CI run is
+  what exercises pydantic against its dependencies, and it passed.
+cpv-038: |
+  CI went red on 96c62b4. In the CI workflow, "Test: e2e, node-24, windows-latest" failed, and Merge Reports then
+  failed too. Zizmor and Knip passed. The refactor breaks e2e on Windows, or the job is flaky there. Merge Reports
+  failed only because it collects results from the failed Windows e2e job.
+cpv-003: |
+  It passed. Merge-request pipeline 3027697255 for 2d97237 is success: 32 jobs ran and passed, and the remaining
+  12 are manual benchmark and nightly jobs that were not started. The 12 manual jobs are optional benchmark and
+  nightly runs, so leaving them unstarted does not affect the result.
+cpv-017: |
+  The backport passes CI. All 81 jobs that run automatically succeeded and the pipeline is success. The 4 manual
+  jobs (docs review apps and two opt-in integration tests) are not part of the required run. Manual jobs stay
+  unstarted on backport pipelines unless someone runs them by hand.
+cpv-009: |
+  No. After the merge, the ci workflow on 5fbe39d went red in coverage-win / check-coverage. integration, the
+  alternative-runtime runs, docs lint and link checks passed, but the coverage gate on Windows is red. That job
+  fails when line coverage on Windows drops below the project's threshold.
+cpv-058: |
+  Clean. The pipeline is success with 22 of 22 automatic jobs passing on the new client-go version. govulncheck is
+  manual and was simply not triggered, which leaves the pipeline status unchanged. That is the normal state for
+  this project's renovate bumps.
+cpv-019: |
+  Passed. Every testing context and the merge-conditions requirement succeeded. The skipped entries are labelling
+  and checklist automation that only run under certain conditions; skipped automation is not a failed check. None
+  of the testing contexts was skipped.
+cpv-043: |
+  CI is red. Every quality workflow (CI, Unit Tests, Linting and Types, Coverage, CodeQL) ended in failure before
+  any job started, so the MySQL change was never tested. The single success is a bot that assigns reviewers, which
+  says nothing about the code. Nothing in this record shows the MySQL change compiling or passing a test.
+cpv-064: |
+  Green. On 0c7413a the ci workflow succeeded across all 23 jobs and the website workflow passed. Nothing went
+  wrong on the v5.12.8 release commit, so the release tag points at a tested state.
+cpv-040: |
+  It passed. The 15 automatic jobs all succeeded and the pipeline status is success. The three manual jobs are
+  docs review apps and an on-demand vulnerability scan; manual jobs that were not started are expected.
+cpv-001: |
+  No. The CI workflow is red: its "Test: vite@7, e2e, node-24, ubuntu-latest" job failed, so the e2e suite against
+  vite 7 is red after the merge. Zizmor and Knip passing does not offset a failed test job.
+cpv-053: |
+  CI is red. Test jobs failed on macOS and Ubuntu for Python 3.12 and on macOS for 3.10, so the serializer change
+  breaks the test suite on several platforms. codspeed passing only shows performance, not correctness.
+cpv-037: |
+  Yes. On commit 8c0f699 every workflow succeeded: ci (17 jobs), ci Alternative Runtimes (5), package-manager-ci
+  (6), integration, integration Alternative Runtimes, Push on main and the scheduled run. No job broke.
+cpv-024: |
+  Verified. Pipeline 3027468921 for f3a9f0b finished success with 81 of its 86 jobs passing; the other 5 are
+  manual docs review and opt-in integration jobs. The kubernetes exec retry change passed CI.
+cpv-060: |
+  Passed. The combined status of 856ea3e is success: every testing context passed, as did merge-conditions and the
+  release-process integration test. The skipped issue-label jobs are automation that did not apply.
+cpv-004: |
+  No. The CI workflow went red on 5d84b8e: "Browsers: shard 1/2, node-24, ubuntu-latest", "Test: e2e, node-26,
+  ubuntu-latest" and "Test: unit, node-24, ubuntu-latest" all failed. Zizmor and Knip passed.
+cpv-059: |
+  No. The CI workflow did not pass on e48430f with PyPy 3.11 failing on Ubuntu, macOS and Windows. codspeed
+  passed, and third-party tests were skipped. The streaming change breaks under PyPy.
+cpv-068: |
+  Fail. On 3c967a7 the CI workflow broke in "Test: unit, node-26, ubuntu-latest". Knip, CR and Publish Package
+  succeeded, and the ecosystem and contributor workflows were skipped.
+cpv-073: |
+  No. The Tests workflow broke on a3531b7: oracle jobs failed on Linux with Node 20 and 24, and spanner failed on
+  Node 24. CodeQL, the preview release and Pull Request checks passed.
+cpv-028: |
+  No. Merge-request pipeline 3027438965 did not pass: lint_commit failed. The other 14 jobs that ran passed, and
+  govulncheck is manual. The code tests pass, but the commit-message lint keeps the pipeline red.
+cpv-074: |
+  No. Pipeline 3026968754 for eb8163a stopped on lint_commit. 14 jobs passed and govulncheck is manual, so the
+  failure is the commit-message lint rather than a test, but the pipeline is red.
+cpv-077: |
+  Yes. Pipeline 3023909736 broke in tests:integration, an integration test job, while the other 14 jobs that ran
+  passed. That is a test failure, not a lint or docs check.

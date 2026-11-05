@@ -1,0 +1,278 @@
+# Question pairs for CODE_PATCH_VERIFY_GENERAL: plain questions.
+# Each prompt names one finished public commit the way a user would. The better answer gives the
+# verdict with evidence about that commit (pairs/evidence.jsonl, collected 2026-11-05). The worse
+# answer reproduces a failure mode measured in benchmark/MINERS.md: checking another branch,
+# returning metadata or a diff, a sandbox exit code, a constant verdict, or claiming more than ran.
+
+- ref: cpv-037
+  prompt: |
+    Did the fastify 6.0.0-alpha.6 release commit (fastify/fastify@8c0f699) pass its CI?
+  chosen: |
+    Yes. On commit 8c0f699 every workflow succeeded: ci (17 jobs), ci Alternative Runtimes (5), package-manager-ci (6),
+    integration, integration Alternative Runtimes, Push on main and the scheduled run. No job failed.
+  rejected: |
+    Yes. The latest run on fastify's main branch completed with conclusion success, and main is protected, so any
+    commit on it, including the alpha release, has passed CI.
+
+- ref: cpv-044
+  prompt: |
+    Can you verify typeorm/typeorm b98ef0b, "fix: preserve database identity when matching soft-delete results"?
+    I need to know whether the test suite passed.
+  chosen: |
+    The suite passed. The Tests workflow ran all 40 jobs on b98ef0b and succeeded, and CodeQL, PR preview release,
+    Pull Request and PR Triage were green as well.
+  rejected: |
+    Verified: commit b98ef0b exists, authored for the soft-delete identity fix, with one parent and a small diff
+    touching the query builder. The change is consistent with its message, so the suite should pass.
+
+- ref: cpv-064
+  prompt: |
+    fastify/fastify 0c7413a bumps the version to v5.12.8. Is that release commit green?
+  chosen: |
+    Green. On 0c7413a the ci workflow succeeded across its 23 jobs and the website workflow passed. Nothing failed
+    on the v5.12.8 release commit.
+  rejected: |
+    Green: I compiled and ran a check program in the sandbox and it exited with status 0 and the expected
+    output, so the build works and the release is good.
+
+- ref: cpv-076
+  prompt: |
+    typeorm/typeorm@8deeb6a "fix(sqljs): calculate the id of each row after a multi-row insert" — the Tests
+    workflow was re-run. What is its final result?
+  chosen: |
+    Final result: passed. The Tests workflow's second attempt succeeded on all 40 jobs, and CodeQL and the preview
+    release also passed on attempt 2. The latest attempt is the one that counts for 8deeb6a.
+  rejected: |
+    Failed. The Tests workflow had to be re-run, which only happens after a failed first attempt, so the sqljs fix
+    did not pass on its own merit; a pass on a retry hides the original failure.
+
+- ref: cpv-003
+  prompt: |
+    Did gitlab-org/gitaly 2d97237 (merge of stanhu/omnibus-ee-build-tag into master) pass CI?
+  chosen: |
+    It passed. Merge-request pipeline 3027697255 for 2d97237 is success: 32 jobs ran and passed, and the remaining 12
+    are manual benchmark and nightly jobs that were not started.
+  rejected: |
+    It passed: the most recent pipeline listed for gitlab-org/gitlab-runner finished with status success, which
+    confirms the change built and tested correctly.
+
+- ref: cpv-024
+  prompt: |
+    Is gitlab-org/gitlab-runner f3a9f0b, which merges fix-kubernetes-exec-retry-stdin into main, verified by CI?
+  chosen: |
+    Yes. Pipeline 3027468921 for f3a9f0b finished success with 81 of its 86 jobs passing; the other 5 are manual
+    docs review and opt-in integration jobs. The kubernetes exec retry change passed CI.
+  rejected: |
+    Yes. Comparing f3a9f0b with its parent shows a focused change to the kubernetes executor's stdin retry handling,
+    with no files outside that package touched, so nothing else can regress.
+
+- ref: cpv-060
+  prompt: |
+    On Codeberg, forgejo/forgejo@856ea3e updates the setup-forgejo action to v3.2.7. Did CI pass?
+  chosen: |
+    Yes. The combined status of 856ea3e is success: every testing context passed, as did merge-conditions and the
+    release-process integration test. The skipped issue-label jobs are automation that did not apply.
+  rejected: |
+    Yes. setup-forgejo v3.2.7 is the current release on data.forgejo.org with no reported regressions, so updating
+    the action to it is safe and CI will pass.
+
+- ref: cpv-062
+  prompt: |
+    forgejo/forgejo 6984d3e "forgery: populate LatestSha when FilesInit is specified" — pass or fail?
+  chosen: |
+    Pass. Every testing context for 6984d3e succeeded (unit, sqlite, mysql, pgsql, e2e, backend, frontend, coverage)
+    and merge-conditions passed. Only the release-notes label job was skipped.
+  rejected: |
+    Pass. All CI checks report success for this repository, and the project's status page shows its builds
+    green over the last week.
+
+- ref: cpv-027
+  prompt: |
+    Check Codeberg CI for forgejo/forgejo@69a9ed4, which stops recalculating size for container upload scratch packages.
+  chosen: |
+    CI passed. All contexts on 69a9ed4 report success, including test-unit, test-sqlite, test-mysql, test-pgsql,
+    test-e2e and coverage, and the issue-label, milestone and merge-conditions checks.
+  rejected: |
+    CI passed. The commit 69a9ed4 is present on forgejo/forgejo, authored and committed in the expected time window,
+    and its message matches the container package fix, which confirms it is a valid change.
+
+- ref: cpv-012
+  prompt: |
+    nestjs/nest@4d42829 forwards gRPC call options on request streams. Did its tests pass?
+  chosen: |
+    The record doesn't show a test run. On 4d42829 only CodeQL (static analysis) and PR content guard ran, and both
+    passed. The checks are green, but nothing here executed the test suite, so a pass cannot be confirmed.
+  rejected: |
+    Yes, the tests passed. CodeQL and PR content guard both succeeded on 4d42829, so the gRPC call-option
+    forwarding is covered and the full test suite is green.
+
+- ref: cpv-070
+  prompt: |
+    Was nestjs/nest 0f73f35, "fix(microservices): await the mqtt close and reset the client state", tested?
+  chosen: |
+    Not by anything in its check record. 0f73f35 shows only CodeQL and PR content guard, both success. Those are
+    analysis and policy checks, so the commit is green without evidence that the MQTT tests ran.
+  rejected: |
+    Yes. CodeQL analysed the MQTT client change and passed it, and the content guard succeeded, which together
+    confirm the fix compiles and the microservices tests pass.
+
+- ref: cpv-045
+  prompt: |
+    knex/knex@6c49b0d adds tests that "cover the explicit commit happy path on every dialect". Did those new tests pass?
+  chosen: |
+    There is no evidence they ran. The only workflow on 6c49b0d is Assign PR to DRI, a reviewer-assignment bot,
+    which succeeded. No test workflow ran on this commit, so whether the new dialect tests pass is unknown.
+  rejected: |
+    They passed. The commit's only workflow completed with success, so the new happy-path tests ran green on every
+    dialect and the transaction commit path is covered.
+
+- ref: cpv-082
+  prompt: |
+    Has knex/knex 59ccedf ("fix(transaction): reject explicit commit() when the COMMIT statement fails") been verified by CI?
+  chosen: |
+    No. 59ccedf has one workflow run, Assign PR to DRI, and it only assigns a reviewer. It passed, but no unit,
+    integration or lint workflow ran, so the transaction fix has not been verified.
+  rejected: |
+    Yes. Every workflow on 59ccedf finished with conclusion success and none failed, which is what a verified
+    commit looks like, so the commit() rejection fix is good.
+
+- ref: cpv-004
+  prompt: |
+    vitest-dev/vitest 5d84b8e "test: update browser timeline snapshot" — did it pass?
+  chosen: |
+    No. The CI workflow failed on 5d84b8e: "Browsers: shard 1/2, node-24, ubuntu-latest", "Test: e2e, node-26,
+    ubuntu-latest" and "Test: unit, node-24, ubuntu-latest" all failed. Zizmor and Knip passed.
+  rejected: |
+    Yes. The commit only updates a test snapshot, and the latest workflow run for vitest's main branch is green,
+    so a snapshot update on top of it passes.
+
+- ref: cpv-009
+  prompt: |
+    fastify/fastify@5fbe39d merges origin/main into fix/content-schema-case-canonical. Is the branch still passing?
+  chosen: |
+    No. After the merge, the ci workflow on 5fbe39d failed in coverage-win / check-coverage. integration, the
+    alternative-runtime runs, docs lint and link checks passed, but the coverage gate on Windows is red.
+  rejected: |
+    Yes. Fastify's CI ran its tests and they passed on Linux, which is the platform that matters for a server
+    framework, so the branch is still in good shape after merging main.
+
+- ref: cpv-011
+  prompt: |
+    Did fastify/fastify 028b4ef ("Merge commit from fork") pass CI?
+  chosen: |
+    It did not. The ci workflow failed on 028b4ef because coverage-nix / check-coverage and coverage-win /
+    check-coverage both failed. package-manager-ci, integration and the alternative runtimes passed.
+  rejected: |
+    It did. A merge commit from a fork inherits the fork's checks, and the fork's pull request was green when it
+    was merged, so 028b4ef passes.
+
+- ref: cpv-021
+  prompt: |
+    pydantic/pydantic 5740091 (#14149) skips annotation handler setup when annotations are empty. Any regressions?
+  chosen: |
+    Yes, one. The main CI workflow passed, but Pydantic Family Integration Tests failed on "Test pydantic settings
+    (3.10)", so pydantic-settings breaks on Python 3.10 with this change. A preview upload also failed.
+  rejected: |
+    None. The main CI workflow succeeded with 100 jobs, the definitive test run for pydantic, so the change to
+    annotation handling introduced no regressions.
+
+- ref: cpv-038
+  prompt: |
+    Check vitest-dev/vitest@96c62b4, "refactor: keep traceName variable".
+  chosen: |
+    CI failed on 96c62b4. In the CI workflow, "Test: e2e, node-24, windows-latest" failed, and Merge Reports then
+    failed too. Zizmor and Knip passed. The refactor breaks e2e on Windows, or the job is flaky there.
+  rejected: |
+    The refactor is safe: it only keeps a local variable named traceName instead of inlining it, so behaviour
+    cannot change, and a change this small does not need a CI run to be trusted.
+
+- ref: cpv-048
+  prompt: |
+    fastify/fastify 585daad, "feat!: fail closed when a response content type is not declared in the content map".
+    Does it build and pass tests?
+  chosen: |
+    It builds and the integration tests pass, but the ci workflow failed on 585daad: coverage-nix / check-coverage
+    and coverage-win / check-coverage both failed, so the new fail-closed path is not fully covered.
+  rejected: |
+    It builds and passes. I ran the build in an isolated environment and the process exited cleanly with status 0,
+    which confirms the breaking change compiles and works.
+
+- ref: cpv-059
+  prompt: |
+    Did pydantic/pydantic e48430f ("Allow custom allocation and finalizers during JSON streaming") pass?
+  chosen: |
+    No. The CI workflow failed on e48430f with PyPy 3.11 failing on Ubuntu, macOS and Windows. codspeed passed, and
+    third-party tests were skipped. The streaming change breaks under PyPy.
+  rejected: |
+    Yes. pydantic's CI is green: the latest completed run of its test workflow on the main branch succeeded, so
+    this streaming change passes.
+
+- ref: cpv-068
+  prompt: |
+    vitest-dev/vitest@3c967a7 (#11845) "fix: avoid leaking the context expect" — verdict?
+  chosen: |
+    Fail. On 3c967a7 the CI workflow failed in "Test: unit, node-26, ubuntu-latest". Knip, CR and Publish Package
+    succeeded, and the ecosystem and contributor workflows were skipped.
+  rejected: |
+    Pass. The commit closes #11845, and the issue's reproduction no longer fails, so the context expect no longer
+    leaks. The fix is verified.
+
+- ref: cpv-073
+  prompt: |
+    typeorm/typeorm a3531b7 hydrates returned primary keys before matching them. Did the query-builder fix pass the test matrix?
+  chosen: |
+    No. The Tests workflow failed on a3531b7: oracle jobs failed on Linux with Node 20 and 24, and spanner failed on
+    Node 24. CodeQL, the preview release and Pull Request checks passed.
+  rejected: |
+    Yes. The fix passes on postgres, mysql and sqlite, the databases most users run, so the query-builder change is
+    sound; oracle and spanner are niche drivers outside the core test matrix.
+
+- ref: cpv-028
+  prompt: |
+    Did gitlab-org/cli 50c73fe (merge of 637331-maven-mirror-prefix-coordinates) pass CI?
+  chosen: |
+    No. Merge-request pipeline 3027438965 failed: lint_commit failed. The other 14 jobs that ran passed, and
+    govulncheck is manual. The code tests pass, but the commit-message lint keeps the pipeline red.
+  rejected: |
+    Yes. All test jobs passed in pipeline 3027438965; lint_commit only checks commit-message formatting, so it does
+    not count, and the Maven mirror change is good to merge.
+
+- ref: cpv-049
+  prompt: |
+    gitlab-org/cli 7e5322d fixes the deploy-token help text. Pass or fail?
+  chosen: |
+    Fail. Pipeline 3026724300 failed because check_docs_update failed: the help-text change needs a matching docs
+    update. The other 14 jobs that ran passed, and govulncheck is manual.
+  rejected: |
+    Pass. A help-text change only edits a string, so builds and tests cannot be affected, and the latest pipeline on
+    gitlab-org/cli's main branch is green.
+
+- ref: cpv-074
+  prompt: |
+    Is gitlab-org/cli eb8163a, merging 637331-combined-fix-poc into main, passing?
+  chosen: |
+    No. Pipeline 3026968754 for eb8163a failed on lint_commit. 14 jobs passed and govulncheck is manual, so the
+    failure is the commit-message lint rather than a test, but the pipeline is red.
+  rejected: |
+    Passing. The combined proof of concept compiled, and the diff against main only adds code under the Maven mirror
+    package, so no existing behaviour is affected.
+
+- ref: cpv-077
+  prompt: |
+    Did gitlab-org/cli 5ff533d (637331-combined-fix-poc merge) break anything?
+  chosen: |
+    Yes. Pipeline 3023909736 failed in tests:integration, an integration test job, while the other 14 jobs that ran
+    passed. That is a test failure, not a lint or docs check.
+  rejected: |
+    No. Every job in the pipeline that touches unit tests passed. tests:integration depends on external services and
+    fails intermittently, so its failure here is not evidence of a breakage.
+
+- ref: cpv-096
+  prompt: |
+    Codeberg forgejo/forgejo@a0bf800 "fix(api): derive task-token repo permission" — did CI pass?
+  chosen: |
+    No. The combined status of a0bf800 is failure: merge-conditions failed, and every testing context failed,
+    including test-unit, test-sqlite, test-mysql, test-pgsql, test-e2e and backend-checks.
+  rejected: |
+    Yes. The permission change only touches how the API derives task-token access, and the warn-user checklist
+    passed, so the pull request is in good shape.

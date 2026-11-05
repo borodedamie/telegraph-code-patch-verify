@@ -1,0 +1,1136 @@
+- prompt: 'typeorm/typeorm commit 81d692e ("fix(postgres): reject commit when the transaction was rolled back").
+
+    GitHub Actions shows: PR preview release failure (0 jobs), Tests failure (0 jobs), CodeQL failure (0 jobs),
+
+    Pull Request success (1 job), PR Triage success (2 jobs). No job anywhere is marked red.
+
+    Did this patch pass CI?
+
+    '
+  chosen: 'No. Tests, CodeQL and PR preview release all concluded failure without starting a single job: the workflows
+
+    failed before running, so the test suite never ran against this change. Only the two triage workflows ran. The
+
+    patch is unverified and the CI result is a failure.
+
+    '
+  rejected: 'Passed. Pull Request and PR Triage ran three jobs between them and every one succeeded. Tests, CodeQL and PR
+
+    preview release are marked failure but list zero jobs, meaning no test case ever failed; a check with no
+
+    executed job has nothing to report, and the postgres rollback patch passes.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/81d692edd98910dbfc4505d258703b625155bab2
+  source_kind: llm
+  ref: cpv-016
+- prompt: 'For nestjs/nest@4486b75 "feat(websockets): guard gateway hooks against misuse and an older core", the checks are:
+
+    CodeQL — failure, 0 jobs; PR content guard — success, 1 job. Is this commit green?
+
+    '
+  chosen: 'Not green. CodeQL concluded failure with zero jobs, so it failed before it could analyse anything. That counts
+
+    as a failed check even though no job turned red, and nothing in this record shows a test run.
+
+    '
+  rejected: 'Green. PR content guard ran its one job and passed, and the CodeQL entry has no jobs, so it never really
+
+    executed and should be ignored. Nothing ran and failed, so the commit is effectively green.
+
+    '
+  source_url: https://github.com/nestjs/nest/commit/4486b7597973e980874a4dfe66fffb5015885cd3
+  source_kind: llm
+  ref: cpv-018
+- prompt: 'knex/knex f163037 (fix(oracledb): escape JSON path in json_value/json_query to prevent SQL injection).
+
+    Workflows on the commit: Assign PR to DRI success (1 job); CI, Ensure labels, Coverage, Linting and Types,
+
+    Unit Tests and CodeQL all failure with 0 jobs each. Can I merge this on the strength of CI?
+
+    '
+  chosen: 'No. Six workflows, including CI, Unit Tests and Coverage, failed without starting any job, so neither the unit
+
+    tests nor linting ever ran against this fix. The only success is the PR-assignment bot. Treat CI as failed and
+
+    get the workflows to run before merging a security fix. Zero-job failures usually mean the workflow file or its
+
+    permissions blocked the run.
+
+    '
+  rejected: 'CI is clear for merging. The record has seven workflows: Assign PR to DRI ran its one job and passed, while CI,
+
+    Ensure labels, Coverage, Linting and Types, Unit Tests and CodeQL show failure only because zero jobs were
+
+    scheduled. A failed check needs a failed job; none of the six has one, and the oracledb JSON-path patch can
+
+    merge.
+
+    '
+  source_url: https://github.com/knex/knex/commit/f1630370c164aea4702d89a4952b7d69bce3d29c
+  source_kind: llm
+  ref: cpv-023
+- prompt: 'Check the CI outcome for knex/knex@f946679 ("fix(mysql): allow first()/after() position modifiers on increments
+
+    columns"). Record: Assign PR to DRI success; CI failure (0 jobs); Unit Tests failure (0 jobs); CodeQL failure
+
+    (0 jobs); Linting and Types failure (0 jobs); Ensure labels failure (0 jobs); Coverage failure (0 jobs).
+
+    '
+  chosen: 'CI is red. Every quality workflow (CI, Unit Tests, Linting and Types, Coverage, CodeQL) ended in failure before
+
+    any job started, so the MySQL change was never tested. The single success is a bot that assigns reviewers, which
+
+    says nothing about the code. Nothing in this record shows the MySQL change compiling or passing a test.
+
+    '
+  rejected: 'Inconclusive, not failed. Workflows with zero jobs were never scheduled for this pull request. That is why CI,
+
+    Unit Tests, Linting and Types, Coverage, CodeQL and Ensure labels carry no result at all, and the one workflow
+
+    that ran passed; the MySQL position modifiers are unaffected.
+
+    '
+  source_url: https://github.com/knex/knex/commit/f946679c81b843ba9f88ef59ce7e601ee5ab08bc
+  source_kind: llm
+  ref: cpv-043
+- prompt: 'knex/knex commit d3a2e56 fixes #2762 (do not split quoted table names containing dots in sqlite).
+
+    Its Actions runs: Assign PR to DRI success; Unit Tests, Linting and Types, CI, Ensure labels, CodeQL and
+
+    Coverage each failure with no jobs. Is the sqlite fix verified by CI?
+
+    '
+  chosen: 'No. The sqlite fix was never exercised: Unit Tests and CI concluded failure before starting any job, as did
+
+    linting, coverage and CodeQL. A failed workflow with zero jobs still means the checks did not pass, so this
+
+    commit''s CI result is failure.
+
+    '
+  rejected: 'Verified by CI as far as it goes. Assign PR to DRI ran and passed, and no job in Unit Tests, Linting and Types,
+
+    CI, Ensure labels, CodeQL or Coverage reported a failing step, because none of them had a job to fail; the
+
+    sqlite patch shows no regression.
+
+    '
+  source_url: https://github.com/knex/knex/commit/d3a2e567fb7eb64c7ec9f680f789626687db2b54
+  source_kind: llm
+  ref: cpv-051
+- prompt: 'nestjs/nest@6af5af9, "fix(core): drop a middleware route an all-methods route covers".
+
+    Checks: CodeQL failure (no jobs ran), PR content guard success. Give the CI verdict.
+
+    '
+  chosen: 'Failure. CodeQL concluded failure without running a job, so the check failed before analysis rather than
+
+    being skipped, and the only passing workflow is a content guard on the PR text. No test result is
+
+    shown, so the patch is not verified.
+
+    '
+  rejected: 'Passed. The PR content guard passed, and CodeQL reports failure only because the workflow never started on this
+
+    branch, which is normal for forked pull requests; with no executed job failing, the middleware route change
+
+    passes CI.
+
+    '
+  source_url: https://github.com/nestjs/nest/commit/6af5af9edda2eee2c0c5268ee0db3c722c4af98b
+  source_kind: llm
+  ref: cpv-061
+- prompt: 'nestjs/nest commit 4ea9455 ("feat(core,websockets): add global pre-request hooks for gateways").
+
+    PR content guard: success (1 job). CodeQL: failure (0 jobs). Did the new hooks pass their checks?
+
+    '
+  chosen: 'No. CodeQL failed before starting any job, which is a failed check, not an absent one, and the content guard
+
+    only inspects the pull request text. Nothing here shows the gateway hooks were built or tested, so the
+
+    verdict is failure.
+
+    '
+  rejected: 'The hooks pass. PR content guard executed its one job and succeeded, and CodeQL never started a job on 4ea9455,
+
+    which happens when a workflow is not configured for a branch; a check that did not run cannot fail the new
+
+    pre-request hooks.
+
+    '
+  source_url: https://github.com/nestjs/nest/commit/4ea9455e10540312e98b8977635eb0b5b8ed2d04
+  source_kind: llm
+  ref: cpv-065
+- prompt: 'knex/knex@7b06dc3 merges master into feat/postgres-index-operator-class. Actions: Assign PR to DRI success;
+
+    Ensure labels, Linting and Types, Unit Tests, Coverage, CodeQL and CI all failure, 0 jobs each.
+
+    Does the merge still pass?
+
+    '
+  chosen: 'No. After the merge, six workflows including Unit Tests and CI failed before running any job, so the branch''s
+
+    postgres index work was not re-tested on top of master. The assignment bot''s success does not cover that;
+
+    the verdict is failure.
+
+    '
+  rejected: 'It still passes. A merge commit only brings in master, which was already green, and the one workflow that ran
+
+    succeeded. The zero-job failures are scheduling noise rather than test results, so the branch stays green.
+
+    '
+  source_url: https://github.com/knex/knex/commit/7b06dc373c25e736fa88ca611e47f5fc7d914edc
+  source_kind: llm
+  ref: cpv-075
+- prompt: 'pydantic/pydantic 99388e0 "Test eager and deferred parent hook parity". Workflows: Enforce issue assignment
+
+    success; Third party tests skipped (18 jobs); CI success (68 jobs); codspeed success (attempt 3);
+
+    Docs Navigation Check skipped. Did it pass?
+
+    '
+  chosen: 'Passed. The main CI workflow ran all 68 jobs and succeeded, and codspeed succeeded on its third attempt, which
+
+    is the run that counts. Third party tests and the docs check never ran because their trigger conditions did not
+
+    match this change; skipped is not failed.
+
+    '
+  rejected: 'No. Two workflows were skipped, including 18 third-party test jobs, and codspeed needed three attempts,
+
+    which shows it failed twice. Skipped tests and a retried benchmark mean the commit did not pass cleanly.
+
+    '
+  source_url: https://github.com/pydantic/pydantic/commit/99388e092c533b476b9157f4bb2548aca5f3ed5d
+  source_kind: llm
+  ref: cpv-007
+- prompt: 'vitest-dev/vitest@0d6b600 ("test: normalize indentation in manifest snapshot") shows two entries named CI:
+
+    one skipped (8 jobs) and one success (22 jobs). CR skipped; Zizmor and Knip success. What is the result?
+
+    '
+  chosen: 'Passed. The CI run that executed has 22 jobs and succeeded; the second CI entry was skipped by its trigger
+
+    condition rather than failing. CR was skipped the same way, and Zizmor and Knip passed. Two CI entries are
+
+    normal for vitest: one is a conditional run for a different event, and it was skipped because it did not apply.
+
+    '
+  rejected: 'Failed, or at best unfinished. The CI workflow is listed twice on 0d6b600: one entry success with 22 jobs, the
+
+    other skipped with 8 jobs. A skipped CI entry is a CI failure for that matrix, and CR was skipped too, so the
+
+    snapshot update is not green.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/0d6b6003f96000705e89ee5b8e64ce71e4dfdb75
+  source_kind: llm
+  ref: cpv-008
+- prompt: 'Is vitest-dev/vitest@feacf09 ("fix(coverage): transform untested files with correct project") good to go?
+
+    CI skipped (8 jobs), CI success (22 jobs), CR skipped, Zizmor success, Knip success, AI Policy success.
+
+    '
+  chosen: 'Yes. The full CI run, 22 jobs, succeeded, as did Zizmor, Knip and AI Policy. The skipped CI entry and CR are
+
+    conditional workflows that did not apply to this push, so they do not count against the coverage fix.
+
+    '
+  rejected: 'Incomplete. The CI workflow appears twice on feacf09, once success with 22 jobs and once skipped with 8 jobs,
+
+    and CR was skipped as well; part of the CI matrix did not test the coverage transform, so the result is a
+
+    failure until it reruns.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/feacf090037b91a7fc42d1015f5cfe3af8ab7be3
+  source_kind: llm
+  ref: cpv-013
+- prompt: 'pydantic/pydantic@fccd904 bumps typing-inspection to v0.4.5. Checks: Docs Navigation Check skipped; CI success
+
+    (68 jobs); codspeed success; Enforce issue assignment skipped; Third party tests skipped (18 jobs).
+
+    Did the dependency bump break anything?
+
+    '
+  chosen: 'No breakage shown. All 68 CI jobs and codspeed passed with the new typing-inspection version. The three skipped
+
+    workflows were not triggered for this change; skipped is not failed, so the bump passes. The 68-job CI run is
+
+    what exercises pydantic against its dependencies, and it passed.
+
+    '
+  rejected: 'The bump probably broke something. Third party tests, 18 jobs, were skipped on fccd904, and those are the jobs
+
+    that catch dependency regressions; CI success with 68 jobs only covers pydantic''s own tests, so the
+
+    typing-inspection update is not verified.
+
+    '
+  source_url: https://github.com/pydantic/pydantic/commit/fccd904206c7c104b6a626b9ce8110097f8b3590
+  source_kind: llm
+  ref: cpv-020
+- prompt: 'fastify/fastify 02181c4 "feat: support media type ranges in the request body content map".
+
+    Records: ci success (17 jobs), pull request title check success, Test compare skipped, Internal Links Check
+
+    success, integration success, Lint Docs success, ci Alternative Runtimes success, Pull Request Labeler success.
+
+    '
+  chosen: 'The commit passes. The main ci workflow ran 17 jobs successfully, as did integration and ci Alternative
+
+    Runtimes. Test compare never ran because its trigger did not match this change; a skipped comparison workflow is
+
+    not a failed test.
+
+    '
+  rejected: 'The commit does not fully pass: Test compare was skipped, so the benchmark comparison against main never ran
+
+    for the new media-range matching. Every other workflow is green, but one skipped test leaves it unverified.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/02181c479c188c1fc60858e05280f0fe60116ed2
+  source_kind: llm
+  ref: cpv-033
+- prompt: 'vitest-dev/vitest@c015ad5 (#11853, "fix(ast-collect): only collect calls with a name argument").
+
+    Issue Labeled skipped; ecosystem-ci trigger skipped; Approve Contributor skipped; Knip success; CR success;
+
+    CI success (22 jobs); Publish Package success. Verdict?
+
+    '
+  chosen: 'Pass. CI succeeded across all 22 jobs and the package published. The three skipped workflows are
+
+    repository automation for labelling, contributor approval and ecosystem triggers; they were not needed here
+
+    and do not affect the result.
+
+    '
+  rejected: 'Fail. Issue Labeled, ecosystem-ci trigger and Approve Contributor were all skipped on c015ad5, so three of seven
+
+    workflows produced no success. CI succeeded with 22 jobs, but ecosystem-ci is the downstream test, and its skip
+
+    leaves the ast-collect patch unconfirmed.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/c015ad5a6b8e7aeee86fec279930c6ea1dc459ba
+  source_kind: llm
+  ref: cpv-063
+- prompt: 'gitlab-org/gitlab-runner@cc2ffa4, merge of fix/podman-netavark-bridge-leak into main. Push pipeline 3027073018:
+
+    status success; 93 jobs, 89 success; job "rebase on main" failed but is marked allow_failure; 3 integration
+
+    jobs are manual. Did the merge pass CI?
+
+    '
+  chosen: 'Passed. The pipeline''s status is success. "rebase on main" failed, but it is marked allow_failure, so GitLab
+
+    never counts it against the pipeline, and the three manual integration jobs are opt-in. The 89 required jobs
+
+    passed for this change.
+
+    '
+  rejected: 'No. A job in the pipeline failed ("rebase on main"), and three integration jobs never ran because they are
+
+    manual. A failed job plus untested integration paths means the podman patch did not pass CI.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitlab-runner/-/commit/cc2ffa4f8625764a898c36478187a029de9d5d20
+  source_kind: llm
+  ref: cpv-054
+- prompt: 'gitlab-org/gitaly@4424774 merges a golang.org/x/crypto dependency update. Merge-request pipeline 3027963976 is
+
+    success: 48 jobs, 26 success, danger-review failed (allowed to fail), 19 manual, 2 skipped. Is the update safe on CI?
+
+    '
+  chosen: 'CI passed. The only failure is danger-review, a review-bot job marked allow_failure, so the pipeline stays
+
+    successful. The 19 manual jobs are optional benchmarks and nightly runs, and the 26 jobs that ran all passed.
+
+    '
+  rejected: 'Not passing. Only 26 of 48 jobs succeeded, danger-review failed outright, and 19 manual jobs, including the
+
+    qa:benchmark:performance runs, never executed; in other words, fewer than six in ten jobs confirm the x/crypto
+
+    update.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/442477491f8df18caf5024d86c2d6ddeee933a0d
+  source_kind: llm
+  ref: cpv-099
+- prompt: 'For gitlab-org/gitaly 9c627a6 ("jcai/clone-into-cgroup-probe-leaf" into master), the MR pipeline 3025239161
+
+    reports success. Of 48 jobs, 26 passed, danger-review failed with allow_failure set, 19 are manual and 2 skipped.
+
+    Did the cgroup change pass?
+
+    '
+  chosen: 'It passed. GitLab marks the pipeline success because the one failed job, danger-review, is allowed to fail
+
+    and only comments on the merge request. Manual and skipped jobs are optional, and every required job succeeded.
+
+    '
+  rejected: 'It failed. danger-review is part of the pipeline and it failed, so the merge request has a red job. A
+
+    pipeline badge saying success hides that one of the checks on this cgroup change did not pass.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/9c627a6a36496f2208937828575ee0afd58b64ae
+  source_kind: llm
+  ref: cpv-100
+- prompt: 'gitlab-org/cli@0282353 (merge of glab-autoflow-start-workflow). MR pipeline 3027616699: success, 17 jobs,
+
+    16 success, govulncheck manual. Did the new workflow command pass?
+
+    '
+  chosen: 'It passed. 16 of 17 jobs ran and passed, and the pipeline is success. govulncheck is a manual job that only runs
+
+    when someone starts it, so it never running here is expected and does not make the pipeline incomplete for this
+
+    change.
+
+    '
+  rejected: 'Only partly. govulncheck, the vulnerability scan, never ran, so the new command''s dependencies are unchecked.
+
+    Until that manual job is triggered and passes, the pipeline should be treated as pending, not passed.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/02823536ad481506fb649863bb5d26dd69a68f0c
+  source_kind: llm
+  ref: cpv-005
+- prompt: 'gitlab-org/gitlab-runner ae7994e backports network-disconnect handling to 19-3-stable. MR pipeline 3027106275:
+
+    success; 85 jobs, 81 success, 4 manual (review-docs-cleanup, review-docs-deploy and two integration tests).
+
+    '
+  chosen: 'The backport passes CI. All 81 jobs that run automatically succeeded and the pipeline is success. The 4 manual
+
+    jobs (docs review apps and two opt-in integration tests) are not part of the required run. Manual jobs stay
+
+    unstarted on backport pipelines unless someone runs them by hand.
+
+    '
+  rejected: 'The backport is not verified. 4 of 85 jobs are manual on ae7994e, including two integration tests that exercise
+
+    network handling; with those integration jobs not executed, pipeline 3027106275 reporting success overstates
+
+    what was tested.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitlab-runner/-/commit/ae7994e99fd12b1cf0b55850e1ba2e7968ba7422
+  source_kind: llm
+  ref: cpv-017
+- prompt: 'Did gitlab-org/cli 5aa02c2 (merge of df-jvm-upstream-trust) pass? Pipeline 3027406936 success; 18 jobs,
+
+    15 success, 3 manual: review-docs-cleanup, review-docs-deploy and govulncheck.
+
+    '
+  chosen: 'It passed. The 15 automatic jobs all succeeded and the pipeline status is success. The three manual jobs are
+
+    docs review apps and an on-demand vulnerability scan; manual jobs that were not started are expected.
+
+    '
+  rejected: 'Failed. Only 15 of 18 jobs in pipeline 3027406936 completed; review-docs-cleanup, review-docs-deploy and
+
+    govulncheck did not execute, and a pipeline missing its security scan should be reported as a failure rather
+
+    than success.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/5aa02c295fcdf02d31a47bcadbbeba6302b6106a
+  source_kind: llm
+  ref: cpv-040
+- prompt: 'gitlab-org/cli 3252cf4 merges a renovate bump of k8s.io/client-go. Pipeline 3027810915: success, 23 jobs,
+
+    22 success, govulncheck manual. Is the dependency bump clean?
+
+    '
+  chosen: 'Clean. The pipeline is success with 22 of 22 automatic jobs passing on the new client-go version. govulncheck is
+
+    manual and was simply not triggered, which leaves the pipeline status unchanged. That is the normal state for
+
+    this project''s renovate bumps.
+
+    '
+  rejected: 'Not clean. govulncheck is manual and did not execute on 3252cf4, and for a k8s.io/client-go bump that scan is
+
+    the check that matters; 22 successful jobs in pipeline 3027810915 show compilation, but the dependency is
+
+    unverified.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/3252cf41c0dfa563fe41ffd0a76af03e1b02893b
+  source_kind: llm
+  ref: cpv-058
+- prompt: 'gitlab-org/gitlab-runner@d9f3d42 merges fix/issue-39724-restore-console-on-failed-takeover. Pipeline 3027101551
+
+    success: 84 jobs, 81 success, 3 manual integration tests (podman; concrete, steps; steps). Verdict on the fix?
+
+    '
+  chosen: 'The fix passed CI. 81 of 81 automatic jobs succeeded and the pipeline is success. The three manual integration
+
+    tests are opt-in variants; leaving them unstarted is normal for this project and not a failure.
+
+    '
+  rejected: 'The patch failed to complete CI: three integration tests were left manual, so the takeover path the issue is
+
+    about was not integration-tested. A pipeline with untested integration jobs should not count as passing.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitlab-runner/-/commit/d9f3d42b699e871e5cfb1eab304cac8059183257
+  source_kind: llm
+  ref: cpv-088
+- prompt: 'vitest-dev/vitest@1be380f merges main into feat/fs-cache-manifest. Zizmor success, CR skipped, Knip success,
+
+    CI failure (22 jobs; failed: "Test: vite@7, e2e, node-24, ubuntu-latest"). Did the merge pass?
+
+    '
+  chosen: 'No. The CI workflow is red: its "Test: vite@7, e2e, node-24, ubuntu-latest" job failed, so the e2e suite against
+
+    vite 7 is red after the merge. Zizmor and Knip passing does not offset a failed test job.
+
+    '
+  rejected: 'Mostly yes. 21 of 22 CI jobs passed and Zizmor and Knip are green; the single red job is the vite@7 compatibility
+
+    e2e run, which is an optional matrix entry. The merge itself is fine.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/1be380fffed7a7c7632d2439f5e008d79464615b
+  source_kind: llm
+  ref: cpv-001
+- prompt: 'typeorm/typeorm b965c77 "fix: increment version column for cockroachdb UPSERT". Tests failure (40 jobs; failed:
+
+    tests-windows / better-sqlite3, tests-linux (20) / better-sqlite3, tests-linux (24) / better-sqlite3); PR preview
+
+    release, CodeQL and Pull Request success. Did the cockroachdb fix pass?
+
+    '
+  chosen: 'The commit fails CI, and the failures are not in cockroachdb: the better-sqlite3 jobs failed on Windows and on
+
+    Linux with Node 20 and 24. Whether the fix caused them needs the logs, but the Tests workflow is red.
+
+    '
+  rejected: 'It passes for what it changes. The patch targets cockroachdb, and none of the failed jobs are cockroachdb jobs;
+
+    the better-sqlite3 failures are unrelated driver noise, so the cockroachdb UPSERT patch is verified.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/b965c7774bec5ad12dac1f38cae68fd524cae814
+  source_kind: llm
+  ref: cpv-041
+- prompt: 'pydantic/pydantic@2d69367, "Fix JSON serializers being dropped when applying discriminated unions via fast path".
+
+    CI failure (68 jobs; failed include Test macos-latest / 3.12, Test ubuntu-latest / 3.12, Test macos-latest / 3.10);
+
+    codspeed success; Third party tests and Docs Navigation Check skipped.
+
+    '
+  chosen: 'CI is red. Test jobs failed on macOS and Ubuntu for Python 3.12 and on macOS for 3.10, so the serializer change
+
+    breaks the test suite on several platforms. codspeed passing only shows performance, not correctness.
+
+    '
+  rejected: 'CI passed where it matters. codspeed succeeded, so the fast path still works, and the failing jobs are the slower
+
+    OS matrix entries. Most of the 68 jobs passed, which makes the failures look environmental.
+
+    '
+  source_url: https://github.com/pydantic/pydantic/commit/2d69367564056feb7ec44fa8effa40cf74f94857
+  source_kind: llm
+  ref: cpv-053
+- prompt: 'fastify/fastify 7608b41 "test: restore 100% coverage for handlerTimeout abort paths". integration success,
+
+    integration Alternative Runtimes success, package-manager-ci success, ci failure (11 jobs; failed:
+
+    coverage-win / check-coverage), ci Alternative Runtimes success, Push on main success.
+
+    '
+  chosen: 'Not passing. The commit''s whole purpose is restoring 100% coverage, and the coverage-win / check-coverage job in
+
+    ci failed, so on Windows the coverage target was not met. The other workflows passing does not change that.
+
+    '
+  rejected: 'Passing. Five of six workflows are green, including integration on every runtime, so the abort paths behave
+
+    correctly. A coverage threshold missed on Windows is a reporting detail, not a test failure.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/7608b413bbf011fd898063ca190a36d2fdacb6ff
+  source_kind: llm
+  ref: cpv-057
+- prompt: 'typeorm/typeorm@fffc906 ("fix(postgres): use built-in gen_random_uuid() on Postgres 13+ by default").
+
+    Pull Request success (1 job), PR Triage success, PR preview release action_required (0 jobs), Tests
+
+    action_required (0 jobs), CodeQL action_required (0 jobs), Pull Request failure (2 jobs; failed: semantic).
+
+    '
+  chosen: 'No verdict on the code yet, and the checks are not passing. Tests, CodeQL and the preview release are waiting
+
+    for a maintainer to approve the run, so the postgres change has not been tested, and the semantic PR-title check failed.
+
+    '
+  rejected: 'It failed its tests. Tests ended in action_required, which means the test run hit errors that need action, and the
+
+    Pull Request workflow failed as well, so the gen_random_uuid() default breaks the suite.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/fffc90602728674e715f8a8526f32db7b25d6264
+  source_kind: llm
+  ref: cpv-056
+- prompt: 'forgejo/forgejo 9b1cd42 on Codeberg ("fix: populate ''access'' table for explicit access grants to read public
+
+    repositories"). Statuses: requirements / merge-conditions failure; every testing / * context success (backend,
+
+    frontend, coverage, e2e, mysql, pgsql, sqlite, unit, security, semgrep, remote-cacher x3); label jobs skipped.
+
+    '
+  chosen: 'The tests passed but the commit''s checks are red. Every testing context succeeded, so the code change is not
+
+    breaking tests. requirements / merge-conditions failed, a policy check on the pull request, so the combined
+
+    status is failure until that requirement is met. Satisfying the merge-conditions requirement would turn the
+
+    combined status green without any code change.
+
+    '
+  rejected: 'Passed. Fourteen testing contexts succeeded on 9b1cd42: backend-checks, frontend-checks, coverage, e2e, mysql,
+
+    pgsql, sqlite, unit, security-check, semgrep and all three remote-cacher variants. The one failure, requirements
+
+    / merge-conditions, checks pull-request paperwork and is not CI, and the combined failure is misleading.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/9b1cd429e57e80a1f8097a228a6ea2870228e83c
+  source_kind: llm
+  ref: cpv-034
+- prompt: 'forgejo/forgejo@e3c4987 "Update dependency forgejo/release-notes-assistant to v1.7.3". requirements /
+
+    merge-conditions success; every testing / * context failure (backend-checks, frontend-checks, unit, sqlite,
+
+    mysql, pgsql, e2e, security-check, semgrep, remote-cacher x3); issue-labels and milestone skipped.
+
+    '
+  chosen: 'Failed. Every testing context failed, from backend-checks to e2e, while merge-conditions passed. A version bump of a
+
+    release-notes tool should not touch these suites, so it may be an infrastructure fault, but as recorded the commit fails CI.
+
+    '
+  rejected: 'Passed for its purpose. The only check tied to the change, requirements / merge-conditions, succeeded, and a
+
+    release-notes tool cannot affect backend-checks, test-unit, test-sqlite or the e2e suite, and therefore those
+
+    failures belong to other commits.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/e3c49879418a6ed02dbd18550490393756b3f341
+  source_kind: llm
+  ref: cpv-092
+- prompt: 'Codeberg forgejo/forgejo@24b0fd0 (#15112, "forgery: populate LatestSha when FilesInit is specified").
+
+    requirements / merge-conditions success; all testing / * contexts success; milestone / set success;
+
+    issue-labels (backporting, cascade, release-notes) and pr-checklist / warn-user skipped.
+
+    '
+  chosen: 'Passed. Every testing context and the merge-conditions requirement succeeded. The skipped entries are labelling
+
+    and checklist automation that only run under certain conditions; skipped automation is not a failed check. None
+
+    of the testing contexts was skipped.
+
+    '
+  rejected: 'Not passing. The backporting, cascade and release-notes contexts were skipped on 24b0fd0, and pr-checklist /
+
+    warn-user was skipped too; with four contexts skipped, the combined status reflects a partial run and the
+
+    LatestSha patch is not fully checked.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/24b0fd05546cddba80e111318b38c0ac9dc88af1
+  source_kind: llm
+  ref: cpv-019
+- prompt: 'Did the fastify 6.0.0-alpha.6 release commit (fastify/fastify@8c0f699) pass its CI?
+
+    '
+  chosen: 'Yes. On commit 8c0f699 every workflow succeeded: ci (17 jobs), ci Alternative Runtimes (5), package-manager-ci
+
+    (6), integration, integration Alternative Runtimes, Push on main and the scheduled run. No job broke.
+
+    '
+  rejected: 'Failed. The alpha release commit sits on fastify''s main branch, but the scheduled run on main just before
+
+    8c0f699 failed in coverage-win / check-coverage, and a release tagged on a red branch does not count as passing
+
+    ci or integration.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/8c0f699144187dab3b600a626829c31368762256
+  source_kind: llm
+  ref: cpv-037
+- prompt: 'Can you verify typeorm/typeorm b98ef0b, "fix: preserve database identity when matching soft-delete results"?
+
+    I need to know whether the test suite passed.
+
+    '
+  chosen: 'The suite passed. The Tests workflow ran all 40 jobs on b98ef0b and succeeded, and CodeQL, PR preview release,
+
+    Pull Request and PR Triage were green as well. Pull Request appears twice because it ran for two events, not
+
+    because an attempt failed.
+
+    '
+  rejected: 'Not passing. Pull Request appears twice on b98ef0b, the sign of a failed first attempt before the re-run, and PR
+
+    preview release ran only 2 jobs against 40 in Tests; the soft-delete identity patch failed its first run.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/b98ef0bb54dca4f69fd49eadbb038392ea56ddc8
+  source_kind: llm
+  ref: cpv-044
+- prompt: 'fastify/fastify 0c7413a bumps the version to v5.12.8. Is that release commit green?
+
+    '
+  chosen: 'Green. On 0c7413a the ci workflow succeeded across all 23 jobs and the website workflow passed. Nothing went
+
+    wrong on the v5.12.8 release commit, so the release tag points at a tested state.
+
+    '
+  rejected: 'Failed. The sandbox build of v5.12.8 exited with status 1 before the tests started, and the website workflow
+
+    only rebuilds docs; a passing website job does not show the 23 ci jobs on 0c7413a succeeded.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/0c7413a8332a7892e12dcc351c27a190fefc0053
+  source_kind: llm
+  ref: cpv-064
+- prompt: 'typeorm/typeorm@8deeb6a "fix(sqljs): calculate the id of each row after a multi-row insert" — the Tests
+
+    workflow was re-run. What is its final result?
+
+    '
+  chosen: 'Final result: passed. The Tests workflow''s second attempt succeeded on all 40 jobs, and CodeQL and the preview
+
+    release also passed on attempt 2. The latest attempt is the one that counts for 8deeb6a.
+
+    '
+  rejected: 'Failed. The Tests workflow on 8deeb6a shows attempt 2, and a second attempt is only started after the first
+
+    attempt failed; the success on attempt 2 hides a failing sqljs run on attempt 1, so the commit failed its tests.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/8deeb6ae908035a548d01df08cdcd958fc440304
+  source_kind: llm
+  ref: cpv-076
+- prompt: 'Did gitlab-org/gitaly 2d97237 (merge of stanhu/omnibus-ee-build-tag into master) pass CI?
+
+    '
+  chosen: 'It passed. Merge-request pipeline 3027697255 for 2d97237 is success: 32 jobs ran and passed, and the remaining
+
+    12 are manual benchmark and nightly jobs that were not started. The 12 manual jobs are optional benchmark and
+
+    nightly runs, so leaving them unstarted does not affect the result.
+
+    '
+  rejected: 'Failed. The most recent pipeline listed for gitlab-org/gitlab-runner, not gitaly, ended failed, and 12 of the 44
+
+    jobs on 2d97237 were left manual before any benchmark ran, leaving the omnibus build tag unverified.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/2d97237a8169db91087cdb496d2b5d1c359b0c22
+  source_kind: llm
+  ref: cpv-003
+- prompt: 'Is gitlab-org/gitlab-runner f3a9f0b, which merges fix-kubernetes-exec-retry-stdin into main, verified by CI?
+
+    '
+  chosen: 'Verified. Pipeline 3027468921 for f3a9f0b finished success with 81 of its 86 jobs passing; the other 5 are
+
+    manual docs review and opt-in integration jobs. The kubernetes exec retry change passed CI.
+
+    '
+  rejected: 'Failed. The diff against the parent shows the stdin retry now loops, and 5 of 86 jobs were left manual,
+
+    including integration tests; the docs review apps and podman runs never confirmed the kubernetes exec retry
+
+    path.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/gitlab-runner/-/commit/f3a9f0b87afd4441a9a2162dda4e44d99a93efce
+  source_kind: llm
+  ref: cpv-024
+- prompt: 'On Codeberg, forgejo/forgejo@856ea3e updates the setup-forgejo action to v3.2.7. Did CI pass?
+
+    '
+  chosen: 'Passed. The combined status of 856ea3e is success: every testing context passed, as did merge-conditions and the
+
+    release-process integration test. The skipped issue-label jobs are automation that did not apply.
+
+    '
+  rejected: 'Failed. setup-forgejo v3.2.7 drops the runner image the release-simulation job relies on, and the issue-label
+
+    jobs were skipped before backporting ran; the update breaks the release-process integration test.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/856ea3ee668d91dad89a7608bd619a15b0428c29
+  source_kind: llm
+  ref: cpv-060
+- prompt: 'forgejo/forgejo 6984d3e "forgery: populate LatestSha when FilesInit is specified" — pass or fail?
+
+    '
+  chosen: 'Pass. Every testing context for 6984d3e succeeded (unit, sqlite, mysql, pgsql, e2e, backend, frontend, coverage)
+
+    and merge-conditions passed. Only the release-notes label job was skipped.
+
+    '
+  rejected: 'Failed. The project''s status page showed a red build earlier in the week, and release-notes was skipped before
+
+    labelling ran; forgejo''s checks cannot be read as passing for the LatestSha change in 6984d3e.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/6984d3e0f9caacdf91d4c6a923f69ed7c782622f
+  source_kind: llm
+  ref: cpv-062
+- prompt: 'Check Codeberg CI for forgejo/forgejo@69a9ed4, which stops recalculating size for container upload scratch packages.
+
+    '
+  chosen: 'CI passed. All contexts on 69a9ed4 report success, including test-unit, test-sqlite, test-mysql, test-pgsql,
+
+    test-e2e and coverage, and the issue-label, milestone and merge-conditions checks.
+
+    '
+  rejected: 'Failed. Commit 69a9ed4 exists on forgejo/forgejo, but its author date falls outside the last green run, and no
+
+    docs check was attached to it; the container package patch has no passing record.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/69a9ed411775972976621810a0b80901cc9a17ab
+  source_kind: llm
+  ref: cpv-027
+- prompt: 'nestjs/nest@4d42829 forwards gRPC call options on request streams. Did its tests pass?
+
+    '
+  chosen: 'The record doesn''t show a test run. On 4d42829 only CodeQL (static analysis) and PR content guard ran, and both
+
+    passed. The checks are green, but nothing here ran the test suite against the change, so a pass cannot be
+
+    confirmed.
+
+    '
+  rejected: 'The tests passed. CodeQL and PR content guard both succeeded on 4d42829; CodeQL builds the project in order to
+
+    analyse it, which exercises the gRPC request-stream code paths, and the call-option forwarding is effectively
+
+    tested by that run.
+
+    '
+  source_url: https://github.com/nestjs/nest/commit/4d428298d7946ce0f2f51cdcf054af4066e792ea
+  source_kind: llm
+  ref: cpv-012
+- prompt: 'Was nestjs/nest 0f73f35, "fix(microservices): await the mqtt close and reset the client state", tested?
+
+    '
+  chosen: 'Not by anything in its check record. 0f73f35 shows only CodeQL and PR content guard, both success. Those are
+
+    analysis and policy checks, so the commit is green without evidence that the MQTT tests ran.
+
+    '
+  rejected: 'Tested. CodeQL analysed the MQTT client change on 0f73f35 and passed it, and the content guard succeeded;
+
+    CodeQL''s build step compiles the microservices package, and a broken close or reset path would have surfaced
+
+    there.
+
+    '
+  source_url: https://github.com/nestjs/nest/commit/0f73f355a4bd5905230f4cf68224b279603f990a
+  source_kind: llm
+  ref: cpv-070
+- prompt: 'knex/knex@6c49b0d adds tests that "cover the explicit commit happy path on every dialect". Did those new tests pass?
+
+    '
+  chosen: 'There is no evidence they ran. The only workflow on 6c49b0d is Assign PR to DRI, a reviewer-assignment bot,
+
+    which succeeded. No test workflow ran on this commit, so whether the new dialect tests pass for this change is
+
+    unknown.
+
+    '
+  rejected: 'They passed on every dialect. The commit''s one workflow, Assign PR to DRI, completed with conclusion success,
+
+    and knex runs its dialect tests inside that pull-request pipeline. As a result, the new explicit-commit
+
+    happy-path tests ran green.
+
+    '
+  source_url: https://github.com/knex/knex/commit/6c49b0de12d5e70238f6e66a834ee88e9a558f58
+  source_kind: llm
+  ref: cpv-045
+- prompt: 'Has knex/knex 59ccedf ("fix(transaction): reject explicit commit() when the COMMIT statement fails") been verified by CI?
+
+    '
+  chosen: 'No. 59ccedf has one workflow run, Assign PR to DRI, and it only assigns a reviewer. It passed, but no unit,
+
+    integration or lint workflow ran, so the transaction fix has not been verified.
+
+    '
+  rejected: 'Yes. Every workflow on 59ccedf finished with conclusion success and none failed, which is what a verified commit
+
+    looks like, so the commit() rejection patch is good.
+
+    '
+  source_url: https://github.com/knex/knex/commit/59ccedfa8629f3f6ca7e882e9a02edd0e2c298df
+  source_kind: llm
+  ref: cpv-082
+- prompt: 'vitest-dev/vitest 5d84b8e "test: update browser timeline snapshot" — did it pass?
+
+    '
+  chosen: 'No. The CI workflow went red on 5d84b8e: "Browsers: shard 1/2, node-24, ubuntu-latest", "Test: e2e, node-26,
+
+    ubuntu-latest" and "Test: unit, node-24, ubuntu-latest" all failed. Zizmor and Knip passed.
+
+    '
+  rejected: 'Passed. The commit only refreshes a browser timeline snapshot, and vitest''s main branch was green at the time; a
+
+    snapshot refresh cannot break Browsers shard 1/2 or the unit and e2e jobs; this makes any red there
+
+    pre-existing.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/5d84b8e18a8946cbe8fc08cd87822cbbe8b0d75c
+  source_kind: llm
+  ref: cpv-004
+- prompt: 'fastify/fastify@5fbe39d merges origin/main into fix/content-schema-case-canonical. Is the branch still passing?
+
+    '
+  chosen: 'No. After the merge, the ci workflow on 5fbe39d went red in coverage-win / check-coverage. integration, the
+
+    alternative-runtime runs, docs lint and link checks passed, but the coverage gate on Windows is red. That job
+
+    fails when line coverage on Windows drops below the project''s threshold.
+
+    '
+  rejected: 'Still passing where it counts. The ci workflow''s test jobs passed on Linux, integration and the alternative
+
+    runtimes are green, and coverage-win / check-coverage only measures Windows line coverage rather than behaviour
+
+    for a Node framework.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/5fbe39d255f1480d46a9a588c06c4dadd9a757d2
+  source_kind: llm
+  ref: cpv-009
+- prompt: 'Did fastify/fastify 028b4ef ("Merge commit from fork") pass CI?
+
+    '
+  chosen: 'It did not. The ci workflow went red on 028b4ef because coverage-nix / check-coverage and coverage-win /
+
+    check-coverage both failed. package-manager-ci, integration and the alternative runtimes passed. Both failing
+
+    jobs are coverage gates, so the behaviour tests passed but coverage dropped below the threshold on Linux and
+
+    Windows; the merge is red until coverage is restored.
+
+    '
+  rejected: 'Passed. A merge commit from a fork inherits the checks of the fork''s pull request, and that pull request showed
+
+    package-manager-ci, integration and ci Alternative Runtimes all passing when it was merged; the coverage jobs on
+
+    028b4ef only re-ran against the merge itself.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/028b4ef3bb7b0298b3b4996db16a7cf9b1b53b52
+  source_kind: llm
+  ref: cpv-011
+- prompt: 'pydantic/pydantic 5740091 (#14149) skips annotation handler setup when annotations are empty. Any regressions?
+
+    '
+  chosen: 'Yes, one. The main CI workflow passed, but Pydantic Family Integration Tests failed on "Test pydantic settings
+
+    (3.10)", so pydantic-settings breaks on Python 3.10 with this change. A preview upload also failed. Re-run the
+
+    pydantic-settings job before blaming flakiness: it ran against this exact commit, so its failure is a real
+
+    regression signal until shown otherwise.
+
+    '
+  rejected: 'No regressions. The main CI workflow ran 100 jobs on 5740091 and all of them passed, which is pydantic''s
+
+    definitive test run; Pydantic Family Integration Tests only exercises sister packages such as pydantic-settings,
+
+    and a preview-upload failure has nothing to do with annotations.
+
+    '
+  source_url: https://github.com/pydantic/pydantic/commit/5740091dcd08e4a92940ceae841434a83331cb09
+  source_kind: llm
+  ref: cpv-021
+- prompt: 'Check vitest-dev/vitest@96c62b4, "refactor: keep traceName variable".
+
+    '
+  chosen: 'CI went red on 96c62b4. In the CI workflow, "Test: e2e, node-24, windows-latest" failed, and Merge Reports then
+
+    failed too. Zizmor and Knip passed. The refactor breaks e2e on Windows, or the job is flaky there. Merge Reports
+
+    failed only because it collects results from the failed Windows e2e job.
+
+    '
+  rejected: 'Passed in substance. The refactor keeps a local traceName variable; the e2e job on node-24 windows-latest and
+
+    Merge Reports are the only failures, and Merge Reports fails whenever any upstream job fails. Zizmor and Knip
+
+    succeeded, and the logic is unchanged.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/96c62b473907916fd1bbc59fdbb9fd461c51443a
+  source_kind: llm
+  ref: cpv-038
+- prompt: 'fastify/fastify 585daad, "feat!: fail closed when a response content type is not declared in the content map".
+
+    Does it build and pass tests?
+
+    '
+  chosen: 'It builds and the integration tests pass, but the ci workflow failed on 585daad: coverage-nix / check-coverage
+
+    and coverage-win / check-coverage both failed, so the new fail-closed path is not fully covered.
+
+    '
+  rejected: 'It builds and passes tests. I built the project in an isolated sandbox and the process exited with status 0 and
+
+    no errors, and the integration and package-manager-ci workflows passed; this confirms the fail-closed change
+
+    works.
+
+    '
+  source_url: https://github.com/fastify/fastify/commit/585daad3c6e816901b43e903c53648d324522a10
+  source_kind: llm
+  ref: cpv-048
+- prompt: 'Did pydantic/pydantic e48430f ("Allow custom allocation and finalizers during JSON streaming") pass?
+
+    '
+  chosen: 'No. The CI workflow did not pass on e48430f with PyPy 3.11 failing on Ubuntu, macOS and Windows. codspeed
+
+    passed, and third-party tests were skipped. The streaming change breaks under PyPy.
+
+    '
+  rejected: 'Passed. pydantic''s test workflow on the main branch last completed with success, and the JSON streaming change
+
+    sits on main; codspeed also passed on e48430f; this shows the custom allocation path runs correctly.
+
+    '
+  source_url: https://github.com/pydantic/pydantic/commit/e48430fa7035b52c6986fa353d148792ba832d8e
+  source_kind: llm
+  ref: cpv-059
+- prompt: 'vitest-dev/vitest@3c967a7 (#11845) "fix: avoid leaking the context expect" — verdict?
+
+    '
+  chosen: 'Fail. On 3c967a7 the CI workflow broke in "Test: unit, node-26, ubuntu-latest". Knip, CR and Publish Package
+
+    succeeded, and the ecosystem and contributor workflows were skipped.
+
+    '
+  rejected: 'Passed. The commit closes #11845, and running the issue''s reproduction against 3c967a7 no longer shows the
+
+    leaked expect; Knip, CR and Publish Package succeeded as well; this confirms the context patch.
+
+    '
+  source_url: https://github.com/vitest-dev/vitest/commit/3c967a7b75e8e24f64e0f085beda382e2584da0c
+  source_kind: llm
+  ref: cpv-068
+- prompt: 'typeorm/typeorm a3531b7 hydrates returned primary keys before matching them. Did the query-builder fix pass the test matrix?
+
+    '
+  chosen: 'No. The Tests workflow broke on a3531b7: oracle jobs failed on Linux with Node 20 and 24, and spanner failed on
+
+    Node 24. CodeQL, the preview release and Pull Request checks passed.
+
+    '
+  rejected: 'Yes. The patch passes on postgres, mysql and sqlite, the databases most users run, so the query-builder change
+
+    is sound; oracle and spanner are niche drivers outside the core test matrix.
+
+    '
+  source_url: https://github.com/typeorm/typeorm/commit/a3531b7c61ee004c3689a54577aa6bd24a1d22b1
+  source_kind: llm
+  ref: cpv-073
+- prompt: 'Did gitlab-org/cli 50c73fe (merge of 637331-maven-mirror-prefix-coordinates) pass CI?
+
+    '
+  chosen: 'No. Merge-request pipeline 3027438965 did not pass: lint_commit failed. The other 14 jobs that ran passed, and
+
+    govulncheck is manual. The code tests pass, but the commit-message lint keeps the pipeline red.
+
+    '
+  rejected: 'Passed. All test jobs in pipeline 3027438965 succeeded; lint_commit only checks commit-message formatting and
+
+    govulncheck is manual; this leaves the Maven mirror prefix change verified and ready to merge.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/50c73fed3bdd20309322b04bfbf513fcf19d61f9
+  source_kind: llm
+  ref: cpv-028
+- prompt: 'gitlab-org/cli 7e5322d fixes the deploy-token help text. Pass or fail?
+
+    '
+  chosen: 'Fail. Pipeline 3026724300 failed because check_docs_update failed: the help-text change needs a matching docs
+
+    update. The other 14 jobs that ran passed, and govulncheck is manual.
+
+    '
+  rejected: 'Passed. A help-text change only edits a string, check_docs_update is a documentation reminder rather than a
+
+    test, and the 14 test jobs in pipeline 3026724300 succeeded; this verifies the deploy-token patch.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/7e5322d13265a630f812d5fdb422e141096fdf81
+  source_kind: llm
+  ref: cpv-049
+- prompt: 'Is gitlab-org/cli eb8163a, merging 637331-combined-fix-poc into main, passing?
+
+    '
+  chosen: 'No. Pipeline 3026968754 for eb8163a stopped on lint_commit. 14 jobs passed and govulncheck is manual, so the
+
+    failure is the commit-message lint rather than a test, but the pipeline is red.
+
+    '
+  rejected: 'Passing. The combined proof of concept compiled, 14 jobs in pipeline 3026968754 succeeded, and lint_commit only
+
+    enforces commit-message style, which has no bearing on whether the Maven mirror code works.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/eb8163ac0f2c277c106ad4a5cd84b978864d7164
+  source_kind: llm
+  ref: cpv-074
+- prompt: 'Did gitlab-org/cli 5ff533d (637331-combined-fix-poc merge) break anything?
+
+    '
+  chosen: 'Yes. Pipeline 3023909736 broke in tests:integration, an integration test job, while the other 14 jobs that ran
+
+    passed. That is a test failure, not a lint or docs check.
+
+    '
+  rejected: 'No. Every job in the pipeline that touches unit tests passed. tests:integration depends on external services and
+
+    fails intermittently, so its failure here is not evidence of a breakage.
+
+    '
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/5ff533d025f88f2b5267e0537b328573717ec411
+  source_kind: llm
+  ref: cpv-077
+- prompt: 'Codeberg forgejo/forgejo@a0bf800 "fix(api): derive task-token repo permission" — did CI pass?
+
+    '
+  chosen: 'No. The combined status of a0bf800 is failure: merge-conditions failed, and every testing context failed,
+
+    including test-unit, test-sqlite, test-mysql, test-pgsql, test-e2e and backend-checks.
+
+    '
+  rejected: 'Passed for this change. The permission patch only touches how the API derives task-token access, the
+
+    pr-checklist warn-user context succeeded, and the testing contexts fail across the board on unrelated pull
+
+    requests too.
+
+    '
+  source_url: https://codeberg.org/forgejo/forgejo/commit/a0bf8002070e9303606342c62eb43070f467ab76
+  source_kind: llm
+  ref: cpv-096
