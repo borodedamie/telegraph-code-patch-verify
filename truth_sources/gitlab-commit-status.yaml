@@ -1,0 +1,41 @@
+version: '1'
+kind: miner
+id: 0
+slug: truth-gitlab-commit-pipeline-status
+protocol: generic
+name: GitLab pipeline status for a commit
+description: >
+  Free, public, no-key GitLab REST API (gitlab.com). Returns one commit of a public
+  project with "status", the result of its latest CI pipeline. The patch passed when
+  status is success; it failed when status is failed, canceled or skipped; running,
+  pending and created mean no verdict yet.
+base_url: https://gitlab.com
+auth:
+  type: none
+docs:
+  documentation: https://docs.gitlab.com/api/commits/#get-a-single-commit
+endpoints:
+- path: /commit-status
+  external_path: /api/v4/projects/{project}/repository/commits/{sha}
+  method: GET
+  description: Latest CI pipeline status for one commit of a public gitlab.com project.
+  intents:
+  - CODE_PATCH_VERIFY_GENERAL
+  params:
+    path:
+      required:
+      - name: project
+        type: string
+        intents: ['*']
+        description: >
+          Project path from the patch with the slash URL-encoded as %2F, e.g.
+          "gitlab-org%2Fgitlab-runner" for gitlab-org/gitlab-runner@723578f.
+      - name: sha
+        type: string
+        intents: ['*']
+        description: Commit SHA (full or abbreviated) taken from the patch, e.g. "723578f".
+semantics:
+  signal_mapping:
+    label_field: status
+  supported_intents:
+  - CODE_PATCH_VERIFY_GENERAL

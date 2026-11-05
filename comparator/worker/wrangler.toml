@@ -1,0 +1,9 @@
+name = "cpv-comparator"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+# Serves public/CODE_PATCH_VERIFY-comparator.wasm byte for byte at
+# /CODE_PATCH_VERIFY-comparator.wasm (the wasmUrl to register).
+# Every other request (GET /, POST /) falls through to worker.js (the runnable URL).
+[assets]
+directory = "./public"

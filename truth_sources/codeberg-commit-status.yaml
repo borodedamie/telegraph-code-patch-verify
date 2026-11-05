@@ -1,0 +1,42 @@
+version: '1'
+kind: miner
+id: 0
+slug: truth-codeberg-commit-status
+protocol: generic
+name: Codeberg combined CI status for a commit
+description: >
+  Free, public, no-key Forgejo REST API on codeberg.org. Returns the combined CI status
+  of one commit of a public repository in "state". The patch passed when state is
+  success; it failed when state is failure or error; pending means no verdict yet.
+base_url: https://codeberg.org
+auth:
+  type: none
+docs:
+  documentation: https://codeberg.org/api/swagger#/repository/repoGetCombinedStatusByRef
+endpoints:
+- path: /commit-status
+  external_path: /api/v1/repos/{owner}/{repo}/commits/{ref}/status
+  method: GET
+  description: Combined CI status for one commit of a public Codeberg repository.
+  intents:
+  - CODE_PATCH_VERIFY_GENERAL
+  params:
+    path:
+      required:
+      - name: owner
+        type: string
+        intents: ['*']
+        description: Repository owner taken from the patch, e.g. "forgejo" in forgejo/forgejo@6bc9d32.
+      - name: repo
+        type: string
+        intents: ['*']
+        description: Repository name taken from the patch, e.g. "forgejo" in forgejo/forgejo@6bc9d32.
+      - name: ref
+        type: string
+        intents: ['*']
+        description: Commit SHA (full or abbreviated) taken from the patch, e.g. "6bc9d32".
+semantics:
+  signal_mapping:
+    label_field: state
+  supported_intents:
+  - CODE_PATCH_VERIFY_GENERAL

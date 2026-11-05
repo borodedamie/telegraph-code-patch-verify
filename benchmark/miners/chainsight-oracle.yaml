@@ -1,0 +1,1910 @@
+version: '1'
+kind: miner
+id: 302
+slug: chainsight-oracle
+protocol: generic
+name: ChainSight — Universal Intelligence & Data Oracle
+description: 'A single high-reliability provider that answers ANY request across conversation, search, research, verification, language, finance, crypto/on-chain, security, weather, logistics and IoT. Routes here for: general conversational questions and chat; open-ended Q&A and knowledge; web search and current news; deep research and academic/scholarly lookups; fact-checking and claim/content verification; translation, summarization, rewriting and text generation; sentiment, classification, moderation, AI-text and authenticity detection; live crypto prices, market cap, DeFi TVL and yields, fiat FX, gas, wallet balances, on-chain transactions, token supply and holders; stock and macro indicators; fraud, sanctions, threat-intel, CVE and vulnerability, URL/email/SSL security, code review and generation; weather, air-quality and geolocation; shipping, port, warehouse, package and vessel logistics; sensor, grid, datacenter and validator telemetry. Every answer is direct, grounded in a real source, number-first for quantitative intents, low-latency and never empty. Broad coverage with specialist-grade quality on each intent — a reliable default the router can trust for almost any question.'
+base_url: https://hub.shadrakbessanh.me
+auth:
+  type: none
+rate_limit_per_sec: 5
+cache_ttl_sec: 30
+circuit_threshold: 5
+circuit_cooldown_seconds: 30
+input_schema:
+  type: object
+  properties:
+    symbol:
+      type: string
+      description: Asset ticker or name, e.g. BTC, ethereum.
+    protocol:
+      type: string
+      description: DeFi protocol slug, e.g. aave, uniswap.
+    chain:
+      type: string
+      description: 'Chain name: ethereum or base.'
+    base:
+      type: string
+      description: Base fiat currency code, e.g. EUR.
+    quote:
+      type: string
+      description: Quote fiat currency code, e.g. USD.
+    address:
+      type: string
+      description: 0x wallet address (40 hex).
+    hash:
+      type: string
+      description: 0x transaction hash (64 hex).
+    query:
+      type: string
+      description: Natural-language question if params are not supplied.
+    intent:
+      type: string
+      description: Optional intent hint.
+output_schema:
+  type: object
+  properties:
+    signal:
+      type: string
+      description: Concise canonical answer (number-first).
+    price_usd:
+      type: number
+    market_cap_usd:
+      type: number
+    volume_24h_usd:
+      type: number
+    tvl_usd:
+      type: number
+    rate:
+      type: number
+    gas_price_gwei:
+      type: number
+    balance_eth:
+      type: number
+    value_eth:
+      type: number
+    source:
+      type: string
+semantics:
+  signal_mapping:
+    label_field: signal
+    reason_field: source
+  supported_intents:
+  - ACADEMIC_SEARCH_GENERAL
+  - AGENT_TASK_GENERAL
+  - AIR_QUALITY_INDEX_GENERAL
+  - AI_TEXT_DETECTION_GENERAL
+  - API_HEALTH_CHECK_GENERAL
+  - ASSET_RESERVE_ATTESTATION_GENERAL
+  - B2B_IDENTITY_ENRICHMENT_GENERAL
+  - CARRIER_SERVICEABILITY_GENERAL
+  - CHATBOT_CONVERSATION_GENERAL
+  - CHAT_COMPLETION_GENERAL
+  - CLOUD_RESOURCE_USAGE_GENERAL
+  - CODE_GENERATION_GENERAL
+  - CODE_PATCH_VERIFY_GENERAL
+  - CODE_REVIEW_GENERAL
+  - COMMERCE_PURCHASE_VERIFY_GENERAL
+  - CONTENT_EXTRACTION_GENERAL
+  - CONTENT_MODERATION_GENERAL
+  - CONTENT_VERIFICATION_GENERAL
+  - CONTRACT_OBLIGATION_AUDIT_GENERAL
+  - CORPORATE_REGISTRY_LOOKUP_GENERAL
+  - CROSS_CHAIN_STATE_VERIFY_GENERAL
+  - CRYPTO_PRICE_USD
+  - CRYPTO_TRANSFER_VERIFY_GENERAL
+  - CRYPTO_YIELD_RATE_GENERAL
+  - CURRENCY_EXCHANGE_CONVERT
+  - CUSTOMER_TICKET_RESOLUTION_GENERAL
+  - CVE_LOOKUP_CVSS
+  - DATACENTER_TELEMETRY_VERIFY_GENERAL
+  - DEEPFAKE_DETECTION_GENERAL
+  - DNS_RECORD_LOOKUP_GENERAL
+  - DOCUMENT_AUTHENTICITY_GENERAL
+  - EMAIL_SECURITY_GENERAL
+  - ENTITY_EXTRACTION_GENERAL
+  - EVENT_OUTCOME_RESOLUTION_GENERAL
+  - FACT_CHECK_GENERAL
+  - FINANCIAL_DATA_GENERAL
+  - FRAUD_DETECTION_GENERAL
+  - FRAUD_RISK_GENERAL
+  - FX_NOW_CAD
+  - FX_NOW_EUR
+  - FX_NOW_SEK
+  - GAS_PRICE_GENERAL
+  - GRAMMAR_SPELL_CHECK_GENERAL
+  - GRID_POWER_PRICE_GENERAL
+  - IMAGE_CAPTIONING_GENERAL
+  - IMAGE_VERIFICATION_GENERAL
+  - IP_GEOLOCATION_GENERAL
+  - KEYWORD_EXTRACTION_GENERAL
+  - LANGUAGE_GENERATION_GENERAL
+  - LANGUAGE_TRANSLATION_GENERAL
+  - LIQUIDITY_DEPTH_VERIFY_GENERAL
+  - LIVE_PORT_CONGESTION_GENERAL
+  - LIVE_SHELF_PRICE_GENERAL
+  - LLM_OUTPUT_EVALUATION_GENERAL
+  - LOAN_INTEREST_RATE_QUOTE_GENERAL
+  - MACRO_ECONOMIC_INDICATOR_GENERAL
+  - MEDIA_AUTHENTICITY_CHECK_GENERAL
+  - MEDIA_FORENSIC_VERIFY_GENERAL
+  - MINING_HASHPRICE_VERIFY_GENERAL
+  - NEWS_HEADLINES_GENERAL
+  - NEWS_SEARCH_GENERAL
+  - ONCHAIN_METRIC_VERIFY_GENERAL
+  - ONCHAIN_TX_LOOKUP_GENERAL
+  - PACKAGE_STATUS_GENERAL
+  - PAYMENT_METHOD_VERIFY_GENERAL
+  - PRODUCT_AUTHENTICITY_GENERAL
+  - QUESTION_ANSWERING_GENERAL
+  - REGRESSION_VERIFY_GENERAL
+  - REGULATORY_FILING_MONITOR_GENERAL
+  - RESEARCH_QUERY_GENERAL
+  - RESEARCH_SYNTHESIS_GENERAL
+  - ROUTE_ETA_GENERAL
+  - SANCTIONS_SCREENING_MATCH_GENERAL
+  - SATELLITE_IMAGERY_ANALYSIS_GENERAL
+  - SECURITY_REVIEW_GENERAL
+  - SEMANTIC_SIMILARITY_GENERAL
+  - SENSOR_TELEMETRY_VERIFY_GENERAL
+  - SENTIMENT_ANALYSIS_GENERAL
+  - SERVER_UPTIME_MONITOR_GENERAL
+  - SHIPMENT_DELAY_RISK_GENERAL
+  - SHIP_RATE_ETA_GENERAL
+  - SKU_IN_STOCK_GENERAL
+  - SLA_COMPLIANCE_GENERAL
+  - SMART_CONTRACT_AUDIT_GENERAL
+  - SOCIAL_BOT_DETECTION_GENERAL
+  - SSL_VERIFICATION_CERT
+  - STOCK_PRICE_US_EQUITY
+  - STORM_ALERT_GENERAL
+  - TASK_EXECUTION_QUALITY_GENERAL
+  - TELEGRAPH_KNOWLEDGE_GENERAL
+  - TEXT_AUTHENTICITY_CHECK_GENERAL
+  - TEXT_CLASSIFICATION_GENERAL
+  - TEXT_GENERATION_GENERAL
+  - TEXT_SUMMARIZATION_GENERAL
+  - THREAT_INTELLIGENCE_INDICATOR
+  - THREAT_IP_REPUTATION_GENERAL
+  - TOKEN_HOLDER_COUNT_GENERAL
+  - TOKEN_TOTAL_SUPPLY_VERIFY_GENERAL
+  - TRANSACTION_RISK_GENERAL
+  - TRAVEL_DISRUPTION_GENERAL
+  - TVL_LOOKUP_GENERAL
+  - URL_SAFE_GENERAL
+  - URL_SCAN_VERDICT
+  - VALIDATOR_PERFORMANCE_VERIFY_GENERAL
+  - VENDOR_VERIFY_GENERAL
+  - VESSEL_TELEMETRY_VERIFY_GENERAL
+  - VIDEO_VERIFICATION_GENERAL
+  - VULNERABILITY_TRIAGE_GENERAL
+  - WALLET_BALANCE_CHECK_GENERAL
+  - WAREHOUSE_INVENTORY_GENERAL
+  - WASH_TRADING_DETECTION_GENERAL
+  - WEATHER_CHECK_TEMPERATURE
+  - WEATHER_FORECAST_GENERAL
+  - WEATHER_FORECAST_VERIFY_GENERAL
+  - WEB_SEARCH_GENERAL
+endpoints:
+- path: /price
+  external_path: /price
+  method: GET
+  description: Live USD price of a crypto asset. Number-first. Route here for crypto price, 'price of BTC/ETH', token USD value.
+  intents:
+  - CRYPTO_PRICE_USD
+  params:
+    query:
+      required:
+      - name: symbol
+        type: string
+        intents:
+        - '*'
+        description: Asset ticker or name.
+      optional:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /financial
+  external_path: /financial
+  method: GET
+  description: 'Crypto market data: price, market cap, 24h volume and change. Route here for market cap, volume, financial data of a coin.'
+  intents:
+  - FINANCIAL_DATA_GENERAL
+  params:
+    query:
+      required:
+      - name: symbol
+        type: string
+        intents:
+        - '*'
+        description: Asset ticker or name.
+      optional:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /tvl
+  external_path: /tvl
+  method: GET
+  description: DeFi total value locked (TVL) of a protocol or chain. Route here for TVL, 'how much is locked', DeFi size.
+  intents:
+  - TVL_LOOKUP_GENERAL
+  params:
+    query:
+      required:
+      - name: protocol
+        type: string
+        intents:
+        - '*'
+        description: DeFi protocol slug.
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name for chain-level TVL.
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /fx
+  external_path: /fx
+  method: GET
+  description: Fiat currency exchange conversion between two currencies. Route here for currency conversion, 'X EUR to USD', exchange amount.
+  intents:
+  - CURRENCY_EXCHANGE_CONVERT
+  params:
+    query:
+      required:
+      - name: base
+        type: string
+        intents:
+        - '*'
+        description: Base currency code.
+      optional:
+      - name: quote
+        type: string
+        intents:
+        - '*'
+        description: Quote currency code.
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /gas
+  external_path: /gas
+  method: GET
+  description: Current network gas price in gwei (Ethereum/Base). Number-first. Route here for gas price, gwei, transaction fee level.
+  intents:
+  - GAS_PRICE_GENERAL
+  params:
+    query:
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name (ethereum or base).
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /balance
+  external_path: /balance
+  method: GET
+  description: Native ETH balance of a wallet address. Route here for wallet balance, 'how much ETH does 0x... hold'.
+  intents:
+  - WALLET_BALANCE_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: address
+        type: string
+        intents:
+        - '*'
+        description: 0x wallet address.
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name (ethereum or base).
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /tx
+  external_path: /tx
+  method: GET
+  description: On-chain transaction details/status by hash (method, confirmed/reverted). Route here for tx lookup, transaction status, 'what did this hash do'.
+  intents:
+  - ONCHAIN_TX_LOOKUP_GENERAL
+  params:
+    query:
+      required:
+      - name: hash
+        type: string
+        intents:
+        - '*'
+        description: 0x transaction hash.
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name (ethereum or base).
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /holders
+  external_path: /holders
+  method: GET
+  description: Number of holders of a token contract. Route here for holder count, 'how many holders'.
+  intents:
+  - TOKEN_HOLDER_COUNT_GENERAL
+  params:
+    query:
+      required:
+      - name: address
+        type: string
+        intents:
+        - '*'
+        description: Token contract address (0x).
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name (ethereum or base).
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /stock
+  external_path: /stock
+  method: GET
+  description: Current US equity stock price by ticker. Number-first. Route here for stock price, share price, ticker quote.
+  intents:
+  - STOCK_PRICE_US_EQUITY
+  params:
+    query:
+      required:
+      - name: symbol
+        type: string
+        intents:
+        - '*'
+        description: Stock ticker symbol.
+      optional:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /fraud
+  external_path: /fraud
+  method: GET
+  description: Malicious-activity risk assessment of a crypto address. Route here for fraud detection on an address/wallet.
+  intents:
+  - FRAUD_DETECTION_GENERAL
+  params:
+    query:
+      required:
+      - name: address
+        type: string
+        intents:
+        - '*'
+        description: Address to assess (0x).
+      optional:
+      - name: chain
+        type: string
+        intents:
+        - '*'
+        description: Chain name (ethereum or base).
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /urlscan
+  external_path: /urlscan
+  method: GET
+  description: Phishing/scam verdict for a URL (Safe/Suspicious/Malicious). Route here for URL scan, 'is this link safe', phishing check.
+  intents:
+  - URL_SCAN_VERDICT
+  params:
+    query:
+      required:
+      - name: url
+        type: string
+        intents:
+        - '*'
+        description: URL to scan.
+      optional:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language question.
+- path: /wforecast
+  external_path: /wforecast
+  method: GET
+  description: Multi-hour/day weather forecast for a place or coordinates. Route here for weather forecast, 'weather tomorrow in X'.
+  intents:
+  - WEATHER_FORECAST_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language weather question (may contain a city name or explicit latitude/longitude).
+      optional:
+      - name: lat
+        type: number
+        intents:
+        - '*'
+        description: Latitude.
+      - name: lon
+        type: number
+        intents:
+        - '*'
+        description: Longitude.
+- path: /wcheck
+  external_path: /wcheck
+  method: GET
+  description: Current weather/temperature for a location. Number-first temperature. Route here for current weather, temperature now.
+  intents:
+  - WEATHER_CHECK_TEMPERATURE
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language weather question (may contain a city name or explicit latitude/longitude).
+      optional:
+      - name: lat
+        type: number
+        intents:
+        - '*'
+        description: Latitude.
+      - name: lon
+        type: number
+        intents:
+        - '*'
+        description: Longitude.
+- path: /wstorm
+  external_path: /wstorm
+  method: GET
+  description: Storm risk (wind, gusts, precipitation) at a location over 24h. Route here for storm alert, severe weather risk.
+  intents:
+  - STORM_ALERT_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Natural-language weather question (may contain a city name or explicit latitude/longitude).
+      optional:
+      - name: lat
+        type: number
+        intents:
+        - '*'
+        description: Latitude.
+      - name: lon
+        type: number
+        intents:
+        - '*'
+        description: Longitude.
+- path: /geoip
+  external_path: /geoip
+  method: GET
+  description: Geolocate an IP address or domain (country, city, ASN). Route here for IP geolocation, 'where is this IP'.
+  intents:
+  - IP_GEOLOCATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: IP address, domain, or natural-language question.
+- path: /extract
+  external_path: /extract
+  method: GET
+  description: Extract the clean main text of a web page from its URL. Route here for content extraction, 'get the article text', readability.
+  intents:
+  - CONTENT_EXTRACTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: A URL (or question containing a URL) to extract content from.
+- path: /ssl
+  external_path: /ssl
+  method: GET
+  description: Live TLS/SSL certificate validity for a host (valid true/false, issuer, expiry). Route here for SSL check, certificate validity, HTTPS cert.
+  intents:
+  - SSL_VERIFICATION_CERT
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Hostname or URL to verify the TLS certificate of.
+- path: /cve
+  external_path: /cve
+  method: GET
+  description: CVE lookup in NIST NVD with CVSS base score (0-10). Number-first. Route here for CVE details, CVSS score, vulnerability lookup by id.
+  intents:
+  - CVE_LOOKUP_CVSS
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: A CVE identifier or question containing one.
+- path: /chat
+  external_path: /chat
+  method: POST
+  description: 'General conversational AI: answer ANY free-form question, explanation, reasoning, opinion-with-caveats, how-to, definition, calculation or open prompt in clear prose. Route here for chat, assistant, ''what/why/how'', explain, help, general knowledge, Q&A and medical/scientific/finance/world questions that fit no specialized data intent. Accurate, hedged when uncertain, never refuses, never empty.'
+  intents:
+  - CHAT_COMPLETION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: The question or prompt.
+- path: /gen
+  external_path: /gen
+  method: POST
+  description: 'Text generation and rewriting from an instruction: drafts, rewrites, expansions, style changes. Route here for ''write'', ''draft'', ''rewrite'', ''generate text'', copy.'
+  intents:
+  - TEXT_GENERATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: The generation or rewrite instruction plus any input text.
+- path: /lang
+  external_path: /lang
+  method: POST
+  description: Language generation, translation or summarization in prose. Route here for multilingual generation, rephrase-in-language, summarize-and-translate.
+  intents:
+  - LANGUAGE_GENERATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Text to generate, translate or summarize.
+- path: /factcheck
+  external_path: /factcheck
+  method: POST
+  description: 'Fact-checking of a claim: verdict (True/Mostly True/Mixed/Misleading/Mostly False/False/Unverified) with evidence. Route here for ''is it true that'', fact-check, verify claim, debunk, misinformation.'
+  intents:
+  - FACT_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: The claim to fact-check.
+- path: /websearch
+  external_path: /websearch
+  method: POST
+  description: 'Live web search with a grounded answer: searches the current web and returns a concise, sourced answer. Route here for web search, ''search for'', ''find online'', ''look up'', current/latest info, prices, availability and anything needing fresh internet results.'
+  intents:
+  - WEB_SEARCH_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: The research question to search the web for.
+- path: /news
+  external_path: /news
+  method: POST
+  description: 'Recent news search: finds current news and coverage on a topic with titles, sources and dates (30-day window). Route here for news, headlines, ''latest news'', ''what happened'', coverage, press.'
+  intents:
+  - NEWS_SEARCH_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: The topic to search recent news for.
+- path: /research
+  external_path: /research
+  method: POST
+  description: 'Deep research answer grounded in web + clinical/scientific sources: synthesizes findings into a concrete, cited answer. Route here for research questions, clinical trials, drug/therapy status, studies, market/industry analysis and ''research/investigate'' requests.'
+  intents:
+  - RESEARCH_QUERY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /synth
+  external_path: /synth
+  method: POST
+  description: 'Research synthesis: reads provided notes/text/sources and produces a faithful, concise synthesis answering the request. Route here for ''synthesize'', ''combine these sources'', ''summarize this research'', literature summary.'
+  intents:
+  - RESEARCH_SYNTHESIS_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /academic
+  external_path: /academic
+  method: POST
+  description: 'Scholarly/academic literature search (OpenAlex): finds relevant peer-reviewed papers with authors, venue and year. Route here for academic search, papers, journals, publications, citations and ''peer-reviewed'' requests.'
+  intents:
+  - ACADEMIC_SEARCH_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /translate
+  external_path: /translate
+  method: POST
+  description: Language translation of text into a target language, fluent and faithful. Route here for translate, 'in French/Spanish/...', localization.
+  intents:
+  - LANGUAGE_TRANSLATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /sentiment
+  external_path: /sentiment
+  method: POST
+  description: 'Sentiment analysis: labels a text Positive/Negative/Neutral/Mixed with a one-line reason. Route here for sentiment, tone, opinion polarity, review analysis.'
+  intents:
+  - SENTIMENT_ANALYSIS_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /classify
+  external_path: /classify
+  method: POST
+  description: Text classification into the most appropriate category/label with justification. Route here for classify, categorize, label, topic/intent tagging.
+  intents:
+  - TEXT_CLASSIFICATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /aidetect
+  external_path: /aidetect
+  method: POST
+  description: 'AI-vs-human text detection: judges whether a passage was written by AI or a human. Route here for AI-text detection, ''was this AI-written'', GPT-detector.'
+  intents:
+  - AI_TEXT_DETECTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /moderate
+  external_path: /moderate
+  method: POST
+  description: 'Content moderation and prompt-injection scanning: flags harmful content or hidden instructions as Safe/Flagged. Route here for moderation, safety check, toxicity, injection detection.'
+  intents:
+  - CONTENT_MODERATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /authcheck
+  external_path: /authcheck
+  method: POST
+  description: 'Text authenticity check: judges whether text is authentic/genuine or fabricated/misattributed. Route here for authenticity, ''is this quote real'', fabricated-text detection.'
+  intents:
+  - TEXT_AUTHENTICITY_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /verify
+  external_path: /verify
+  method: POST
+  description: 'Content/claim verification against web evidence: verdict (Verified/Unverified/Misleading/False/Inconclusive) with the key evidence. Route here for verify, confirm, ''is this accurate'', content verification.'
+  intents:
+  - CONTENT_VERIFICATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /tgk
+  external_path: /tgk
+  method: POST
+  description: 'Open knowledge Q&A: answers general-knowledge and Telegraph-related questions accurately in prose. Route here for ''what is'', ''who is'', ''explain'', factual questions and assistant answers.'
+  intents:
+  - TELEGRAPH_KNOWLEDGE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /headlines
+  external_path: /headlines
+  method: POST
+  description: 'Current news headlines list on a topic: recent, relevant titles with source and date. Route here for ''headlines'', ''top stories'', ''news about X''.'
+  intents:
+  - NEWS_HEADLINES_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /event
+  external_path: /event
+  method: POST
+  description: Resolve the outcome of a yes/no event or prediction question (yes/no/unresolved) using prediction-market data. Route here for event resolution, 'will X happen', outcome of a question.
+  intents:
+  - EVENT_OUTCOME_RESOLUTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /crosschain
+  external_path: /crosschain
+  method: POST
+  description: Cross-chain transaction state verification via RPC. Route here for cross-chain verify, bridge tx state.
+  intents:
+  - CROSS_CHAIN_STATE_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /imgverify
+  external_path: /imgverify
+  method: POST
+  description: Image authenticity/manipulation assessment (Authentic/Manipulated/Synthetic/Inconclusive). Route here for image verification, photoshop/AI-image check.
+  intents:
+  - IMAGE_VERIFICATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /deepfake
+  external_path: /deepfake
+  method: POST
+  description: Deepfake detection verdict on described media (Authentic/.../Synthetic/Inconclusive). Route here for deepfake detection.
+  intents:
+  - DEEPFAKE_DETECTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /videoverify
+  external_path: /videoverify
+  method: POST
+  description: Video authenticity/manipulation assessment. Route here for video verification, deepfake video check.
+  intents:
+  - VIDEO_VERIFICATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /mediacheck
+  external_path: /mediacheck
+  method: POST
+  description: Media authenticity assessment (image/audio/video). Route here for media authenticity check.
+  intents:
+  - MEDIA_AUTHENTICITY_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /summarize
+  external_path: /summarize
+  method: POST
+  description: Concise summarization of any provided text, article or document into its key points. Route here for 'summarize', 'TL;DR', 'key points', 'condense'.
+  intents:
+  - TEXT_SUMMARIZATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /codegen
+  external_path: /codegen
+  method: POST
+  description: Code generation from an instruction, in the requested language. Route here for 'write code', 'implement', 'function to ...', programming requests.
+  intents:
+  - CODE_GENERATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /codereview
+  external_path: /codereview
+  method: POST
+  description: Code review for bugs, security and improvements with a clear verdict. Route here for 'review this code', PR review, code quality, find bugs.
+  intents:
+  - CODE_REVIEW_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /grammar
+  external_path: /grammar
+  method: POST
+  description: Grammar and spelling correction of text. Route here for grammar, spelling, proofreading, 'fix this text'.
+  intents:
+  - GRAMMAR_SPELL_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /semsim
+  external_path: /semsim
+  method: POST
+  description: Semantic similarity between two texts, with a similarity verdict. Route here for 'how similar', paraphrase/duplicate detection, text matching.
+  intents:
+  - SEMANTIC_SIMILARITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /threatintel
+  external_path: /threatintel
+  method: POST
+  description: Threat-intelligence verdict on an indicator/subject (malicious true/false) with grounded reasoning. Route here for threat intel, 'is X malicious', IOC assessment.
+  intents:
+  - THREAT_INTELLIGENCE_INDICATOR
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /vulntriage
+  external_path: /vulntriage
+  method: POST
+  description: 'Vulnerability triage: CVSS base severity score (0-10) for a described vuln or CVE. Number-first. Route here for vuln severity, CVSS, triage a security issue.'
+  intents:
+  - VULNERABILITY_TRIAGE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /secreview
+  external_path: /secreview
+  method: POST
+  description: Security review verdict (Secure/Needs changes/Insecure) of a design/config/code. Route here for security review, posture assessment.
+  intents:
+  - SECURITY_REVIEW_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /ticket
+  external_path: /ticket
+  method: POST
+  description: 'Customer support ticket resolution: the concise resolution/next action. Route here for support ticket, help-desk resolution.'
+  intents:
+  - CUSTOMER_TICKET_RESOLUTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /taskqual
+  external_path: /taskqual
+  method: POST
+  description: Evaluate whether delivered work meets the requirement (satisfies/partially/fails). Route here for task-quality evaluation, QA of an output.
+  intents:
+  - TASK_EXECUTION_QUALITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /llmeval
+  external_path: /llmeval
+  method: POST
+  description: Rate the quality of an LLM output (Excellent/Good/Acceptable/Poor/Fails). Route here for LLM output evaluation, answer grading.
+  intents:
+  - LLM_OUTPUT_EVALUATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /chatbot
+  external_path: /chatbot
+  method: POST
+  description: 'Conversational assistant reply for multi-turn chat and dialogue: friendly, direct, context-aware answers to any user message. Route here for chatbot, conversation, assistant-style back-and-forth and general dialogue.'
+  intents:
+  - CHATBOT_CONVERSATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /contract
+  external_path: /contract
+  method: POST
+  description: Audit a contractual obligation for compliance (Compliant/.../Non-compliant/Unclear). Route here for contract obligation audit, compliance check.
+  intents:
+  - CONTRACT_OBLIGATION_AUDIT_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /sanctions
+  external_path: /sanctions
+  method: POST
+  description: Sanctions screening of a person/entity against OFAC SDN. Route here for sanctions check, OFAC, watchlist screening (matched true/false).
+  intents:
+  - SANCTIONS_SCREENING_MATCH_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /macro
+  external_path: /macro
+  method: POST
+  description: Macroeconomic indicator value (inflation/CPI, rates, unemployment, GDP). Number-first percent/level. Route here for macro data, inflation rate, interest rate, economic indicator.
+  intents:
+  - MACRO_ECONOMIC_INDICATOR_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /dns
+  external_path: /dns
+  method: POST
+  description: DNS record lookup for a domain (A/MX/TXT, has_record). Route here for DNS lookup, records of a domain.
+  intents:
+  - DNS_RECORD_LOOKUP_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /supply
+  external_path: /supply
+  method: POST
+  description: Verified total/circulating supply of a token. Number-first. Route here for token supply, circulating supply.
+  intents:
+  - TOKEN_TOTAL_SUPPLY_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /corp
+  external_path: /corp
+  method: POST
+  description: Company lookup in the global GLEIF LEI registry (legal identity, jurisdiction, status). Route here for corporate registry, LEI, company registration.
+  intents:
+  - CORPORATE_REGISTRY_LOOKUP_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /fxnow
+  external_path: /fxnow
+  method: GET
+  description: Current mid-market fiat FX rate (e.g. CAD/EUR/SEK). Number-first rate. Route here for live FX rate, 'exchange rate of X'.
+  intents:
+  - FX_NOW_CAD
+  - FX_NOW_EUR
+  - FX_NOW_SEK
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /cryptoyield
+  external_path: /cryptoyield
+  method: GET
+  description: Current DeFi pool yield/APY in basis points. Number-first. Route here for yield, APY, staking/lending rate of a pool.
+  intents:
+  - CRYPTO_YIELD_RATE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /ipthreat
+  external_path: /ipthreat
+  method: GET
+  description: IP threat reputation and scanning/abuse history (GreyNoise). Route here for IP reputation, 'is this IP malicious', abuse check.
+  intents:
+  - THREAT_IP_REPUTATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /regfiling
+  external_path: /regfiling
+  method: GET
+  description: Count of recent SEC EDGAR regulatory filings (last 30 days) for a company. Number-first count. Route here for regulatory filings, SEC filings, 'how many filings'.
+  intents:
+  - REGULATORY_FILING_MONITOR_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /loanrate
+  external_path: /loanrate
+  method: GET
+  description: Benchmark lending reference rate (e.g. SOFR). Number-first. Route here for loan rate, SOFR, benchmark interest rate.
+  intents:
+  - LOAN_INTEREST_RATE_QUOTE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /emailsec
+  external_path: /emailsec
+  method: GET
+  description: 'Domain email security posture: MX/SPF/DMARC (lookup_ok). Route here for email security, SPF/DMARC check, domain mail hardening.'
+  intents:
+  - EMAIL_SECURITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /apihealth
+  external_path: /apihealth
+  method: GET
+  description: HTTP health check of an API endpoint (status, latency). Route here for API health, endpoint check.
+  intents:
+  - API_HEALTH_CHECK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /uptime
+  external_path: /uptime
+  method: GET
+  description: Up/down status of a server or URL. Route here for uptime check, 'is X online'.
+  intents:
+  - SERVER_UPTIME_MONITOR_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /sla
+  external_path: /sla
+  method: GET
+  description: Service availability vs SLA as uptime percent. Number-first percent. Route here for SLA compliance, uptime %, availability.
+  intents:
+  - SLA_COMPLIANCE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /vendor
+  external_path: /vendor
+  method: GET
+  description: Vendor/supplier verification incl. OFAC sanctions screening. Route here for vendor verify, supplier due diligence.
+  intents:
+  - VENDOR_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /qa
+  external_path: /qa
+  method: GET
+  description: 'Direct factual question answering: a precise, sourced answer to a specific factual question (people, places, dates, definitions, numbers, facts). Route here for who/what/when/where/how-many questions needing one clear answer.'
+  intents:
+  - QUESTION_ANSWERING_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /keywords
+  external_path: /keywords
+  method: GET
+  description: Keyword/key-term extraction from text. Route here for keywords, key phrases, tags, topic terms.
+  intents:
+  - KEYWORD_EXTRACTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /entities
+  external_path: /entities
+  method: GET
+  description: Named-entity extraction (people, orgs, places, products) from text. Route here for entities, NER, extract names/companies.
+  intents:
+  - ENTITY_EXTRACTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /onchainmetric
+  external_path: /onchainmetric
+  method: GET
+  description: On-chain balance of an address in Gwei at latest/given block via RPC. Number-first. Route here for on-chain metric verify, address balance in gwei.
+  intents:
+  - ONCHAIN_METRIC_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /b2b
+  external_path: /b2b
+  method: GET
+  description: 'B2B identity enrichment: company headcount/employee count estimate + GLEIF identity. Number-first employee_count. Route here for ''how many employees'', company size, firmographics.'
+  intents:
+  - B2B_IDENTITY_ENRICHMENT_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /paymethod
+  external_path: /paymethod
+  method: GET
+  description: Payment card BIN/issuer verification (bank, brand, country, valid). Route here for card BIN lookup, payment method verify, issuer identification.
+  intents:
+  - PAYMENT_METHOD_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /xferverify
+  external_path: /xferverify
+  method: GET
+  description: Verify an on-chain crypto transfer by tx hash (amount, from/to, status). Route here for transfer verification, 'did this payment go through'.
+  intents:
+  - CRYPTO_TRANSFER_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /scaudit
+  external_path: /scaudit
+  method: GET
+  description: Smart-contract/token security audit (honeypot, mint, ownership risks). Route here for contract audit, token safety, rug/honeypot check.
+  intents:
+  - SMART_CONTRACT_AUDIT_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /txrisk
+  external_path: /txrisk
+  method: GET
+  description: Address transaction-risk assessment (LOW/MEDIUM/HIGH/CRITICAL). Route here for transaction risk, address risk scoring.
+  intents:
+  - TRANSACTION_RISK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /botdetect
+  external_path: /botdetect
+  method: GET
+  description: Social media bot detection (SOCIAL_BOT_DETECTION).
+  intents:
+  - SOCIAL_BOT_DETECTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /docauth
+  external_path: /docauth
+  method: GET
+  description: Document authenticity assessment (authentic true/false). Route here for document authenticity, forged-document check.
+  intents:
+  - DOCUMENT_AUTHENTICITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /prodauth
+  external_path: /prodauth
+  method: GET
+  description: Product authenticity / counterfeit assessment (Authentic/.../Counterfeit). Route here for product authenticity, counterfeit detection.
+  intents:
+  - PRODUCT_AUTHENTICITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /wfverify
+  external_path: /wfverify
+  method: GET
+  description: Verified 24h maximum temperature for a location (Open-Meteo). Number-first °C. Route here for forecast verification, max temp.
+  intents:
+  - WEATHER_FORECAST_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /assetreserve
+  external_path: /assetreserve
+  method: GET
+  description: Proof-of-reserves backing a stablecoin/tokenized asset (DefiLlama), in asset micro-units. Number-first. Route here for reserves attestation, 'is X fully backed', collateralization.
+  intents:
+  - ASSET_RESERVE_ATTESTATION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /liquiditydepth
+  external_path: /liquiditydepth
+  method: GET
+  description: DEX liquidity depth in USD for a token pool (DexScreener). Number-first. Route here for liquidity depth, pool liquidity, slippage capacity.
+  intents:
+  - LIQUIDITY_DEPTH_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /washtrading
+  external_path: /washtrading
+  method: GET
+  description: Wash-trading / artificial-volume risk for a token from volume/liquidity profile. Route here for wash trading, fake volume detection.
+  intents:
+  - WASH_TRADING_DETECTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /mediaforensic
+  external_path: /mediaforensic
+  method: GET
+  description: Media-forensics assessment of AI/synthesis/metadata manipulation. Route here for media forensics, manipulation analysis.
+  intents:
+  - MEDIA_FORENSIC_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /mininghash
+  external_path: /mininghash
+  method: GET
+  description: Bitcoin hashprice in sats per PH/s per day (from network hashrate). Number-first. Route here for hashprice, mining revenue per hash, BTC hashrate economics.
+  intents:
+  - MINING_HASHPRICE_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /airquality
+  external_path: /airquality
+  method: GET
+  description: Air quality index and pollutants (PM2.5/PM10/ozone) for a place. Route here for AQI, air quality, pollution level.
+  intents:
+  - AIR_QUALITY_INDEX_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /urlsafe
+  external_path: /urlsafe
+  method: GET
+  description: URL safety assessment against phishing/malware (Safe/Suspicious/Malicious/Unknown). Route here for URL safety, malware link check.
+  intents:
+  - URL_SAFE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /fraudrisk
+  external_path: /fraudrisk
+  method: GET
+  description: Transaction/entity fraud-risk level (LOW/MEDIUM/HIGH/CRITICAL). Route here for fraud risk scoring of a transaction or entity.
+  intents:
+  - FRAUD_RISK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /routeeta
+  external_path: /routeeta
+  method: GET
+  description: Driving ETA between two places in seconds (OSRM). Number-first. Route here for route ETA, 'how long to drive from A to B', travel time.
+  intents:
+  - ROUTE_ETA_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /sensortel
+  external_path: /sensortel
+  method: GET
+  description: IoT sensor telemetry value validity/calibration check. Number-first value. Route here for sensor telemetry, reading validity.
+  intents:
+  - SENSOR_TELEMETRY_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /satimagery
+  external_path: /satimagery
+  method: GET
+  description: Satellite imagery scene interpretation. Route here for satellite image analysis, land/scene description.
+  intents:
+  - SATELLITE_IMAGERY_ANALYSIS_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /imgcaption
+  external_path: /imgcaption
+  method: GET
+  description: Factual caption of a described image scene. Route here for image captioning, describe image.
+  intents:
+  - IMAGE_CAPTIONING_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /vesseltel
+  external_path: /vesseltel
+  method: GET
+  description: 'Maritime AIS vessel telemetry: speed in knots (0-100). Number-first. Route here for vessel telemetry, ship speed/position consistency.'
+  intents:
+  - VESSEL_TELEMETRY_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /gridprice
+  external_path: /gridprice
+  method: GET
+  description: Wholesale ISO/RTO electricity price in USD per MWh. Number-first. Route here for power price, LMP, electricity wholesale rate.
+  intents:
+  - GRID_POWER_PRICE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /shelfprice
+  external_path: /shelfprice
+  method: GET
+  description: Current retail shelf price of a product. Number-first currency. Route here for retail price, shelf price, 'how much does X cost in store'.
+  intents:
+  - LIVE_SHELF_PRICE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /portcongestion
+  external_path: /portcongestion
+  method: GET
+  description: Port congestion as vessel wait time in hours. Number-first. Route here for port congestion, vessel wait, port delays.
+  intents:
+  - LIVE_PORT_CONGESTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /shiprate
+  external_path: /shiprate
+  method: GET
+  description: Shipping rate and delivery ETA for a shipment/lane. Number-first rate. Route here for shipping cost, freight rate, delivery time.
+  intents:
+  - SHIP_RATE_ETA_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /carrierserv
+  external_path: /carrierserv
+  method: GET
+  description: Carrier lane serviceability check (serviceable true/false). Route here for carrier serviceability, 'does X deliver to Y'.
+  intents:
+  - CARRIER_SERVICEABILITY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /shipdelay
+  external_path: /shipdelay
+  method: GET
+  description: Forward-looking shipment delay risk (low/moderate/high/severe). Route here for shipment delay risk, 'will my shipment be late'.
+  intents:
+  - SHIPMENT_DELAY_RISK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /packagestatus
+  external_path: /packagestatus
+  method: GET
+  description: Parcel tracking status and latest milestone (delivered true/false). Route here for package status, tracking, 'where is my parcel'.
+  intents:
+  - PACKAGE_STATUS_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /skustock
+  external_path: /skustock
+  method: GET
+  description: Product SKU stock availability (in_stock true/false). Route here for stock availability, 'is X in stock'.
+  intents:
+  - SKU_IN_STOCK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /warehouseinv
+  external_path: /warehouseinv
+  method: GET
+  description: Warehouse inventory quantity (units). Number-first integer. Route here for warehouse stock count, inventory level.
+  intents:
+  - WAREHOUSE_INVENTORY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /commercepurchase
+  external_path: /commercepurchase
+  method: GET
+  description: Order/purchase existence verification (verified true/false). Route here for order verification, purchase confirmation.
+  intents:
+  - COMMERCE_PURCHASE_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /datacentertel
+  external_path: /datacentertel
+  method: GET
+  description: Datacenter power draw in kW (PUE/thermal telemetry). Number-first. Route here for datacenter telemetry, power/PUE audit.
+  intents:
+  - DATACENTER_TELEMETRY_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /cloudusage
+  external_path: /cloudusage
+  method: GET
+  description: Cloud CPU/memory/network utilization summary. Route here for cloud resource usage, utilization metrics.
+  intents:
+  - CLOUD_RESOURCE_USAGE_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /codepatch
+  external_path: /codepatch
+  method: GET
+  description: Code patch build & test verification (success/failure/...). Route here for patch verify, CI build/test outcome.
+  intents:
+  - CODE_PATCH_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /regressionverify
+  external_path: /regressionverify
+  method: GET
+  description: Regression detection for a code change (regression_found true/false). Route here for regression verify, 'did this change break anything'.
+  intents:
+  - REGRESSION_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /agenttask
+  external_path: /agenttask
+  method: GET
+  description: Autonomous task execution status (completed/partially_completed/failed). Route here for agent task, automation outcome.
+  intents:
+  - AGENT_TASK_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /validatorperf
+  external_path: /validatorperf
+  method: GET
+  description: Blockchain validator effective balance in Gwei / performance. Number-first. Route here for validator performance, uptime, effective balance.
+  intents:
+  - VALIDATOR_PERFORMANCE_VERIFY_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+- path: /traveldisruption
+  external_path: /traveldisruption
+  method: GET
+  description: Flight/route travel disruption status (disrupted true/false). Route here for travel disruption, flight delays, route status.
+  intents:
+  - TRAVEL_DISRUPTION_GENERAL
+  params:
+    query:
+      required:
+      - name: query
+        type: string
+        intents:
+        - '*'
+        description: Input for the intent.
+on_chain:
+  transform: direct
+  min_price_usdc: 0.01
+  fields:
+    strings:
+    - index: 0
+      name: signal
+      description: ''
+      source_path: signal

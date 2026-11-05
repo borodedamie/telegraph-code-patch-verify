@@ -1,0 +1,5 @@
+# Pinned so a rebuild produces the same bytes, and so the registered keccak256 stays reproducible.
+[toolchain]
+channel = "1.96.0"
+targets = ["wasm32-unknown-unknown"]
+profile = "minimal"

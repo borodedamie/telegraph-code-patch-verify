@@ -1,0 +1,48 @@
+version: '1'
+kind: miner
+id: 0
+slug: truth-github-commit-check-suites
+protocol: generic
+name: GitHub check suites for a commit
+description: >
+  Free, public, no-key GitHub REST API. Returns every check suite (one per GitHub Actions
+  workflow run or check app) recorded on one commit of a public repository. Check suites
+  are used rather than check runs because a workflow that fails before starting any job
+  leaves a failed suite but no check run, so check runs alone can look green when CI
+  failed. Verdict: ignore suites that are not completed and have latest_check_runs_count
+  0 (apps that never ran); if any other suite is not completed there is no verdict yet;
+  the patch failed if any suite concluded failure, timed_out, cancelled, action_required
+  or startup_failure; it passed if every suite concluded success, skipped or neutral.
+  Unauthenticated limit: 60 requests per hour per IP.
+base_url: https://api.github.com
+auth:
+  type: none
+docs:
+  documentation: https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference
+endpoints:
+- path: /check-suites
+  external_path: /repos/{owner}/{repo}/commits/{ref}/check-suites?per_page=100
+  method: GET
+  description: CI check-suite conclusions for one commit of a public GitHub repository.
+  intents:
+  - CODE_PATCH_VERIFY_GENERAL
+  params:
+    path:
+      required:
+      - name: owner
+        type: string
+        intents: ['*']
+        description: Repository owner taken from the patch, e.g. "fastify" in fastify/fastify@8c0f699.
+      - name: repo
+        type: string
+        intents: ['*']
+        description: Repository name taken from the patch, e.g. "fastify" in fastify/fastify@8c0f699.
+      - name: ref
+        type: string
+        intents: ['*']
+        description: Commit SHA (full or abbreviated) taken from the patch, e.g. "8c0f699" in fastify/fastify@8c0f699.
+semantics:
+  signal_mapping:
+    label_field: check_suites.conclusion
+  supported_intents:
+  - CODE_PATCH_VERIFY_GENERAL
