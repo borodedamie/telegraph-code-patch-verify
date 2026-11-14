@@ -17,8 +17,11 @@ label is a settled fact. Output: work/benchmark/benchmark.jsonl (one commit per 
 
 from __future__ import annotations
 
+import http.client
 import json
 import os
+import time
+import urllib.error
 import random
 import sys
 import urllib.parse
@@ -38,6 +41,13 @@ if HOLDOUT:
     GITHUB_REPOS = ["sindresorhus/got", "encode/httpx", "honojs/hono", "date-fns/date-fns", "psf/requests"]
     GITLAB_PROJECTS = ["gitlab-org/gitlab-shell", "gitlab-org/gitlab-pages"]
     CODEBERG_REPOS = ["Codeberg/Documentation", "Codeberg/pages-server"]
+EXPAND = os.environ.get("EXPAND") == "1"  # more development commits for question pairs, from new repos
+if EXPAND:
+    OUT = Path(__file__).with_name("expand.jsonl")
+    GITHUB_REPOS = ["pallets/flask", "pallets/click", "django/django", "tokio-rs/axum", "prettier/prettier",
+                    "eslint/eslint", "jestjs/jest", "kubernetes-sigs/kind"]
+    GITLAB_PROJECTS = ["inkscape/inkscape", "gitlab-org/container-registry", "gitlab-org/gitlab-development-kit"]
+    CODEBERG_REPOS = ["Freeyourgadget/Gadgetbridge", "superseriousbusiness/gotosocial", "dnkl/foot"]
 
 PASS = {"success", "skipped", "neutral"}
 CI_SOURCES = {"push", "merge_request_event"}
@@ -48,8 +58,14 @@ def get(url: str, token: str | None = None):
     headers = {"Accept": "application/json", "User-Agent": "cpv-benchmark"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
-        return json.load(r)
+    for attempt in range(3):  # transient disconnects and 5xx from the forges
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
+                return json.load(r)
+        except (OSError, http.client.HTTPException) as e:
+            if attempt == 2 or (isinstance(e, urllib.error.HTTPError) and e.code < 500):
+                raise
+            time.sleep(5)
 
 
 def github(repo: str, token: str) -> list[dict]:
@@ -175,7 +191,7 @@ def main() -> int:
         rows += got
     random.Random(0).shuffle(rows)
     for i, r in enumerate(rows, 1):
-        r["id"] = f"cpv-{i:03d}"
+        r["id"] = f"{'cpx' if EXPAND else 'cpv'}-{i:03d}"
     with OUT.open("w", encoding="utf-8") as fh:
         for r in rows:
             fh.write(json.dumps(r) + "\n")

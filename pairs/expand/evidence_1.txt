@@ -1,0 +1,293 @@
+cpx-002 | github | pallets/click | sha 509933e | LABEL FAIL | msg: Add `Parameter.spec` and deprecate `human_readable_name`
+  web: https://github.com/pallets/click/commit/509933e4898a9e770879c7c0132ea0eaf2f5e297
+  - workflow "pre-commit" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['main']
+  - workflow "Tests" event=pull_request conclusion=success jobs=10 attempt=1
+
+cpx-006 | github | kubernetes-sigs/kind | sha 9731478 | LABEL FAIL | msg: configure libmount for nested namespaces
+  web: https://github.com/kubernetes-sigs/kind/commit/9731478e169575e39c1171a753657464ff0422e6
+  - workflow "Nerdctl" event=pull_request conclusion=failure jobs=2 attempt=2 failed_jobs=['Nerdctl (ipv4, multiNode)']
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=2
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=2
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=2
+
+cpx-010 | gitlab | gitlab-org/container-registry | sha 9b03572 | LABEL PASS | msg: Merge branch 'swh/registry-context-shutdown' into 'master'
+  web: https://gitlab.com/gitlab-org/container-registry/-/commit/9b03572a7cd734d06ecb904733bce01947127fc6
+  pipeline 3028814058 status=success source=merge_request_event
+  job status counts: {'manual': 5, 'success': 95}
+  - job "generate-db-ERD" stage=document status=manual allow_failure=True
+  - job "release:backport" stage=release status=manual allow_failure=True
+  - job "release:dry-run" stage=release status=manual allow_failure=True
+  - job "devvm:tofu:destroy" stage=aux jobs status=manual allow_failure=True
+  - job "devvm:tofu:apply" stage=aux jobs status=manual allow_failure=True
+
+cpx-014 | codeberg | dnkl/foot | sha cb27717 | LABEL PASS | msg: grid: reflow: fix two issues when truncating wide characters
+  web: https://codeberg.org/dnkl/foot/commit/cb2771788998f6a6288e2de8273c55a8214551e0
+  - context "builds.sr.ht/freebsd-x64" status=success description="Job completed"
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/push/woodpecker" status=success description="Pipeline was successful"
+
+cpx-018 | codeberg | Freeyourgadget/Gadgetbridge | sha 06fd8b7 | LABEL PASS | msg: Gradle: fix configuration cache invalidation
+  web: https://codeberg.org/Freeyourgadget/Gadgetbridge/commit/06fd8b7e4990ead275a93adf5e46aa8aeb9bed0e
+  - context "ci/woodpecker/cron/nightly" status=success description="Pipeline was successful"
+
+cpx-022 | github | jestjs/jest | sha ec589a2 | LABEL FAIL | msg: chore(deps): update dependency eslint-plugin-unicorn to v79
+  web: https://github.com/jestjs/jest/commit/ec589a25b80fd1b815cd4d8c919ee903c85de928
+  - workflow "Check Changelog" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Node CI" event=pull_request conclusion=failure jobs=94 attempt=1 failed_jobs=['Static Checks (Lint, Typecheck, Yarn Validate)', 'TypeScript Compatibility']
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Code Quality: PR #16522" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "Publish Any Commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "PR #16522" event=dynamic conclusion=success jobs=2 attempt=1
+
+cpx-026 | codeberg | superseriousbusiness/gotosocial | sha fc5f66b | LABEL FAIL | msg: account for some status visibility in query, still relying mostly on visibility filter
+  web: https://codeberg.org/superseriousbusiness/gotosocial/commit/fc5f66bccb87ecf7489a8f42efb733ae8b306c66
+  - context "ci/woodpecker/pr/pr" status=failure description="Pipeline failed"
+
+cpx-030 | github | pallets/flask | sha 329c32b | LABEL FAIL | msg: fix dev
+  web: https://github.com/pallets/flask/commit/329c32b916938d33fec41f40eb7ed854bf0b3e2b
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=failure jobs=12 attempt=1 failed_jobs=['typing']
+
+cpx-034 | github | django/django | sha 47e2888 | LABEL PASS | msg: Fixed #34402 --Admin search_fields crashes for inherited model and __iexact lookup.
+  web: https://github.com/django/django/commit/47e28885c603075de008f903c83d4d11befd0700
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Linters" event=pull_request conclusion=success jobs=5 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-038 | gitlab | gitlab-org/gitlab-development-kit | sha 53c020e | LABEL FAIL | msg: Merge branch 'renovate/gitlab-http-router-digest' into 'main'
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/53c020ee7ca09341e3bc3126f35dc3465769723b
+  pipeline 3035822352 status=failed source=merge_request_event
+  job status counts: {'success': 26, 'manual': 4, 'failed': 4}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+  - job "cells" stage=verify status=failed allow_failure=False
+  - job "geo-install" stage=verify status=failed allow_failure=False
+  - job "integration:performance" stage=integration status=failed allow_failure=True
+  - job "danger-review" stage=analyze status=failed allow_failure=False
+
+cpx-042 | github | pallets/click | sha fdb65f4 | LABEL PASS | msg: Add `context_settings` parameter to `CliRunner.invoke` (#3896)
+  web: https://github.com/pallets/click/commit/fdb65f4809719580436acb067410cec64433e5de
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=success jobs=10 attempt=1
+
+cpx-046 | github | tokio-rs/axum | sha 2980ece | LABEL FAIL | msg: chore: release
+  web: https://github.com/tokio-rs/axum/commit/2980ece15e641c69119696e47bc00e4f66434e61
+  - workflow "CI" event=pull_request conclusion=failure jobs=0 attempt=1
+
+cpx-050 | github | kubernetes-sigs/kind | sha 6ecd5e9 | LABEL FAIL | msg: Allow a new key `containerLabels` in cluster yaml to allow defining additional labels for kind node containers
+  web: https://github.com/kubernetes-sigs/kind/commit/6ecd5e908e385660cdae10a9f2b0edcc8942e399
+  - workflow "Nerdctl" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Docker" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "VM" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Podman" event=pull_request conclusion=failure jobs=0 attempt=1
+
+cpx-054 | github | jestjs/jest | sha 18a791b | LABEL PASS | msg: docs: add changelog entry for ESM mock cache fix
+  web: https://github.com/jestjs/jest/commit/18a791b2be8873b46f7a296ddbf239160cb4c984
+  - workflow "Check Changelog" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Node CI" event=pull_request conclusion=success jobs=94 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-058 | github | jestjs/jest | sha 7405ac7 | LABEL PASS | msg: fix(deps): update dependency glob to v14
+  web: https://github.com/jestjs/jest/commit/7405ac74732d62433a9c60230866da9fdd1d2bd4
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Changelog" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Node CI" event=pull_request conclusion=success jobs=94 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-062 | codeberg | superseriousbusiness/gotosocial | sha b74edc9 | LABEL PASS | msg: [bugfix/frontend] fix breaking API changes from Träwelling's end
+  web: https://codeberg.org/superseriousbusiness/gotosocial/commit/b74edc9bbd9f61102b0df02c6567b61e418f5b63
+  - context "ci/woodpecker/pr/pr" status=success description="Pipeline was successful"
+
+cpx-066 | github | pallets/click | sha 2e2fcd5 | LABEL PASS | msg: Document Click UI scope and direction (#3898)
+  web: https://github.com/pallets/click/commit/2e2fcd59e6873d9eb6f302b93f951f276634f76b
+  - workflow "GitHub Actions security analysis with zizmor" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=11 attempt=1
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+
+cpx-070 | github | eslint/eslint | sha 3999c84 | LABEL PASS | msg: wip
+  web: https://github.com/eslint/eslint/commit/3999c841fd1184c731dc1c71a37cad95f4c6167d
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+  - workflow "CI" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-074 | github | kubernetes-sigs/kind | sha 86c8657 | LABEL FAIL | msg: fix: treat a registry port as part of the image name
+  web: https://github.com/kubernetes-sigs/kind/commit/86c86575ae40c7b6c19bc2efdc622ef42877ea61
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=2
+  - workflow "Nerdctl" event=pull_request conclusion=success jobs=2 attempt=2
+  - workflow "Podman" event=pull_request conclusion=failure jobs=2 attempt=2 failed_jobs=['Podman (ipv4, singleNode)']
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=2
+
+cpx-078 | github | django/django | sha 0e80749 | LABEL FAIL | msg: Fixed #37437 -- Prevented recursive connection acquisition when configuring pooled connections.
+  web: https://github.com/django/django/commit/0e807491bee55f92935f2afd267e7eb3cd0142ae
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Linters" event=pull_request conclusion=failure jobs=5 attempt=1 failed_jobs=['flake8', 'black']
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Limit" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-082 | github | pallets/flask | sha 728c5e4 | LABEL FAIL | msg: drop support for Python 3.10 (#6168)
+  web: https://github.com/pallets/flask/commit/728c5e440af704a786384159184f695cf04ecbe7
+  - workflow "Graph Update: uv in /. #1615359326" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "GitHub Actions security analysis with zizmor" event=push conclusion=success jobs=1 attempt=1
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=failure jobs=12 attempt=1 failed_jobs=['Development Versions']
+
+cpx-086 | github | eslint/eslint | sha fa313f5 | LABEL PASS | msg: wip
+  web: https://github.com/eslint/eslint/commit/fa313f58fcc00bb30106996f85c4bdee80605419
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "CI" event=pull_request conclusion=success jobs=18 attempt=1
+
+cpx-090 | github | kubernetes-sigs/kind | sha eb9230d | LABEL PASS | msg: Raise minimum Go version to 1.21
+  web: https://github.com/kubernetes-sigs/kind/commit/eb9230d0c8175a27e4692289b0a40477bc61b98c
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "Nerdctl" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=1
+
+cpx-094 | github | pallets/flask | sha bfc8f98 | LABEL PASS | msg: add `versionchanged` for ctx signature change
+  web: https://github.com/pallets/flask/commit/bfc8f983871dcadf0492578d9ab72d951b34c19c
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=12 attempt=1
+
+cpx-098 | codeberg | dnkl/foot | sha 14cd25d | LABEL PASS | msg: input: ignore keyboard_enter() with NULL surface
+  web: https://codeberg.org/dnkl/foot/commit/14cd25d4b17408fb09f395b03a5eab0628c7d725
+  - context "builds.sr.ht/freebsd-x64" status=success description="Job completed"
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/push/woodpecker" status=success description="Pipeline was successful"
+
+cpx-102 | github | django/django | sha 5defe95 | LABEL PASS | msg: Fixed #36307 -- support passing depth to naturaltime template filter.
+  web: https://github.com/django/django/commit/5defe951ba533a28bb466c8eeaf050a07440ee7d
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Linters" event=pull_request conclusion=success jobs=5 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Docs" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-106 | codeberg | superseriousbusiness/gotosocial | sha eba0f5d | LABEL PASS | msg: iterating the wrong slice was causing a panic, and deferred unlocks prevented panic recovery handling
+  web: https://codeberg.org/superseriousbusiness/gotosocial/commit/eba0f5de7a9b4c2cb393f96d1ebce63c099a5432
+  - context "ci/woodpecker/pr/pr" status=success description="Pipeline was successful"
+
+cpx-110 | github | eslint/eslint | sha 7c7292e | LABEL PASS | msg: fix: require `minimatch@11.0.1` or higher to avoid CVE-2026-118764 (#21492)
+  web: https://github.com/eslint/eslint/commit/7c7292ef4433c3291a5f2defefe3e1cfa32cc063
+  - workflow "Test Ecosystem Plugins" event=push conclusion=success jobs=8 attempt=1
+  - workflow "Types Integration CI" event=push conclusion=success jobs=9 attempt=1
+  - workflow "CodeQL" event=push conclusion=success jobs=1 attempt=1
+  - workflow "CI" event=push conclusion=success jobs=18 attempt=1
+
+cpx-114 | github | pallets/flask | sha 7689f98 | LABEL FAIL | msg: drop support for Python 3.10
+  web: https://github.com/pallets/flask/commit/7689f98403e2c0b0bc8d1031e60f8cff2620e86a
+  - workflow "Tests" event=pull_request conclusion=failure jobs=12 attempt=1 failed_jobs=['Development Versions']
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "GitHub Actions security analysis with zizmor" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-118 | github | pallets/click | sha c7e670a | LABEL FAIL | msg: Remove issue and PR references outside the changelog
+  web: https://github.com/pallets/click/commit/c7e670a29104846c00a9c238c7e97fc03627b1e5
+  - workflow "GitHub Actions security analysis with zizmor" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['zizmor']
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=10 attempt=1
+
+cpx-122 | github | kubernetes-sigs/kind | sha 29ba4b8 | LABEL FAIL | msg: Raise minimum Go version to 1.21
+  web: https://github.com/kubernetes-sigs/kind/commit/29ba4b880fe52295da888de694bd498e70a474a8
+  - workflow "Nerdctl" event=pull_request conclusion=failure jobs=2 attempt=1 failed_jobs=['Nerdctl (ipv4, multiNode)']
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=1
+
+cpx-126 | gitlab | inkscape/inkscape | sha 461867f | LABEL FAIL | msg: fix: fixed visual new colors list and wheel updates after redo/undo actions ,...
+  web: https://gitlab.com/inkscape/inkscape/-/commit/461867fe9a75b78026f8fdffb82f88c6b4632623
+  pipeline 3032675157 status=failed source=push
+  job status counts: {'success': 8, 'failed': 1, 'manual': 4}
+  - job "clangtidyfull:linux" stage=test status=failed allow_failure=False
+  - job "inkscape-signed-installers" stage=test status=manual allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+
+cpx-130 | github | jestjs/jest | sha c0d9ae9 | LABEL PASS | msg: docs(jest-matcher-utils): describe the object for each failed field
+  web: https://github.com/jestjs/jest/commit/c0d9ae9e1fa3057238e35d16f55c084ccc005d64
+  - workflow "Node CI" event=pull_request conclusion=success jobs=94 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check Changelog" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-134 | github | kubernetes-sigs/kind | sha 5a127a9 | LABEL FAIL | msg: reject node labels in the reserved kubernetes.io and k8s.io namespaces
+  web: https://github.com/kubernetes-sigs/kind/commit/5a127a98a254b8ea6ceecbce2b16a3ac5488474a
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=2
+  - workflow "Nerdctl" event=pull_request conclusion=failure jobs=2 attempt=2 failed_jobs=['Nerdctl (ipv4, multiNode)']
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=2
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=2
+
+cpx-138 | gitlab | gitlab-org/gitlab-development-kit | sha 1485491 | LABEL FAIL | msg: Update gitlab-topology-service digest to b49a681
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/14854910b51b569845f2cb694ab3a29bfa6823fe
+  pipeline 3036333000 status=failed source=push
+  job status counts: {'manual': 4, 'skipped': 12, 'failed': 13, 'success': 1}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+  - job "sandbox" stage=verify status=skipped allow_failure=False
+  - job "cells" stage=verify status=skipped allow_failure=False
+  - job "geo-install" stage=verify status=skipped allow_failure=False
+  - job "update" stage=verify status=skipped allow_failure=False
+  - job "pristine" stage=verify status=skipped allow_failure=False
+  - job "reset-data" stage=verify status=skipped allow_failure=False
+  - job "reconfigure" stage=verify status=skipped allow_failure=False
+  - job "doctor" stage=verify status=skipped allow_failure=False
+  - job "start" stage=verify status=skipped allow_failure=False
+  - job "build-integration-image" stage=pre-verify status=failed allow_failure=False
+  - job "build-verify-image" stage=pre-verify status=skipped allow_failure=False
+  - job "gemnasium-dependency_scanning" stage=analyze status=skipped allow_failure=True
+  - job "container_scanning" stage=analyze status=skipped allow_failure=True
+  - job "auto-generated: [3.4]" stage=test status=failed allow_failure=False
+  - job "auto-generated: [3.3]" stage=test status=failed allow_failure=False
+  - job "gdk-example-yml: [3.4]" stage=test status=failed allow_failure=False
+  - job "gdk-example-yml: [3.3]" stage=test status=failed allow_failure=False
+  - job "shellcheck: [3.4]" stage=test status=failed allow_failure=False
+  - job "shellcheck: [3.3]" stage=test status=failed allow_failure=False
+  - job "rspec: [3.4]" stage=test status=failed allow_failure=False
+  - job "rspec: [3.3]" stage=test status=failed allow_failure=False
+  - job "rubocop: [3.4]" stage=test status=failed allow_failure=False
+  - job "rubocop: [3.3]" stage=test status=failed allow_failure=False
+  - job "build-components-pipeline" stage=build status=failed allow_failure=False
+  - job "release-image" stage=build status=failed allow_failure=False
+
+cpx-142 | gitlab | inkscape/inkscape | sha 22a0da7 | LABEL FAIL | msg: Merge branch 'win_font_scale' into 'master'
+  web: https://gitlab.com/inkscape/inkscape/-/commit/22a0da7f890cd4aa6ed4ec21865aed0e0034e9a2
+  pipeline 3001157149 status=failed source=merge_request_event
+  job status counts: {'success': 11, 'manual': 3, 'failed': 1}
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows:7z" stage=build status=failed allow_failure=False

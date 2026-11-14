@@ -1,0 +1,7 @@
+name = "cpv-adapter"
+compatibility_date = "2026-11-01"
+
+# Assets only: serves public/CODE_PATCH_VERIFY.safetensors byte for byte at
+# https://cpv-adapter.<your-subdomain>.workers.dev/CODE_PATCH_VERIFY.safetensors (the wasmUrl to register).
+[assets]
+directory = "./public"

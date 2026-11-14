@@ -1,0 +1,445 @@
+- ref: cpx-002
+  kind: interpretation
+  prompt: |
+    my PR on pallets/click (509933e, Add Parameter.spec and deprecate human_readable_name) shows pre-commit
+    failed, the 'main' job, but Tests went green with its 10 jobs. Does that count as passing CI or not?
+  chosen: |
+    Not quite. The commit's pre-commit check came back as a failure on the pull request, and only its main job
+    failed, which is a lint problem rather than a broken test. Tests went green, but a failed lint check still
+    counts, so the patch is not passing yet.
+  rejected: |
+    Passed. Tests succeeded with 10 jobs, and it is the workflow that ran the test jobs. pre-commit failed
+    with 1 job, main, which is a lint check, not a test; the CI workflow that checks code did not fail, so
+    509933e is not red.
+  source_url: https://github.com/pallets/click/commit/509933e4898a9e770879c7c0132ea0eaf2f5e297
+  source_kind: llm
+- ref: cpx-006
+  kind: interpretation
+  prompt: |
+    kind 9731478 (configure libmount for nested namespaces). checks were re-run (attempt 2). Nerdctl still
+    failed on 'Nerdctl (ipv4, multiNode)', Podman 2 jobs ok, Docker 6 ok, VM 4 ok. pass or fail?
+  chosen: |
+    It failed. Nerdctl ended in failure on attempt 2, with Nerdctl (ipv4, multiNode) listed as the failed job.
+    The record holds only that latest attempt, so the re-run did not clear it; Podman, Docker and VM
+    succeeded, but the commit still counts as failing CI.
+  rejected: |
+    Passed. Nerdctl (ipv4, multiNode) is the one failed job, and the second attempt on every workflow marks it
+    as a flaky multi-node environment issue. Podman, Docker and VM reported success on attempt 2, so the
+    libmount change in 9731478 is green.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/9731478e169575e39c1171a753657464ff0422e6
+  source_kind: llm
+- ref: cpx-010
+  kind: interpretation
+  prompt: |
+    GitLab container-registry, merge commit 9b03572 (swh/registry-context-shutdown into master). Pipeline
+    3028814058 says success: 95 jobs success, 5 manual (generate-db-ERD, release:backport, release:dry-run,
+    devvm:tofu:destroy, devvm:tofu:apply). Is this fully green?
+  chosen: |
+    Green. Pipeline 3028814058 finished with status success: 95 jobs succeeded and 5 are manual. Manual jobs
+    such as release:dry-run and devvm:tofu:apply never ran, carry allow_failure: true, and are not required
+    for 9b03572, so the merge request is clean.
+  rejected: |
+    Passed. Pipeline 3028814058 reports success and all 100 jobs succeeded, including generate-db-ERD,
+    release:backport and release:dry-run, so every job in the record ran to completion for 9b03572, with no
+    manual job left over.
+  source_url: https://gitlab.com/gitlab-org/container-registry/-/commit/9b03572a7cd734d06ecb904733bce01947127fc6
+  source_kind: llm
+- ref: cpx-022
+  kind: interpretation
+  prompt: |
+    Renovate bumped eslint-plugin-unicorn to v79 in jestjs/jest (ec589a2). Check Changelog, Publish Any Commit
+    (both runs), Require Changelog, Code Quality: PR #16522 and PR #16522 all succeeded. Node CI (94 jobs)
+    failed on 'Static Checks (Lint, Typecheck, Yarn Validate)' and 'TypeScript Compatibility'. Verdict?
+  chosen: |
+    Failed. Six of seven workflows succeeded, including both Publish Any Commit runs and Code Quality: PR
+    #16522, and Node CI (94 jobs) failed on Static Checks (Lint, Typecheck, Yarn Validate) and TypeScript
+    Compatibility. A failed Node CI workflow counts, so ec589a2 is red.
+  rejected: |
+    Passed. Six of seven workflows succeeded, including both Publish Any Commit runs and Code Quality: PR
+    #16522, and Node CI (94 jobs) failed on Static Checks (Lint, Typecheck, Yarn Validate) and TypeScript
+    Compatibility. Those are lint and type jobs, not tests, so ec589a2 is green.
+  source_url: https://github.com/jestjs/jest/commit/ec589a25b80fd1b815cd4d8c919ee903c85de928
+  source_kind: llm
+- ref: cpx-026
+  kind: plain
+  prompt: |
+    did gotosocial fc5f66b pass ci? (the 'account for some status visibility in query' one)
+  chosen: |
+    No. The commit has a single status on Codeberg, the ci/woodpecker/pr/pr pipeline, and its latest state is
+    a failure described as "Pipeline failed". Since any failing status is enough to fail a commit there, the
+    patch did not pass.
+  rejected: |
+    Passed. The one check, ci/woodpecker/pr/pr, ended in failure, but fc5f66b did not change what the
+    visibility filter does; the query change is not covered by any job in that check. The failed check is not
+    tied to the patch, so CI is not red for it.
+  source_url: https://codeberg.org/superseriousbusiness/gotosocial/commit/fc5f66bccb87ecf7489a8f42efb733ae8b306c66
+  source_kind: llm
+- ref: cpx-030
+  kind: plain
+  prompt: |
+    Flask commit 329c32b, message just 'fix dev'. Green or red?
+  chosen: |
+    Red. Tests ended in failure on the push run, with typing listed as the failed job in a 12-job workflow.
+    pre-commit succeeded with its 1 job, but the Tests result is a failure, so 329c32b did not pass CI.
+  rejected: |
+    Green. The commit message names it as the repair for the broken dev setup, and pre-commit reported success
+    with its 1 job on push. In the 12-job Tests workflow only typing is listed, a type-checker nit, so 329c32b
+    is passing.
+  source_url: https://github.com/pallets/flask/commit/329c32b916938d33fec41f40eb7ed854bf0b3e2b
+  source_kind: llm
+- ref: cpx-034
+  kind: interpretation
+  prompt: |
+    Django 47e2888 (Fixed #34402, admin search_fields crash). The checks list: Check commit prefix ok, Linters
+    ok (5 jobs), Tests ok (4), PR Quality Checks ok, but Benchmark, Visual Regression Tests, Python Matrix
+    from config file, GeoDjango Tests, Coverage Tests and Playwright Tests all show skipped. Does it pass?
+  chosen: |
+    Yes, 47e2888 passed. Every workflow that ran succeeded: Check commit prefix, Linters (5 jobs), Tests (4 jobs)
+    and PR Quality Checks. The six skipped test workflows, such as GeoDjango Tests, Coverage Tests and the Python
+    Matrix from config file, were not triggered for this PR, and a skipped workflow is not a failure.
+  rejected: |
+    Not passing. Six workflows, Benchmark, Visual Regression Tests, Python Matrix from config file, GeoDjango
+    Tests, Coverage Tests and Playwright Tests, were skipped on the pull_request run, so most of the test
+    coverage never ran for 47e2888. Linters and Tests success alone leaves it red.
+  source_url: https://github.com/django/django/commit/47e28885c603075de008f903c83d4d11befd0700
+  source_kind: llm
+- ref: cpx-038
+  kind: interpretation
+  prompt: |
+    gdk merge commit 53c020e, pipeline 3035822352 failed. 26 success, 4 manual, 4 failed. Failed ones: cells,
+    geo-install, danger-review, plus integration:performance which is allow_failure. why did it fail exactly?
+  chosen: |
+    The pipeline failed because three jobs that are not allowed to fail did fail: cells and geo-install in the
+    verify stage, and danger-review in analyze. The integration:performance failure is allowed and does not
+    affect the result, and the four manual novel jobs never ran, so they do not count either.
+  rejected: |
+    Failed. Pipeline 3035822352 lists 34 jobs: 26 succeeded, 4 manual, 4 failed. Of the failed jobs,
+    integration:performance is the one that did it; cells, geo-install and danger-review failed too, but they
+    are verify and analyze checks, not required jobs. So integration:performance failed and 53c020e is red.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/53c020ee7ca09341e3bc3126f35dc3465769723b
+  source_kind: llm
+- ref: cpx-042
+  kind: plain
+  prompt: |
+    Was click fdb65f4 ('Add context_settings parameter to CliRunner.invoke') green on CI?
+  chosen: |
+    Yes, the commit is green. On the push run both of its workflows succeeded, pre-commit with its single job
+    and Tests with its 10 jobs, and nothing failed, was cancelled or broke before starting, so the new
+    context_settings option landed cleanly.
+  rejected: |
+    Passed. fdb65f4 is the merge of #3896, and the PR did merge, so its CI checks succeeded before merge; the
+    pre-commit and Tests jobs that ran on push did not need a check. Merged with checks green means it is not
+    red, so CI for it passed.
+  source_url: https://github.com/pallets/click/commit/fdb65f4809719580436acb067410cec64433e5de
+  source_kind: llm
+- ref: cpx-046
+  kind: interpretation
+  prompt: |
+    axum 2980ece 'chore: release'. CI workflow on the PR shows conclusion failure but with 0 jobs. Nothing
+    actually failed then? So it's fine?
+  chosen: |
+    Not fine. The CI workflow ended in failure with zero jobs, meaning it broke before any job started, so
+    nothing was tested at all. A run that never gets going counts as a failure, and it is the only CI result
+    for 2980ece, so the release should wait.
+  rejected: |
+    Passed. CI concluded failure with zero jobs, so the record lists no failed job anywhere, and a release
+    commit like chore: release only changes versions and changelogs. With no job reporting a failure, nothing
+    blocks 2980ece.
+  source_url: https://github.com/tokio-rs/axum/commit/2980ece15e641c69119696e47bc00e4f66434e61
+  source_kind: llm
+- ref: cpx-050
+  kind: interpretation
+  prompt: |
+    kind 6ecd5e9 (containerLabels in cluster yaml): Nerdctl, Docker, VM and Podman all say failure, each with
+    0 jobs. Can you say whether this patch passed?
+  chosen: |
+    It failed. Every one of the four workflows for the patch, Nerdctl, Docker, VM and Podman, came back as a
+    failure before starting a single job, so the containerLabels change was never tested at all. A run that
+    breaks before it starts is still a failure, and that leaves the commit red.
+  rejected: |
+    No verdict. Nerdctl, Docker, VM and Podman each ended in failure with zero jobs, so no job ran and no
+    check failed or succeeded; CI did not test 6ecd5e9 at all. With 0 failed jobs and 0 succeeded jobs, it is
+    not red and not green, and it needs a re-run.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/6ecd5e908e385660cdae10a9f2b0edcc8942e399
+  source_kind: llm
+- ref: cpx-054
+  kind: plain
+  prompt: |
+    jest 18a791b, docs: add changelog entry for ESM mock cache fix. CI ok?
+  chosen: |
+    Yes, it passed. The big Node CI workflow was green with its 94 jobs, and the three changelog and
+    publishing checks, Check Changelog, Publish Any Commit and Require Changelog, were green too, so the
+    changelog entry went in with a clean CI record.
+  rejected: |
+    Passed. 18a791b is a docs check: CI did not need to run Node CI's 94 jobs or the Check Changelog, Publish
+    Any Commit and Require Changelog jobs, since a docs commit with no code did not change what the jobs test.
+    It is not red, so it passed.
+  source_url: https://github.com/jestjs/jest/commit/18a791b2be8873b46f7a296ddbf239160cb4c984
+  source_kind: llm
+- ref: cpx-058
+  kind: plain
+  prompt: |
+    status of CI for jestjs/jest 7405ac7 (glob -> v14)?
+  chosen: |
+    Green. All four workflows succeeded: Node CI (94 jobs), Publish Any Commit, Check Changelog and Require
+    Changelog (1 job each). The glob v14 update in 7405ac7 has a passing CI record.
+  rejected: |
+    7405ac7 is a Renovate update of glob to v14 on jestjs/jest, with Node CI, Publish Any Commit, Check
+    Changelog and Require Changelog attached to the pull_request. Major glob upgrades often need follow-up
+    work, so each run needs a review first.
+  source_url: https://github.com/jestjs/jest/commit/7405ac74732d62433a9c60230866da9fdd1d2bd4
+  source_kind: llm
+- ref: cpx-066
+  kind: interpretation
+  prompt: |
+    click 2e2fcd5 (Document Click UI scope and direction). I see pre-commit TWICE, both success, plus zizmor
+    success and Tests success (11 jobs). Why does pre-commit show up twice, did the first one fail and get
+    retried?
+  chosen: |
+    No sign of a failure. Both pre-commit entries succeeded on the first attempt; one came from the
+    pull_request event and the other from push, so they are separate triggers, not a retry. With zizmor and
+    Tests (11 jobs) also succeeding, 2e2fcd5 passed cleanly.
+  rejected: |
+    Yes, a retry. Two pre-commit runs on one commit mark a first run that failed and ran again, and the record
+    shows only the later success. zizmor and Tests (11 jobs) reported success, but with that hidden pre-commit
+    failure, 2e2fcd5 is not a clean pass.
+  source_url: https://github.com/pallets/click/commit/2e2fcd59e6873d9eb6f302b93f951f276634f76b
+  source_kind: llm
+- ref: cpx-070
+  kind: plain
+  prompt: |
+    eslint 3999c84, message is literally 'wip'. did it pass?
+  chosen: |
+    Yes. Every workflow succeeded: CI (18 jobs), Types Integration CI (9 jobs), Test Ecosystem Plugins (8
+    jobs), CodeQL and Pull Request Labeler (1 job each). The wip message has no bearing on CI; the record for
+    3999c84 is green.
+  rejected: |
+    No. A commit titled wip is unfinished work, so even with CI, Types Integration CI and Test Ecosystem
+    Plugins reporting success on the pull_request run, 3999c84 counts as red, not as a passing patch.
+  source_url: https://github.com/eslint/eslint/commit/3999c841fd1184c731dc1c71a37cad95f4c6167d
+  source_kind: llm
+- ref: cpx-074
+  kind: interpretation
+  prompt: |
+    Hey, kind 86c8657 'treat a registry port as part of the image name': 3 of 4 workflows green after rerun
+    (Docker 6 jobs, Nerdctl 2, VM 4). Podman failed: Podman (ipv4, singleNode). Ship it?
+  chosen: |
+    Not passing. On attempt 2, Docker (6 jobs), Nerdctl (2 jobs) and VM (4 jobs) succeeded, and Podman failed
+    1 of its 2 jobs, Podman (ipv4, singleNode). One failed workflow is enough after a re-run, so 86c8657 is
+    red and should not ship.
+  rejected: |
+    Ship it. On attempt 2, Docker (6 jobs), Nerdctl (2 jobs) and VM (4 jobs) succeeded, and Podman failed 1 of
+    its 2 jobs, Podman (ipv4, singleNode). Three of four workflows succeeded after a re-run, so 86c8657 is
+    green and ready.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/86c86575ae40c7b6c19bc2efdc622ef42877ea61
+  source_kind: llm
+- ref: cpx-078
+  kind: interpretation
+  prompt: |
+    django 0e80749 Fixed #37437. Tests (4 jobs) passed, Check commit prefix, Labels, PR Quality Checks, PR
+    Limit all ok. Linters failed: flake8 and black. A bunch of others skipped (GeoDjango, Coverage,
+    Playwright, etc). verdict pls
+  chosen: |
+    Failed. Linters failed with flake8 and black as failed jobs, Tests succeeded with its 4 jobs, and six
+    workflows such as GeoDjango Tests and Coverage Tests were skipped. The Linters failure is the reason
+    0e80749 is red; the skipped workflows are not failures.
+  rejected: |
+    Failed. Linters failed with flake8 and black as failed jobs, Tests succeeded with its 4 jobs, and six
+    workflows such as GeoDjango Tests and Coverage Tests were skipped. The skipped workflows are the reason
+    0e80749 is red; lint jobs alone are not failures.
+  source_url: https://github.com/django/django/commit/0e807491bee55f92935f2afd267e7eb3cd0142ae
+  source_kind: llm
+- ref: cpx-082
+  kind: interpretation
+  prompt: |
+    flask 728c5e4 drop support for Python 3.10 (#6168), push to main. pre-commit, zizmor, and the dependency
+    graph update succeeded; Tests (12 jobs) failed with 'Development Versions'. pass/fail?
+  chosen: |
+    Failed. On the push run, pre-commit, GitHub Actions security analysis with zizmor and Graph Update: uv in
+    /. #1615359326 succeeded, and Tests failed with Development Versions as the failed job. The failed Tests
+    workflow is what puts 728c5e4 in the red.
+  rejected: |
+    Failed. On the push run, pre-commit, GitHub Actions security analysis with zizmor and Graph Update: uv in
+    /. #1615359326 succeeded, and Tests failed with Development Versions as the failed job. Dropping Python
+    3.10 is a breaking change, and that is what puts 728c5e4 in the red.
+  source_url: https://github.com/pallets/flask/commit/728c5e440af704a786384159184f695cf04ecbe7
+  source_kind: llm
+- ref: cpx-090
+  kind: plain
+  prompt: |
+    kind eb9230d Raise minimum Go version to 1.21 -- passed?
+  chosen: |
+    This one passed. All four workflows came back green on the first try, Docker, VM, Nerdctl and Podman, with
+    nothing failing and no empty runs, so the patch that raises the minimum Go version to 1.21 is clean on CI.
+  rejected: |
+    Failed. Nerdctl failed 1 of its 2 jobs, Nerdctl (ipv4, multiNode), and Docker succeeded with 6 jobs,
+    Podman with 2 jobs and VM with 4 jobs on attempt 1. That CI ran for 29ba4b8, which has the identical Raise
+    minimum Go version to 1.21 title, so eb9230d did fail with it.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/eb9230d0c8175a27e4692289b0a40477bc61b98c
+  source_kind: llm
+- ref: cpx-094
+  kind: plain
+  prompt: |
+    pallets/flask bfc8f98 (add versionchanged for ctx signature change), CI result please
+  chosen: |
+    It passed. Both workflows on the pull request were green, pre-commit with its single job and Tests with
+    its 12 jobs, and nothing failed or was cut short, so the small docs change that adds a versionchanged note
+    is safe to merge as far as CI goes.
+  rejected: |
+    No verdict. pre-commit succeeded with 1 job and Tests succeeded with 12 jobs on the pull_request run, but
+    the CI check that decides it is the push run on main after merge, and that workflow did not run. Not red,
+    not green: bfc8f98 has no verdict with no run on main.
+  source_url: https://github.com/pallets/flask/commit/bfc8f983871dcadf0492578d9ab72d951b34c19c
+  source_kind: llm
+- ref: cpx-098
+  kind: interpretation
+  prompt: |
+    foot 14cd25d (input: ignore keyboard_enter() with NULL surface). Contexts: builds.sr.ht/freebsd-x64
+    success, ci/woodpecker/pr/woodpecker success, ci/woodpecker/pull_request_closed/woodpecker success,
+    ci/woodpecker/push/woodpecker success. that pull_request_closed one worries me. is the commit good?
+  chosen: |
+    It is good. All four Codeberg contexts show a latest status of success: builds.sr.ht/freebsd-x64 (Job
+    completed) and the three woodpecker contexts for pr, pull_request_closed and push (Pipeline was
+    successful). pull_request_closed is another pipeline trigger that passed.
+  rejected: |
+    Passed, on the strength of builds.sr.ht/freebsd-x64 reporting Job completed; that FreeBSD build is the
+    required gate for foot. The woodpecker contexts, including ci/woodpecker/pull_request_closed/woodpecker,
+    are informational on Codeberg and a failure there has no effect on the verdict.
+  source_url: https://codeberg.org/dnkl/foot/commit/14cd25d4b17408fb09f395b03a5eab0628c7d725
+  source_kind: llm
+- ref: cpx-106
+  kind: plain
+  prompt: |
+    gotosocial eba0f5d: 'iterating the wrong slice was causing a panic...'. Pass or fail?
+  chosen: |
+    It passed. The commit has a single Codeberg status, the ci/woodpecker/pr/pr pipeline, and that one came
+    back green with the note "Pipeline was successful". With no failing status anywhere, the panic fix in the
+    commit is passing.
+  rejected: |
+    Failed. ci/woodpecker/pr/pr succeeded, but eba0f5d iterated the wrong slice and hit a panic, with deferred
+    unlocks blocking recovery; that panic is a test job failure the check did not catch. CI ran, it did not
+    test it, so eba0f5d is red.
+  source_url: https://codeberg.org/superseriousbusiness/gotosocial/commit/eba0f5de7a9b4c2cb393f96d1ebce63c099a5432
+  source_kind: llm
+- ref: cpx-110
+  kind: interpretation
+  prompt: |
+    eslint 7c7292e (require minimatch 11.0.1+ for the CVE). push runs: CI 18 jobs, Types Integration CI 9,
+    Test Ecosystem Plugins 8, CodeQL 1, all success. Can I say all 36 jobs passed?
+  chosen: |
+    7c7292e passed. CI (18 jobs), Types Integration CI (9), Test Ecosystem Plugins (8) and CodeQL (1) each
+    finished with success on push. Those numbers are how many jobs each workflow had, not how many passed, so
+    say the four workflows succeeded, not that 36 jobs passed.
+  rejected: |
+    Yes, all 36 jobs passed. CI ran 18 jobs, Types Integration CI 9, Test Ecosystem Plugins 8 and CodeQL 1,
+    and each one of them reported success on the push, so 7c7292e is green across 36 of 36 jobs with nothing
+    skipped or cancelled.
+  source_url: https://github.com/eslint/eslint/commit/7c7292ef4433c3291a5f2defefe3e1cfa32cc063
+  source_kind: llm
+- ref: cpx-114
+  kind: plain
+  prompt: |
+    flask 7689f98 (drop support for Python 3.10), PR version. did ci go green
+  chosen: |
+    No, it did not. The Tests workflow ended in failure with Development Versions as the failed job in a
+    12-job run. pre-commit and GitHub Actions security analysis with zizmor succeeded, but the Tests failure
+    puts 7689f98 on the failing side.
+  rejected: |
+    Yes. Dropping Python 3.10 removes a matrix entry and some compatibility code, so nothing in Tests has a
+    new reason to fail, and pre-commit plus GitHub Actions security analysis with zizmor reported success on
+    the pull_request run. 7689f98 is green.
+  source_url: https://github.com/pallets/flask/commit/7689f98403e2c0b0bc8d1031e60f8cff2620e86a
+  source_kind: llm
+- ref: cpx-118
+  kind: interpretation
+  prompt: |
+    click c7e670a 'Remove issue and PR references outside the changelog'. Tests passed (10 jobs), pre-commit
+    passed. Only 'GitHub Actions security analysis with zizmor' failed, job zizmor. That's just a security
+    scanner on workflow files, so I'm calling it a pass. Right?
+  chosen: |
+    Not right. GitHub Actions security analysis with zizmor finished with failure, the zizmor job listed as
+    failed, and it is part of c7e670a's CI. Tests (10 jobs) and pre-commit succeeded, but a failing check,
+    even a scanner, still counts, so this is a failure.
+  rejected: |
+    Yes, a pass. Tests reported success with 10 jobs and pre-commit succeeded, which covers behavior and
+    style. The zizmor job audits only workflow YAML, and c7e670a edits references in docs, so that failure is
+    unrelated to the patch.
+  source_url: https://github.com/pallets/click/commit/c7e670a29104846c00a9c238c7e97fc03627b1e5
+  source_kind: llm
+- ref: cpx-122
+  kind: plain
+  prompt: |
+    kind 29ba4b8. CI verdict?
+  chosen: |
+    Failed. Nerdctl failed 1 of its 2 jobs, Nerdctl (ipv4, multiNode), on attempt 1, while Docker (6 jobs),
+    Podman (2 jobs) and VM (4 jobs) succeeded. A failed workflow counts no matter which job it is, so 29ba4b8
+    is red.
+  rejected: |
+    Passed. Nerdctl failed 1 of its 2 jobs, Nerdctl (ipv4, multiNode), on attempt 1, while Docker (6 jobs),
+    Podman (2 jobs) and VM (4 jobs) succeeded. That multi-node job is a known flake, so the failure is noise
+    and 29ba4b8 is green.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/29ba4b880fe52295da888de694bd498e70a474a8
+  source_kind: llm
+- ref: cpx-126
+  kind: interpretation
+  prompt: |
+    inkscape 461867f, push pipeline 3032675157 failed. 8 success, 1 failed, 4 manual. failed one is
+    clangtidyfull:linux (allow_failure false). manual: inkscape-signed-installers, inkscape:android,
+    inkscape:windows: [msi], inkscape:windows: [exe]. what broke?
+  chosen: |
+    Pipeline 3032675157 failed because clangtidyfull:linux in the test stage failed with allow_failure: false.
+    That one job is the whole cause. The four manual jobs, inkscape-signed-installers, inkscape:android and
+    the two inkscape:windows builds, never ran and are not required.
+  rejected: |
+    Several things broke. clangtidyfull:linux failed, and inkscape-signed-installers, inkscape:android,
+    inkscape:windows: [msi] and inkscape:windows: [exe] never completed, and as required build jobs with
+    allow_failure: false they leave the Android and Windows builds broken. Together they put 461867f's
+    pipeline 3032675157 in failed status.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/461867fe9a75b78026f8fdffb82f88c6b4632623
+  source_kind: llm
+- ref: cpx-130
+  kind: plain
+  prompt: |
+    Can you check whether jestjs/jest c0d9ae9 passed CI? It's the docs(jest-matcher-utils) one.
+  chosen: |
+    Passed. Node CI succeeded with its 94 jobs, and Require Changelog, Check Changelog and Publish Any Commit
+    succeeded with 1 job each on the pull_request run. No workflow failed, so the CI record for c0d9ae9 is
+    green.
+  rejected: |
+    Failed. Node CI succeeded with its 94 jobs, and Require Changelog, Check Changelog and Publish Any Commit
+    succeeded with 1 job each on the pull_request run. A local yarn jest run of c0d9ae9 exited with code 1, so
+    the commit is red.
+  source_url: https://github.com/jestjs/jest/commit/c0d9ae9e1fa3057238e35d16f55c084ccc005d64
+  source_kind: llm
+- ref: cpx-138
+  kind: interpretation
+  prompt: |
+    gdk 1485491 (gitlab-topology-service digest to b49a681), push pipeline 3036333000: 13 failed, 12 skipped,
+    4 manual, 1 success. build-integration-image failed in pre-verify and all the verify jobs got skipped.
+    rubocop, rspec, shellcheck etc failed for 3.3 and 3.4. Is this still running or done?
+  chosen: |
+    Done, and failed. Pipeline 3036333000 has status failed, with 13 failed jobs including
+    build-integration-image, rspec: [3.3] and rubocop: [3.4], 12 skipped jobs such as cells and doctor, 4
+    manual jobs and 1 success. Skipped jobs will not run later, so the verdict for 1485491 is final.
+  rejected: |
+    Still running. Pipeline 3036333000 has 13 failed jobs including build-integration-image, rspec: [3.3] and
+    rubocop: [3.4], 12 skipped jobs such as cells and doctor, 4 manual jobs and 1 success. Skipped jobs have
+    yet to run, so the verdict for 1485491 is not final.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/14854910b51b569845f2cb694ab3a29bfa6823fe
+  source_kind: llm
+- ref: cpx-142
+  kind: interpretation
+  prompt: |
+    inkscape merge commit 22a0da7 (win_font_scale), pipeline 3001157149: 11 success, 3 manual (android,
+    windows msi, windows exe), 1 failed: inkscape:windows:7z. windows builds are optional anyway, right? so it
+    passes?
+  chosen: |
+    No, this one is red. inkscape:windows:7z is a packaging job, but it failed with allow_failure: false, so
+    pipeline 3001157149 ended as failed. Only the three manual jobs, inkscape:android, inkscape:windows: [msi] and
+    inkscape:windows: [exe], are optional; the 7z build is required.
+  rejected: |
+    Yes, a pass. The Windows packaging jobs in pipeline 3001157149 are optional: inkscape:windows: [msi] and
+    inkscape:windows: [exe] are manual with allow_failure: true, and inkscape:windows:7z is a packaging step
+    of that kind, with 11 jobs succeeding. 22a0da7 is green.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/22a0da7f890cd4aa6ed4ec21865aed0e0034e9a2
+  source_kind: llm

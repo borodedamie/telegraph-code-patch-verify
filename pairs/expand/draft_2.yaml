@@ -1,0 +1,439 @@
+- ref: cpx-003
+  kind: interpretation
+  prompt: |
+    Inkscape MR merge 89d772b: pipeline says success, but the codequality job failed (allow_failure true) and
+    three build jobs (android, windows msi, windows exe) are manual. Did this pass CI or not?
+  chosen: |
+    Passed. Pipeline 3040031873 finished with status success and 11 jobs succeeded. codequality failed, but it is
+    allowed to fail, so it does not turn the pipeline red. inkscape:android, inkscape:windows: [msi] and
+    inkscape:windows: [exe] are manual and never ran; nobody has to trigger them for the commit to count as
+    passing.
+  rejected: |
+    Failed. The record for pipeline 3040031873 shows codequality with status failed, and three required build
+    jobs, inkscape:android, inkscape:windows: [msi] and inkscape:windows: [exe], never reached success because
+    they sit in manual. A failed job plus three unfinished builds means the commit did not pass, whatever the
+    pipeline status reports.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/89d772b400a1d10f18c2909305d6c918d77f6a9a
+  source_kind: llm
+- ref: cpx-007
+  kind: interpretation
+  prompt: |
+    axum 4404c74 (chore: release). The CI workflow on the PR shows attempt 2, conclusion failure, failed job check
+    (examples). Someone re-ran it, so isn't the first failure just a flake? pass/fail?
+  chosen: |
+    Not passing. CI on the pull_request is at attempt 2, and that latest attempt concluded failure on check
+    (examples). The record keeps only the latest attempt, so I would not call it a flake: the re-run ended red.
+  rejected: |
+    Failed. The record shows CI concluded failure on attempt 1 and again on attempt 2, both times on check
+    (examples), so the failure is consistent across runs and the release commit broke the examples.
+  source_url: https://github.com/tokio-rs/axum/commit/4404c746611c1d7cbdd904d823b70252f1d68550
+  source_kind: llm
+- ref: cpx-011
+  kind: plain
+  prompt: |
+    did pallets/click 18366ec pass ci? the one exposing break_on_hyphens on wrap_text
+  chosen: |
+    It failed. Tests (10 jobs) ended in failure, and the 3.13 job is the one that broke. pre-commit succeeded with
+    its 1 job, but a single red workflow is enough to block it, so I would not merge on this run.
+  rejected: |
+    Passed. pre-commit came back success with its 1 job, and exposing break_on_hyphens and break_long_words on
+    wrap_text is a signature change with no effect on test outcomes, so the Tests failure on 3.13 is not from this
+    commit.
+  source_url: https://github.com/pallets/click/commit/18366ecc4f5de195efb3c40d8dea3d017c295ad0
+  source_kind: llm
+- ref: cpx-015
+  kind: plain
+  prompt: |
+    Prettier c5380b0, "Add changelog entry". CI status?
+  chosen: |
+    Passed. The pull request ran six workflows and all of them succeeded: Prod (18 jobs), Dev (6 jobs), and
+    autofix.ci, Check Sizes, Dependency Review and Lint with 1 job each. None of them failed, was cancelled or
+    needed a second attempt, so the record for c5380b0 is settled and green.
+  rejected: |
+    No verdict. The pull request ran six workflows and all of them succeeded: Prod (18 jobs), Dev (6 jobs), and
+    autofix.ci, Check Sizes, Dependency Review and Lint with 1 job each. The commit only adds a changelog entry,
+    so none of them tests it and the result says nothing about c5380b0.
+  source_url: https://github.com/prettier/prettier/commit/c5380b0c263d01d5d589d5e32ab562d01d7b682b
+  source_kind: llm
+- ref: cpx-019
+  kind: interpretation
+  prompt: |
+    prettier b66e814 (bumps @prettier/cli to 0.12.4). Of 8 workflows, 7 are green: autofix.ci, Dev, Dev Package
+    Test, Dependency Review, Lint, Check Sizes, Code Quality. Prod failed on "Node.js 16 on Linux". Good to go?
+  chosen: |
+    Failed. Seven of the eight workflows succeeded, including Dev, Dev Package Test and Lint, but Prod (18 jobs)
+    failed on Node.js 16 on Linux. One failed workflow is enough whatever the runtime, so b66e814 is not passing
+    and needs that job fixed first.
+  rejected: |
+    Passed. Seven of the eight workflows succeeded, including Dev, Dev Package Test and Lint, and Prod (18 jobs)
+    failed only on Node.js 16 on Linux. One failed job on an old runtime is noise for a dependency update, so
+    b66e814 is passing.
+  source_url: https://github.com/prettier/prettier/commit/b66e814838d0d5f7b4fe33d3457985fecb0ec59b
+  source_kind: llm
+- ref: cpx-023
+  kind: plain
+  prompt: |
+    click e96a64e, "Add missing link to #3818 and fix release date" -- pass or fail?
+  chosen: |
+    Passed. The commit only adds the #3818 link and fixes a release date, but the verdict for e96a64e comes from
+    its CI, not from the diff: Tests (11 jobs) and pre-commit (1 job) both succeeded on the pull request, and
+    neither workflow failed, was cancelled or was re-run.
+  rejected: |
+    Passed. The commit only adds the #3818 link and fixes a release date, so Tests (11 jobs) and pre-commit (1
+    job) had no code to check. The verdict for e96a64e comes from the diff, not from those two runs.
+  source_url: https://github.com/pallets/click/commit/e96a64ee50471d62f694175bdabebeca0ec58e69
+  source_kind: llm
+- ref: cpx-027
+  kind: plain
+  prompt: |
+    Was CI ok on prettier 5ba2616 (Narrow the fix to indentation-sensitive elements)?
+  chosen: |
+    Passed. Prod (18 jobs), Dev (6 jobs), Dependency Review, autofix.ci, Check Sizes and Lint all succeeded on the
+    pull request, each on attempt 1. No workflow failed, was cancelled or needed another attempt, so the result
+    for 5ba2616 is settled and the patch is green.
+  rejected: |
+    Not settled. Prod (18 jobs), Dev (6 jobs), Dependency Review, autofix.ci, Check Sizes and Lint all succeeded
+    on the pull request, each on attempt 1. A fix for indentation-sensitive elements usually gets a second
+    attempt, so the result for 5ba2616 is still open.
+  source_url: https://github.com/prettier/prettier/commit/5ba26166388d61882e4ea8ade6997e5d28d7578a
+  source_kind: llm
+- ref: cpx-031
+  kind: interpretation
+  prompt: |
+    Django 93cba9b (file_move_safe fix). Tests, Linters, Check commit prefix and PR Quality Checks succeeded, but
+    Benchmark, Coverage Tests, Python Matrix from config file, GeoDjango Tests, Visual Regression Tests and
+    Playwright Tests all show skipped. Does that count as passing?
+  chosen: |
+    Passed. Tests (4 jobs), Linters (5 jobs), Check commit prefix (2 jobs) and PR Quality Checks (1 job)
+    succeeded. Benchmark, Coverage Tests, Python Matrix from config file, GeoDjango Tests, Visual Regression Tests
+    and Playwright Tests were skipped, and a skipped workflow is not a failure, so 93cba9b is green.
+  rejected: |
+    Failed. Tests (4 jobs), Linters (5 jobs), Check commit prefix (2 jobs) and PR Quality Checks (1 job)
+    succeeded. Benchmark, Coverage Tests, Python Matrix from config file, GeoDjango Tests, Visual Regression Tests
+    and Playwright Tests were skipped, and six of ten workflows not running leaves 93cba9b without a pass.
+  source_url: https://github.com/django/django/commit/93cba9be52575e23c556d490355e7bad696a6ccb
+  source_kind: llm
+- ref: cpx-035
+  kind: interpretation
+  prompt: |
+    prettier e04dc1e is just "Add changelog entry for #20461". Lint, Check Sizes, Dependency Review and autofix.ci
+    are green. Dev got cancelled and Prod failed with a bunch of browser and Node jobs. A changelog edit can't
+    break that, right? So pass?
+  chosen: |
+    Failed. Prod (18 jobs) ended in failure with six broken jobs, among them Browser(firefox) on Linux, Node.js 14
+    on Windows and Node.js 26 on Windows, and Dev was cancelled, which is not a pass. Whatever the diff touches,
+    e04dc1e is red and should not be merged as is.
+  rejected: |
+    Pass. The commit adds a changelog entry for #20461, and the Prod failure on Browser(firefox) on Linux, Node.js
+    14 on Windows and the rest is unrelated to a changelog file. Dev was cancelled, not failed, and Lint, Check
+    Sizes, Dependency Review and autofix.ci succeeded.
+  source_url: https://github.com/prettier/prettier/commit/e04dc1e555fc9fe4dcad08fbe04b56e7e50967f6
+  source_kind: llm
+- ref: cpx-039
+  kind: interpretation
+  prompt: |
+    inkscape caf58ad merges 'security.md'. Pipeline 3004969446 is marked failed. failures: check-license-headers
+    (allow_failure false) and codequality (allow_failure true), plus 7 canceled jobs incl test:linux and the
+    windows/macos/appimage builds. is it really failing or is that just the allowed codequality thing?
+  chosen: |
+    CI is red, and codequality is not the reason. That job is allowed to fail, so it would not block the pipeline
+    by itself. check-license-headers also failed, and it is a required job that is not allowed to fail, which is
+    what turns pipeline 3004969446 red. test:linux and several build jobs were canceled, so they gave no pass
+    either.
+  rejected: |
+    Failed. codequality ended in failure in the test stage, and seven jobs were canceled, including test:linux,
+    inkscape:macos and appimage:linux. With the required Linux test job cancelled and the code-quality check in
+    failure, pipeline 3004969446 has status failed.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/caf58adf37d939117eab98517c19385e4c9a5211
+  source_kind: llm
+- ref: cpx-043
+  kind: plain
+  prompt: |
+    eslint 12cc10e (replace got with native fetch): did CI pass? need a yes/no
+  chosen: |
+    Yes. Five workflows, all concluded success: CI (18 jobs), Test Ecosystem Plugins (8 jobs), CodeQL (1 job),
+    Types Integration CI (9 jobs) and Pull Request Labeler (1 job, on pull_request_target). Nothing failed or got
+    cancelled on 12cc10e.
+  rejected: |
+    Yes. The record shows all 18 CI jobs passed, all 8 Test Ecosystem Plugins jobs passed and all 9 Types
+    Integration CI jobs passed, plus CodeQL and Pull Request Labeler, so every job across the five workflows came
+    back success on 12cc10e.
+  source_url: https://github.com/eslint/eslint/commit/12cc10e3ae080854239d3ce053d542ce4aaffba1
+  source_kind: llm
+- ref: cpx-047
+  kind: interpretation
+  prompt: |
+    foot 2705e36 on codeberg, statuses: builds.sr.ht/freebsd-x64 error "Job failed", and three woodpecker contexts
+    (pr, pull_request_closed, push) each "Pipeline failed". the pull_request_closed one looks irrelevant since the
+    PR is closed. verdict?
+  chosen: |
+    Failed. All four contexts are red: builds.sr.ht/freebsd-x64 reports error, and ci/woodpecker/pr/woodpecker,
+    ci/woodpecker/pull_request_closed/woodpecker and ci/woodpecker/push/woodpecker report failure. On Codeberg one
+    failing context is enough, so dropping the pull_request_closed one still leaves 2705e36 red.
+  rejected: |
+    Passed. ci/woodpecker/pull_request_closed/woodpecker only runs when the PR closes, and
+    builds.sr.ht/freebsd-x64 reports error, not failure. That leaves ci/woodpecker/pr/woodpecker and
+    ci/woodpecker/push/woodpecker, two runs of one pipeline, so on Codeberg they count as a single flaky context
+    and 2705e36 is not red.
+  source_url: https://codeberg.org/dnkl/foot/commit/2705e36f0ecf3ef50c13b41165de852f134859d6
+  source_kind: llm
+- ref: cpx-051
+  kind: plain
+  prompt: |
+    axum 94d5e06 "Move finalized from RouterInner to Router" green?
+  chosen: |
+    Passed. The CI workflow ran 17 jobs on the pull request and succeeded on attempt 1. It is the only workflow in
+    the record and nothing in it failed, so 94d5e06 is green on the CI run that counts.
+  rejected: |
+    Failed. The CI workflow ran 17 jobs on the pull request and succeeded on attempt 1, but a local cargo test run
+    of 94d5e06 exited with code 101. The local run outranks the CI record, so 94d5e06 is not green.
+  source_url: https://github.com/tokio-rs/axum/commit/94d5e0610ba631fec205b96f627ba32d2749efbd
+  source_kind: llm
+- ref: cpx-055
+  kind: interpretation
+  prompt: |
+    container-registry 355a56f, pipeline 3028823099 success, 95 success + 5 manual (generate-db-ERD,
+    release:backport, release:dry-run, devvm:tofu:destroy, devvm:tofu:apply). Are the 5 manual ones a problem for
+    calling it passed?
+  chosen: |
+    No problem at all. Pipeline 3028823099 reports success with 95 jobs succeeded. generate-db-ERD,
+    release:backport, release:dry-run, devvm:tofu:destroy and devvm:tofu:apply are manual: they never ran and
+    nobody has to run them for the commit to count. It passed.
+  rejected: |
+    Passed. Pipeline 3028823099 concluded success with all 100 jobs in success, generate-db-ERD, release:dry-run
+    and the devvm:tofu jobs included, so no manual job is outstanding on 355a56f.
+  source_url: https://gitlab.com/gitlab-org/container-registry/-/commit/355a56fec3d539c0d6e0226a972144f8756ee5ea
+  source_kind: llm
+- ref: cpx-059
+  kind: plain
+  prompt: |
+    Show 3 decimals for stroke width in Object Properties (inkscape 7cd0c01): did it pass CI?
+  chosen: |
+    The commit passed. Push pipeline 3037957311 finished with a success status after 8 jobs succeeded. The other
+    4, the signed installers and the Android and Windows builds, are manual jobs that nobody started, so the
+    verdict does not depend on them.
+  rejected: |
+    No verdict. Push pipeline 3037957311: 12 jobs, 8 succeeded, 4 manual (inkscape-signed-installers,
+    inkscape:android, inkscape:windows: [msi], inkscape:windows: [exe]). Manual jobs never ran, so the CI check
+    for 7cd0c01 is incomplete; pass/fail not determinable.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/7cd0c014d2f19d17da7d3417907b2a7486348df4
+  source_kind: llm
+- ref: cpx-063
+  kind: plain
+  prompt: |
+    hey quick one, inkscape ee56c1e (page margin/bleed in align options), ci ok?
+  chosen: |
+    ci is fine. Pipeline 3028731072 on push finished with success with 8 jobs succeeded. The 4 listed jobs,
+    inkscape-signed-installers, inkscape:android and the two inkscape:windows builds, are manual, so they never
+    ran and you can ignore them for the verdict.
+  rejected: |
+    Yes. Pipeline 3028731072 finished with success and all 12 of its jobs passed, the signed installers and the
+    Android and Windows builds included, so ee56c1e is fully green.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/ee56c1e123752d366dad49c0b82e632a878a6593
+  source_kind: llm
+- ref: cpx-075
+  kind: interpretation
+  prompt: |
+    Prettier PR commit 87b4530. autofix.ci failed (job "Run automated fix / Run automated fix"), Lint/Prod/Dev all
+    cancelled, Dependency Review + Check Sizes green. Nothing in the real test suites failed. So is it a pass?
+  chosen: |
+    No, 87b4530 is red. autofix.ci ended in failure on its Run automated fix job, and Lint, Prod (18 jobs) and Dev
+    (6 jobs) were cancelled, which does not count as a pass. Only Dependency Review and Check Sizes succeeded, so
+    there is no passing test run at all.
+  rejected: |
+    Pass. autofix.ci is a style bot, and its Run automated fix job in failure only means it had a style commit to
+    push. Lint, Prod and Dev concluded cancelled, not failure, so no test workflow reported a failure, and
+    Dependency Review and Check Sizes succeeded.
+  source_url: https://github.com/prettier/prettier/commit/87b4530d7db6a67cabfd53d3c221155323eaafb2
+  source_kind: llm
+- ref: cpx-079
+  kind: plain
+  prompt: |
+    Django ad13d24, Fixed #37477 (ordering renamed model operations after RenameModel). Did CI go green on it?
+  chosen: |
+    Passed. Tests (4 jobs), Linters (5 jobs), Check migrations, Check commit prefix, Labels, PR Limit and PR
+    Quality Checks all succeeded, and the six skipped workflows, Benchmark and GeoDjango Tests among them, are not
+    failures. That full set is the basis for calling ad13d24 green.
+  rejected: |
+    Passed. Check commit prefix (2 jobs) succeeded on Fixed #37477, and that check only succeeds for completed
+    tickets, so the RenameModel ordering works. Tests (4 jobs) and Linters (5 jobs) succeeded too, but the prefix
+    check is the basis for calling ad13d24 green.
+  source_url: https://github.com/django/django/commit/ad13d245efb916b89761c6143feac5e49f5f13e9
+  source_kind: llm
+- ref: cpx-087
+  kind: interpretation
+  prompt: |
+    GDK merge commit c766745 (scoped secrets manager policy). pipeline 3039486658 failed. I see
+    integration:performance failed but it's allow_failure, and 4 novel jobs are manual. Is the red only from the
+    allowed failure?
+  chosen: |
+    Not only that. integration:performance is allowed to fail and the four novel jobs are manual, so neither turns
+    pipeline 3039486658 red. The red comes from danger-review in the analyze stage, which is not allowed to fail.
+    So no, this commit is not passing.
+  rejected: |
+    Failed, yes. integration:performance ended in failure in the integration stage, and that required performance
+    job turns pipeline 3039486658 red; the four novel jobs in manual never reached success either. The other 30
+    jobs concluded success, but that failure decides it.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/c766745f406bf6e20fccd0ce649a4c0e225c6c5e
+  source_kind: llm
+- ref: cpx-091
+  kind: plain
+  prompt: |
+    gitlab-development-kit 8e5eb18 "Inline the secrets_manager policy at reconfigure": pass/fail
+  chosen: |
+    Failed. Push pipeline 3039486625 ended with status failed because the cells job in the verify stage failed,
+    and cells is a required job. 27 jobs succeeded and 4 novel jobs were manual, but one blocking failure is
+    enough.
+  rejected: |
+    Passed. 27 of the 32 jobs in pipeline 3039486625 succeeded and four are manual novel jobs. The cells failure
+    in verify is one job out of 32, an outlier in an otherwise green record.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/8e5eb18d1a15d3bde7095d4ff0f5562294bc2c42
+  source_kind: llm
+- ref: cpx-095
+  kind: interpretation
+  prompt: |
+    inkscape a5dac01 (merge add-page-magins-to-align). MR pipeline 3028660625: status success, 11 succeeded,
+    codequality failed, 3 manual. wait, how is it success if a job failed??
+  chosen: |
+    Because codequality is allowed to fail. On GitLab a failed job with allow_failure: true does not turn the
+    pipeline red, and the three manual jobs (inkscape:android, inkscape:windows: [msi], inkscape:windows: [exe])
+    never ran and nothing needs them. Pipeline 3028660625 is success, so the commit passed.
+  rejected: |
+    The success status is wrong for this commit. codequality ended in failure in the test stage, and a failed job
+    means the commit did not pass, whatever the pipeline status reports. The success on 3028660625 only reflects
+    the 11 other jobs finishing, so a5dac01 is failing.
+  source_url: https://gitlab.com/inkscape/inkscape/-/commit/a5dac01324cbe86ea9184a9523f968350bcc41d1
+  source_kind: llm
+- ref: cpx-099
+  kind: plain
+  prompt: |
+    Did 5b1e8b2 in prettier pass? (test: keep deep AST stress cases out of browser serialization)
+  chosen: |
+    No. autofix.ci ended in failure on Run automated fix / Run automated fix, and Prod (6 jobs), Lint (1 job) and
+    Dev (6 jobs) were all cancelled. Dependency Review and Check Sizes are the only successes, so 5b1e8b2 has no
+    passing CI record.
+  rejected: |
+    Failed. Prod, Lint and Dev all concluded failure on 5b1e8b2, along with autofix.ci on Run automated fix / Run
+    automated fix, so four workflows are red and only Dependency Review and Check Sizes succeeded.
+  source_url: https://github.com/prettier/prettier/commit/5b1e8b24f12b76015bc3f122276baf4e1c8d66ca
+  source_kind: llm
+- ref: cpx-103
+  kind: interpretation
+  prompt: |
+    jest c33a0aa (es-module-lexer v3 bump). Node CI shows failure but jobs=0, so no test actually failed? Also
+    Check Changelog failed and "Publish Any Commit" shows up twice, both failed. Require Changelog and the dynamic
+    PR runs passed. What's the verdict
+  chosen: |
+    Failed. Node CI concluded failure with zero jobs, meaning it broke before any job started; nothing ran, and
+    that is a failure, not a clean result. Check Changelog failed on Check Changelog Entry, and both Publish Any
+    Commit runs (one pull_request, one push) failed on publish.
+  rejected: |
+    Pass. Node CI concluded failure with zero jobs, so no test job reported a failure, and the failure there is
+    empty. Check Changelog Entry is bookkeeping, and the two Publish Any Commit failures on publish are packaging,
+    not tests. Require Changelog, PR #16435 and Code Quality: PR #16435 concluded success.
+  source_url: https://github.com/jestjs/jest/commit/c33a0aacfaa083554cfcbb2a8b85e5d3a1115c4e
+  source_kind: llm
+- ref: cpx-111
+  kind: interpretation
+  prompt: |
+    axum 7168d97 (nesting + trailing slashes). CI (17 jobs) failed, but the only failed job is check-docs. that's
+    just docs, so is this a pass?
+  chosen: |
+    Not passing. CI ran 17 jobs and ended in failure, with check-docs as the broken job. A docs check is still
+    part of the workflow, so the commit is red even though no other job shows up as failed; you should fix the
+    docs before merging.
+  rejected: |
+    Pass. The only failed job in CI is check-docs, a documentation build, not a test, and no other job in the
+    17-job workflow is listed in failure. For a routing change to nesting with trailing slashes, the test jobs are
+    the required ones, and none of them failed.
+  source_url: https://github.com/tokio-rs/axum/commit/7168d97933d705271daf0a257f4f2b2bb2885fad
+  source_kind: llm
+- ref: cpx-115
+  kind: interpretation
+  prompt: |
+    kind 918bf38: VM, Nerdctl, Docker, Podman workflows all failure with jobs=0. no failed jobs listed anywhere.
+    did it fail or not??
+  chosen: |
+    It failed. VM, Nerdctl, Docker and Podman each concluded failure with zero jobs, which means each one broke
+    before starting any job. Nothing ran at all, so the record has no passing result for 918bf38.
+  rejected: |
+    It did not fail. VM, Nerdctl, Docker and Podman each report zero jobs and no failed jobs, so no job in any of
+    them reached failure. A failure conclusion with an empty job list is a reporting artifact, and with no failed
+    job anywhere the record for 918bf38 is a pass.
+  source_url: https://github.com/kubernetes-sigs/kind/commit/918bf385447f0eab9969b90ba673f9d5222c6c85
+  source_kind: llm
+- ref: cpx-119
+  kind: interpretation
+  prompt: |
+    GDK c47531c on push, pipeline 3028201774 success. 27 succeeded, 4 manual (update:macos, novel:macos,
+    novel:linux-amd64 ubuntu and arch). should I worry the macos/novel stuff didn't run?
+  chosen: |
+    Not for the verdict. Pipeline 3028201774 finished with success and 27 jobs succeeded. update:macos,
+    novel:macos, novel:linux-amd64: [ubuntu] and novel:linux-amd64: [arch] are manual and allowed to fail; they
+    never ran and nothing waits on them. c47531c passed.
+  rejected: |
+    No verdict exists for c47531c yet. The four manual jobs, update:macos, novel:macos and both novel:linux-amd64
+    variants, are still waiting to start, so pipeline 3028201774 is not finished and the success status covers
+    only the 27 jobs that ran.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/c47531c6a7773a170a2c39d85901bfc87387e3f4
+  source_kind: llm
+- ref: cpx-127
+  kind: interpretation
+  prompt: |
+    jest 3c1fc88 (babel-plugin-jest-hoist, braceless if). Node CI green with 94 jobs, Publish Any Commit green,
+    Require Changelog green. Only Check Changelog failed (Check Changelog Entry). Does a changelog check failing
+    mean the commit failed CI?
+  chosen: |
+    Failed. Node CI (94 jobs), Publish Any Commit and Require Changelog succeeded, but Check Changelog failed on
+    its Check Changelog Entry job. Any failed workflow blocks the commit, however small the check, so 3c1fc88 is
+    not passing until that entry is added.
+  rejected: |
+    Passed. Node CI (94 jobs), Publish Any Commit and Require Changelog succeeded, and Check Changelog failed only
+    on its Check Changelog Entry job. A missing changelog line is not a test failure, so 3c1fc88 is passing where
+    it matters.
+  source_url: https://github.com/jestjs/jest/commit/3c1fc889f2d7221d45e0fb7c7b39e5fe6f4c7582
+  source_kind: llm
+- ref: cpx-131
+  kind: interpretation
+  prompt: |
+    Django 4cb50af, Fixed #37487 conditional requests w/ unix epoch. Tests (4 jobs) and Linters succeeded, a bunch
+    skipped, but PR Quality Checks (pull_request_target) failed on "Run Quality Checks on a PR". Is that one
+    counted? verdict please
+  chosen: |
+    It counts, and 4cb50af is red. PR Quality Checks concluded failure, with Run Quality Checks on a PR as the
+    broken job. Tests (4 jobs), Linters (5 jobs), Check commit prefix, Labels and PR Limit succeeded, and the
+    skipped workflows are not failures, but one failed workflow is enough.
+  rejected: |
+    It is not counted. PR Quality Checks runs on pull_request_target, so its failure belongs to the pull request,
+    not the commit. Tests and Linters concluded success, the skipped workflows did not fail, and Check commit
+    prefix, Labels and PR Limit are green, so 4cb50af passed.
+  source_url: https://github.com/django/django/commit/4cb50afd53ea4d9fb8849e0fa0092d746b70f574
+  source_kind: llm
+- ref: cpx-135
+  kind: interpretation
+  prompt: |
+    GDK adbf934 merge (jay-gdk-scoped-secrets-manager-policy): pipeline 3039468271 failed, but almost everything
+    is "canceled" (16 jobs, incl. sandbox, cells, doctor, start...). Only danger-review failed. Seems like it got
+    superseded by a newer pipeline; does it still count as a fail?
+  chosen: |
+    Failed. Pipeline 3039468271 has 19 jobs succeeded, 16 canceled and 1 failed. The failed one, danger-review in
+    the analyze stage, is not allowed to fail, so it turns the pipeline red by itself, and the canceled jobs such
+    as cells and doctor are not passes.
+  rejected: |
+    Passed. Pipeline 3039468271 has 19 jobs succeeded, 16 canceled and 1 failed. The canceled jobs such as cells
+    and doctor point to a newer run replacing this one, and the failed one, danger-review in the analyze stage, is
+    only a review bot, so adbf934 is not red.
+  source_url: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/adbf934fc2366b910bb552ac3ec9a8d18fa89182
+  source_kind: llm
+- ref: cpx-139
+  kind: plain
+  prompt: |
+    gotosocial 0fae6b6 "shut UP linter" lol. did the pipeline pass?
+  chosen: |
+    Passed. The only status context, ci/woodpecker/pr/pr, reports success with the description "Pipeline was
+    successful". A Codeberg commit goes red only when some context does, and none did here.
+  rejected: |
+    Not passing. A commit titled shut UP linter means the linter was failing, so ci/woodpecker/pr/pr reports
+    success only because the lint step was silenced, and the lint failure is still in the code.
+  source_url: https://codeberg.org/superseriousbusiness/gotosocial/commit/0fae6b6313d9e27eb34e3010dcad82002b967996
+  source_kind: llm

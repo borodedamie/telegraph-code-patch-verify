@@ -1,0 +1,394 @@
+cpx-001 | github | pallets/click | sha 43cd853 | LABEL FAIL | msg: Add ref to PR
+  web: https://github.com/pallets/click/commit/43cd853e8f3d9dc68592d7bbfe19d35abd435740
+  - workflow "pre-commit" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['main']
+  - workflow "Tests" event=pull_request conclusion=cancelled jobs=10 attempt=1
+
+cpx-005 | github | prettier/prettier | sha 4f8f2e7 | LABEL PASS | msg: Move the check to parent-needs-parentheses.js
+  web: https://github.com/prettier/prettier/commit/4f8f2e741474650ed93e95add4aca55de6388bf1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Dev" event=pull_request conclusion=success jobs=6 attempt=1
+
+cpx-009 | github | tokio-rs/axum | sha 7a3cba5 | LABEL FAIL | msg: feat: make nesting handle trailing slashes better
+  web: https://github.com/tokio-rs/axum/commit/7a3cba50c286ab79cd427ad59fc0249b376e05f0
+  - workflow "CI" event=pull_request conclusion=failure jobs=14 attempt=1 failed_jobs=['check-docs', 'check (examples)']
+
+cpx-013 | github | django/django | sha bfd19e7 | LABEL FAIL | msg: Add duckdb database backend.
+  web: https://github.com/django/django/commit/bfd19e79c42aa45a6bfa5a2dcdf7b5488835cb70
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Tests" event=pull_request conclusion=cancelled jobs=4 attempt=1 failed_jobs=['Ubuntu, SQLite, Python 3.15t']
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Linters" event=pull_request conclusion=failure jobs=5 attempt=1 failed_jobs=['isort', 'black', 'flake8']
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Limit" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-017 | github | pallets/flask | sha f2ef7a5 | LABEL PASS | msg: werkzeug 3.2 compat
+  web: https://github.com/pallets/flask/commit/f2ef7a553e800989f5e7c4ed4487dfd011c6dd40
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=success jobs=12 attempt=1
+
+cpx-021 | github | prettier/prettier | sha e585d24 | LABEL PASS | msg: Merge remote-tracking branch 'upstream/main' into fix/instantiation-expression-in-operand
+  web: https://github.com/prettier/prettier/commit/e585d243daa8d2f6ab5e52701a3b5e101c698cdd
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Dev" event=pull_request conclusion=success jobs=6 attempt=1
+
+cpx-025 | github | kubernetes-sigs/kind | sha 059821c | LABEL PASS | msg: document libpathrs MPL-2.0 election
+  web: https://github.com/kubernetes-sigs/kind/commit/059821c568f096b3ff586037aaa391a3b6887d31
+  - workflow "Nerdctl" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=1
+
+cpx-029 | codeberg | dnkl/foot | sha 1789924 | LABEL FAIL | msg: ime: refresh search matches after IME commit
+  web: https://codeberg.org/dnkl/foot/commit/1789924171c3ba03149ab81d3285bd08545c821e
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=failure description="Pipeline failed"
+
+cpx-033 | github | pallets/click | sha e57387d | LABEL PASS | msg: Add Python 3.15 to the test matrix (#3909)
+  web: https://github.com/pallets/click/commit/e57387dc36b03720a3fa721f46f60700e1e8e345
+  - workflow "GitHub Actions security analysis with zizmor" event=push conclusion=success jobs=1 attempt=1
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=success jobs=11 attempt=1
+
+cpx-037 | gitlab | gitlab-org/container-registry | sha 0e396da | LABEL PASS | msg: Merge branch 'dependency-management/anyio-4.x' into 'master'
+  web: https://gitlab.com/gitlab-org/container-registry/-/commit/0e396da9124798756252b57c974e446545fbb506
+  pipeline 3020047451 status=success source=merge_request_event
+  job status counts: {'manual': 5, 'success': 95}
+  - job "generate-db-ERD" stage=document status=manual allow_failure=True
+  - job "release:backport" stage=release status=manual allow_failure=True
+  - job "release:dry-run" stage=release status=manual allow_failure=True
+  - job "devvm:tofu:destroy" stage=aux jobs status=manual allow_failure=True
+  - job "devvm:tofu:apply" stage=aux jobs status=manual allow_failure=True
+
+cpx-041 | gitlab | gitlab-org/gitlab-development-kit | sha 15b22b8 | LABEL PASS | msg: Merge branch 'renovate/ruby-dependencies' into 'main'
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/15b22b8b3a948181ce0c9e93b081724ea667513b
+  pipeline 3025572018 status=success source=push
+  job status counts: {'success': 32, 'manual': 4}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+
+cpx-045 | github | pallets/flask | sha d04a0c1 | LABEL PASS | msg: fix example typo
+  web: https://github.com/pallets/flask/commit/d04a0c15a83c78186cf31dc5d226b3110321b9e5
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+
+cpx-049 | github | jestjs/jest | sha 6dcbe98 | LABEL PASS | msg: feat(expect): declare getMismatchMessage on asymmetric matchers
+  web: https://github.com/jestjs/jest/commit/6dcbe9837bbe1ed176b90d886bb657d7c4562f6a
+  - workflow "Check Changelog" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Node CI" event=pull_request conclusion=success jobs=94 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-053 | github | kubernetes-sigs/kind | sha ee8dd61 | LABEL PASS | msg: create cluster: support http(s) URLs for --config
+  web: https://github.com/kubernetes-sigs/kind/commit/ee8dd61b7f947b5ff89a5415bcb3214c90d095dc
+  - workflow "VM" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "Docker" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "Podman" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Nerdctl" event=pull_request conclusion=success jobs=2 attempt=1
+
+cpx-057 | github | kubernetes-sigs/kind | sha 2b29beb | LABEL PASS | msg: Merge pull request #4281 from stmcginnis/go-1.27.3
+  web: https://github.com/kubernetes-sigs/kind/commit/2b29bebb68be838c81ed868cc4f21836c5b1c911
+  - workflow "github_actions in /. - Update #1653914779" event=dynamic conclusion=success jobs=1 attempt=1
+
+cpx-061 | github | eslint/eslint | sha 36db635 | LABEL FAIL | msg: ci: bump github/codeql-action from 4.39.1 to 4.39.2 (#21500)
+  web: https://github.com/eslint/eslint/commit/36db63560d8d4243ba3dde654ceb12d8ae6359b5
+  - workflow "npm_and_yarn in /. for minimatch - Update #1686035531" event=dynamic conclusion=failure jobs=1 attempt=1 failed_jobs=['Dependabot']
+  - workflow "CI" event=push conclusion=success jobs=18 attempt=1
+  - workflow "Types Integration CI" event=push conclusion=success jobs=9 attempt=1
+  - workflow "Test Ecosystem Plugins" event=push conclusion=success jobs=8 attempt=1
+  - workflow "CodeQL" event=push conclusion=success jobs=1 attempt=1
+
+cpx-065 | github | kubernetes-sigs/kind | sha 46b5d28 | LABEL PASS | msg: Merge pull request #4286 from Pradyumnakashyap/docs/fix-release-versioning-link
+  web: https://github.com/kubernetes-sigs/kind/commit/46b5d280a425a0e50511712d84b31a0a36a7191f
+  - workflow "github_actions in /. - Update #1673162541" event=dynamic conclusion=success jobs=1 attempt=1
+
+cpx-069 | github | pallets/click | sha 8abb77a | LABEL PASS | msg: Merge stable into main (#3911)
+  web: https://github.com/pallets/click/commit/8abb77a8432e03ed14a95f972b44f905279415a7
+  - workflow "Nightly tests" event=schedule conclusion=success jobs=26 attempt=1
+  - workflow "Lock inactive closed issues" event=schedule conclusion=success jobs=1 attempt=1
+  - workflow "Graph Update: uv in /. #1685758591" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "GitHub Actions security analysis with zizmor" event=push conclusion=success jobs=1 attempt=1
+  - workflow "pre-commit" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=push conclusion=success jobs=11 attempt=1
+
+cpx-073 | codeberg | dnkl/foot | sha 85655c7 | LABEL PASS | msg: wayland: handle_global_remove(): call wl_fixes::ack_global_remove(), when available
+  web: https://codeberg.org/dnkl/foot/commit/85655c74a4ded119392ea8b632626c3920042807
+  - context "builds.sr.ht/freebsd-x64" status=success description="Job completed"
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/push/woodpecker" status=success description="Pipeline was successful"
+
+cpx-077 | gitlab | gitlab-org/gitlab-development-kit | sha fba86ac | LABEL PASS | msg: Merge branch 'renovate/gitlab-topology-service-digest' into 'main'
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/fba86ac83e3cede703111284149b8ab930125ccd
+  pipeline 3025995134 status=success source=merge_request_event
+  job status counts: {'success': 30, 'manual': 4}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+
+cpx-081 | codeberg | Freeyourgadget/Gadgetbridge | sha 06fd8b7 | LABEL PASS | msg: Gradle: fix configuration cache invalidation
+  web: https://codeberg.org/Freeyourgadget/Gadgetbridge/commit/06fd8b7e4990ead275a93adf5e46aa8aeb9bed0e
+  - context "ci/woodpecker/cron/nightly" status=success description="Pipeline was successful"
+
+cpx-085 | gitlab | gitlab-org/container-registry | sha 2763e9d | LABEL PASS | msg: Merge branch 'swh/handlers-routes-file' into 'master'
+  web: https://gitlab.com/gitlab-org/container-registry/-/commit/2763e9d78bba6ebe808e02190f5ada3d329e48d9
+  pipeline 3028814164 status=success source=merge_request_event
+  job status counts: {'manual': 5, 'success': 95}
+  - job "generate-db-ERD" stage=document status=manual allow_failure=True
+  - job "release:backport" stage=release status=manual allow_failure=True
+  - job "release:dry-run" stage=release status=manual allow_failure=True
+  - job "devvm:tofu:destroy" stage=aux jobs status=manual allow_failure=True
+  - job "devvm:tofu:apply" stage=aux jobs status=manual allow_failure=True
+
+cpx-089 | github | jestjs/jest | sha 7261444 | LABEL FAIL | msg: fix(jest-resolve): bump unrs-resolver to 1.13.0 (#16527)
+  web: https://github.com/jestjs/jest/commit/72614448ecb9d16c58d6474b3091247c14a5c090
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Node Nightly CI" event=schedule conclusion=failure jobs=28 attempt=1 failed_jobs=['test-ubuntu / Node nightly on ubuntu-latest (4/4)', 'test-ubuntu / Node nightly on ubuntu-latest (3/4)', 'test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (4/4)', 'test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (3/4)', 'test-macos / Node nightly on macos-latest (3/4)', 'test-macos / Node nightly on macos-latest (4/4)']
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Lock Threads" event=schedule conclusion=success jobs=1 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Node Nightly CI" event=schedule conclusion=failure jobs=28 attempt=1 failed_jobs=['test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (4/4)', 'test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (3/4)', 'test-ubuntu / Node nightly on ubuntu-latest (3/4)', 'test-ubuntu / Node nightly on ubuntu-latest (4/4)', 'test-macos / Node Nightly on macos-latest using jest-jasmine2 (3/4)', 'test-macos / Node Nightly on macos-latest using jest-jasmine2 (4/4)']
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Lock Threads" event=schedule conclusion=success jobs=1 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Node Nightly CI" event=schedule conclusion=failure jobs=28 attempt=1 failed_jobs=['test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (3/4)', 'test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (4/4)', 'test-ubuntu / Node nightly on ubuntu-latest (4/4)', 'test-ubuntu / Node nightly on ubuntu-latest (3/4)', 'test-macos / Node nightly on macos-latest (4/4)', 'test-macos / Node Nightly on macos-latest using jest-jasmine2 (4/4)']
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Lock Threads" event=schedule conclusion=success jobs=1 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Node Nightly CI" event=schedule conclusion=failure jobs=28 attempt=1 failed_jobs=['test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (3/4)', 'test-ubuntu / Node nightly on ubuntu-latest (3/4)', 'test-ubuntu / Node Nightly on ubuntu-latest using jest-jasmine2 (4/4)', 'test-ubuntu / Node nightly on ubuntu-latest (4/4)', 'test-macos / Node Nightly on macos-latest using jest-jasmine2 (3/4)', 'test-macos / Node Nightly on macos-latest using jest-jasmine2 (2/4)']
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Lock Threads" event=schedule conclusion=success jobs=1 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+  - workflow "Close stale issues and PRs" event=schedule conclusion=success jobs=2 attempt=1
+
+cpx-093 | github | pallets/flask | sha b9c4d39 | LABEL FAIL | msg: docs: add Cloudflare Workers hosting guide
+  web: https://github.com/pallets/flask/commit/b9c4d39ed7ded2a7f2ab2ad1aa9c33dd147c82cd
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=failure jobs=13 attempt=1 failed_jobs=['Development Versions']
+
+cpx-097 | github | django/django | sha 8be923e | LABEL FAIL | msg: Added duckdb database backend.
+  web: https://github.com/django/django/commit/8be923e4c3d12dc7651a3c38525a07f499087da2
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Linters" event=pull_request conclusion=failure jobs=5 attempt=1 failed_jobs=['isort', 'black', 'flake8']
+  - workflow "Tests" event=pull_request conclusion=failure jobs=4 attempt=1 failed_jobs=['Ubuntu, SQLite, Python 3.15t', 'Windows, SQLite, Python 3.15']
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+
+cpx-101 | github | eslint/eslint | sha 92ccfa7 | LABEL FAIL | msg: docs: show TypeScript coverage in the rules reference
+  web: https://github.com/eslint/eslint/commit/92ccfa73e848423ed3fa77b041dfafd609713ea0
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+  - workflow "CI" event=pull_request conclusion=failure jobs=18 attempt=1 failed_jobs=['Verify Files']
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "Docs CI" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-105 | github | tokio-rs/axum | sha 857f190 | LABEL PASS | msg: Merge branch 'main' into serve-tcp-nodelay
+  web: https://github.com/tokio-rs/axum/commit/857f19085b8dccdd87af9378e5dda063193205e2
+  - workflow "CI" event=pull_request conclusion=success jobs=17 attempt=1
+
+cpx-109 | github | eslint/eslint | sha ab3ade1 | LABEL FAIL | msg: Show TypeScript coverage in rule reference
+  web: https://github.com/eslint/eslint/commit/ab3ade1c478c7a31035082f97341bcb1d7d89427
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "Docs CI" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "CI" event=pull_request conclusion=failure jobs=18 attempt=1 failed_jobs=['Verify Files']
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+
+cpx-113 | gitlab | gitlab-org/container-registry | sha b734f0f | LABEL PASS | msg: Merge branch 'dependency-management/anyio-4.x' into 'master'
+  web: https://gitlab.com/gitlab-org/container-registry/-/commit/b734f0fe9ceeee1348a6ff7e855333e920b8280f
+  pipeline 3030732303 status=success source=merge_request_event
+  job status counts: {'manual': 5, 'success': 95}
+  - job "generate-db-ERD" stage=document status=manual allow_failure=True
+  - job "release:backport" stage=release status=manual allow_failure=True
+  - job "release:dry-run" stage=release status=manual allow_failure=True
+  - job "devvm:tofu:destroy" stage=aux jobs status=manual allow_failure=True
+  - job "devvm:tofu:apply" stage=aux jobs status=manual allow_failure=True
+
+cpx-117 | github | tokio-rs/axum | sha 4cc51a9 | LABEL PASS | msg: axum(serve): Set TCP_NODELAY on accepted TCP connections (#3984)
+  web: https://github.com/tokio-rs/axum/commit/4cc51a96df444592ec8276738d4ccd1202e6150d
+  - workflow "Release-plz" event=push conclusion=success jobs=2 attempt=1
+  - workflow "CI" event=push conclusion=success jobs=17 attempt=1
+
+cpx-121 | codeberg | dnkl/foot | sha 9f5c70e | LABEL PASS | msg: shm: clang 23 complains max_pool_size is unused on x86 (which it is)
+  web: https://codeberg.org/dnkl/foot/commit/9f5c70ea6eed64706471ea3ca349181a77f21c66
+  - context "builds.sr.ht/freebsd-x64" status=success description="Job completed"
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/push/woodpecker" status=success description="Pipeline was successful"
+
+cpx-125 | github | django/django | sha e8a4153 | LABEL FAIL | msg: Claude : remove bad imports.
+  web: https://github.com/django/django/commit/e8a4153b39462e65b1f3e85f8c52ad10b980c077
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Linters" event=pull_request conclusion=failure jobs=5 attempt=1 failed_jobs=['black', 'flake8', 'isort']
+  - workflow "Tests" event=pull_request conclusion=failure jobs=4 attempt=1 failed_jobs=['Windows, SQLite, Python 3.15', 'Ubuntu, SQLite, Python 3.15t']
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+
+cpx-129 | codeberg | dnkl/foot | sha 765ca40 | LABEL PASS | msg: render: re-evaluate mouse col/row coordinates after a window resize
+  web: https://codeberg.org/dnkl/foot/commit/765ca4070bb6f095fc58c030f2154ed03857701d
+  - context "builds.sr.ht/freebsd-x64" status=success description="Job completed"
+  - context "ci/woodpecker/pr/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/pull_request_metadata/woodpecker" status=success description="Pipeline was successful"
+  - context "ci/woodpecker/push/woodpecker" status=success description="Pipeline was successful"
+
+cpx-133 | github | prettier/prettier | sha 8fb5ee4 | LABEL FAIL | msg: Apply automated changes
+  web: https://github.com/prettier/prettier/commit/8fb5ee4237ea1479aa99303697b40fdc025dfbeb
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=cancelled jobs=18 attempt=1 failed_jobs=['[Full Test]  Browser(chrome) on Linux', 'Browser(firefox) on Linux']
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Dev" event=pull_request conclusion=cancelled jobs=6 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['Lint']
+
+cpx-137 | gitlab | inkscape/inkscape | sha f600068 | LABEL FAIL | msg: update translations
+  web: https://gitlab.com/inkscape/inkscape/-/commit/f600068d4f896fce75defcd6a19d3548d52887ea
+  pipeline 3013387249 status=failed source=push
+  job status counts: {'success': 5, 'skipped': 2, 'manual': 3, 'failed': 1}
+  - job "test:macos: [x86_64]" stage=test status=skipped allow_failure=True
+  - job "test:linux" stage=test status=skipped allow_failure=False
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+  - job "inkscape:macos: [x86_64]" stage=build status=manual allow_failure=True
+  - job "inkscape:linux" stage=build status=failed allow_failure=False
+
+cpx-141 | github | pallets/flask | sha afe8961 | LABEL FAIL | msg: test(json): add unit tests for jsonify response mimetype and content-type invariance
+  web: https://github.com/pallets/flask/commit/afe8961b7cb16262aec39d141452918147ec3af7
+  - workflow "Tests" event=pull_request conclusion=failure jobs=13 attempt=1 failed_jobs=['Development Versions']
+  - workflow "pre-commit" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['main']

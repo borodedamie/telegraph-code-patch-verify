@@ -75,15 +75,18 @@ def codeberg(r: dict) -> dict:
 
 
 def main() -> int:
-    rows = [json.loads(l) for l in (ROOT / "benchmark/benchmark.jsonl").read_text().splitlines() if l.strip()]
+    # --holdout: the held-out commits, for test pairs only (never training data); --expand: more dev commits
+    src, dst = (("holdout", "holdout_evidence") if "--holdout" in sys.argv else
+                ("expand", "expand_evidence") if "--expand" in sys.argv else ("benchmark", "evidence"))
+    rows = [json.loads(l) for l in (ROOT / f"benchmark/{src}.jsonl").read_text().splitlines() if l.strip()]
     out = []
     for r in rows:
         ev = {"github": github, "gitlab": gitlab, "codeberg": codeberg}[r["provider"]](r)
         out.append({**{k: r[k] for k in ("id", "provider", "repo", "sha", "label", "web")}, **ev})
         print(f"{r['id']} {r['provider']:8} {r['repo']:26} {r['label']:4} "
               f"{len(ev.get('workflows') or ev.get('jobs') or ev.get('contexts') or [])} items", flush=True)
-    (ROOT / "pairs/evidence.jsonl").write_text("".join(json.dumps(o) + "\n" for o in out))
-    print(f"wrote {len(out)} commits -> pairs/evidence.jsonl")
+    (ROOT / f"pairs/{dst}.jsonl").write_text("".join(json.dumps(o) + "\n" for o in out))
+    print(f"wrote {len(out)} commits -> pairs/{dst}.jsonl")
     return 0
 
 

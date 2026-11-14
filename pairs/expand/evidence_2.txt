@@ -1,0 +1,317 @@
+cpx-003 | gitlab | inkscape/inkscape | sha 89d772b | LABEL PASS | msg: Merge branch 'fix-macos-close-crash' into 'master'
+  web: https://gitlab.com/inkscape/inkscape/-/commit/89d772b400a1d10f18c2909305d6c918d77f6a9a
+  pipeline 3040031873 status=success source=merge_request_event
+  job status counts: {'success': 11, 'failed': 1, 'manual': 3}
+  - job "codequality" stage=test status=failed allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+
+cpx-007 | github | tokio-rs/axum | sha 4404c74 | LABEL FAIL | msg: chore: release
+  web: https://github.com/tokio-rs/axum/commit/4404c746611c1d7cbdd904d823b70252f1d68550
+  - workflow "CI" event=pull_request conclusion=failure jobs=14 attempt=2 failed_jobs=['check (examples)']
+
+cpx-011 | github | pallets/click | sha 18366ec | LABEL FAIL | msg: Expose `break_on_hyphens` and `break_long_words` arguments on `wrap_text`
+  web: https://github.com/pallets/click/commit/18366ecc4f5de195efb3c40d8dea3d017c295ad0
+  - workflow "Tests" event=pull_request conclusion=failure jobs=10 attempt=1 failed_jobs=['3.13']
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-015 | github | prettier/prettier | sha c5380b0 | LABEL PASS | msg: Add changelog entry
+  web: https://github.com/prettier/prettier/commit/c5380b0c263d01d5d589d5e32ab562d01d7b682b
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Dev" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-019 | github | prettier/prettier | sha b66e814 | LABEL FAIL | msg: Update dependency @prettier/cli to v0.12.4
+  web: https://github.com/prettier/prettier/commit/b66e814838d0d5f7b4fe33d3457985fecb0ec59b
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=failure jobs=18 attempt=1 failed_jobs=['Node.js 16 on Linux']
+  - workflow "Dev Package Test" event=pull_request conclusion=success jobs=3 attempt=1
+  - workflow "Dev" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Code Quality: PR #20452" event=dynamic conclusion=success jobs=1 attempt=1
+
+cpx-023 | github | pallets/click | sha e96a64e | LABEL PASS | msg: Add missing link to #3818 and fix release date
+  web: https://github.com/pallets/click/commit/e96a64ee50471d62f694175bdabebeca0ec58e69
+  - workflow "pre-commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=11 attempt=1
+
+cpx-027 | github | prettier/prettier | sha 5ba2616 | LABEL PASS | msg: Narrow the fix to indentation-sensitive elements
+  web: https://github.com/prettier/prettier/commit/5ba26166388d61882e4ea8ade6997e5d28d7578a
+  - workflow "Prod" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Dev" event=pull_request conclusion=success jobs=6 attempt=1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-031 | github | django/django | sha 93cba9b | LABEL PASS | msg: Fixed #37225 -- Prevented file_move_safe() from overwriting concurrently created destination when allow_overwrite=False.
+  web: https://github.com/django/django/commit/93cba9be52575e23c556d490355e7bad696a6ccb
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Linters" event=pull_request conclusion=success jobs=5 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-035 | github | prettier/prettier | sha e04dc1e | LABEL FAIL | msg: Add changelog entry for #20461
+  web: https://github.com/prettier/prettier/commit/e04dc1e555fc9fe4dcad08fbe04b56e7e50967f6
+  - workflow "autofix.ci" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Dev" event=pull_request conclusion=cancelled jobs=6 attempt=1 failed_jobs=['Node.js 22 on MacOS', 'Node.js 22 on Windows', 'Node.js 22 on Linux', 'Node.js 26 on MacOS', '[Full Test]  Node.js 26 on Linux']
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Lint" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=failure jobs=18 attempt=1 failed_jobs=['Browser(firefox) on Linux', '[Full Test]  Browser(chrome) on Linux', 'Browser(firefox) on Windows', 'Node.js 14 on Windows', 'Node.js 14 on Linux', 'Node.js 26 on Windows']
+
+cpx-039 | gitlab | inkscape/inkscape | sha caf58ad | LABEL FAIL | msg: Merge branch 'security.md' into 'master'
+  web: https://gitlab.com/inkscape/inkscape/-/commit/caf58adf37d939117eab98517c19385e4c9a5211
+  pipeline 3004969446 status=failed source=merge_request_event
+  job status counts: {'success': 6, 'failed': 2, 'canceled': 7}
+  - job "check-license-headers" stage=test status=failed allow_failure=False
+  - job "codequality" stage=test status=failed allow_failure=True
+  - job "test:linux" stage=test status=canceled allow_failure=False
+  - job "inkscape:android" stage=build status=canceled allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=canceled allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=canceled allow_failure=True
+  - job "inkscape:windows:7z" stage=build status=canceled allow_failure=False
+  - job "inkscape:macos" stage=build status=canceled allow_failure=False
+  - job "appimage:linux" stage=build status=canceled allow_failure=False
+
+cpx-043 | github | eslint/eslint | sha 12cc10e | LABEL PASS | msg: chore: replace `got` with Node.js native `fetch`
+  web: https://github.com/eslint/eslint/commit/12cc10e3ae080854239d3ce053d542ce4aaffba1
+  - workflow "CI" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-047 | codeberg | dnkl/foot | sha 2705e36 | LABEL FAIL | msg: selection: treat spacer pad cells as empty cells when marking cells for highlighting
+  web: https://codeberg.org/dnkl/foot/commit/2705e36f0ecf3ef50c13b41165de852f134859d6
+  - context "builds.sr.ht/freebsd-x64" status=error description="Job failed"
+  - context "ci/woodpecker/pr/woodpecker" status=failure description="Pipeline failed"
+  - context "ci/woodpecker/pull_request_closed/woodpecker" status=failure description="Pipeline failed"
+  - context "ci/woodpecker/push/woodpecker" status=failure description="Pipeline failed"
+
+cpx-051 | github | tokio-rs/axum | sha 94d5e06 | LABEL PASS | msg: axum: Move finalized from RouterInner to Router
+  web: https://github.com/tokio-rs/axum/commit/94d5e0610ba631fec205b96f627ba32d2749efbd
+  - workflow "CI" event=pull_request conclusion=success jobs=17 attempt=1
+
+cpx-055 | gitlab | gitlab-org/container-registry | sha 355a56f | LABEL PASS | msg: Merge branch 'swh/handlers-json-helpers' into 'master'
+  web: https://gitlab.com/gitlab-org/container-registry/-/commit/355a56fec3d539c0d6e0226a972144f8756ee5ea
+  pipeline 3028823099 status=success source=merge_request_event
+  job status counts: {'success': 95, 'manual': 5}
+  - job "generate-db-ERD" stage=document status=manual allow_failure=True
+  - job "release:backport" stage=release status=manual allow_failure=True
+  - job "release:dry-run" stage=release status=manual allow_failure=True
+  - job "devvm:tofu:destroy" stage=aux jobs status=manual allow_failure=True
+  - job "devvm:tofu:apply" stage=aux jobs status=manual allow_failure=True
+
+cpx-059 | gitlab | inkscape/inkscape | sha 7cd0c01 | LABEL PASS | msg: Show 3 decimals for stroke width in Object Properties
+  web: https://gitlab.com/inkscape/inkscape/-/commit/7cd0c014d2f19d17da7d3417907b2a7486348df4
+  pipeline 3037957311 status=success source=push
+  job status counts: {'success': 8, 'manual': 4}
+  - job "inkscape-signed-installers" stage=test status=manual allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+
+cpx-063 | gitlab | inkscape/inkscape | sha ee56c1e | LABEL PASS | msg: Add Page Margin and Page Bleed to Align Options
+  web: https://gitlab.com/inkscape/inkscape/-/commit/ee56c1e123752d366dad49c0b82e632a878a6593
+  pipeline 3028731072 status=success source=push
+  job status counts: {'success': 8, 'manual': 4}
+  - job "inkscape-signed-installers" stage=test status=manual allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+
+cpx-067 | github | tokio-rs/axum | sha fae2183 | LABEL PASS | msg: axum: Reset finalized in map_inner like tap_inner
+  web: https://github.com/tokio-rs/axum/commit/fae21834e2b1a282467214bc7e69709c3d07c255
+  - workflow "CI" event=pull_request conclusion=success jobs=17 attempt=1
+
+cpx-071 | github | eslint/eslint | sha fd78f10 | LABEL PASS | msg: ci: bump github/codeql-action from 4.39.1 to 4.39.2
+  web: https://github.com/eslint/eslint/commit/fd78f109a1a47b8ba6b145daef31a2b414badad5
+  - workflow "Types Integration CI" event=pull_request conclusion=success jobs=9 attempt=1
+  - workflow "CI" event=pull_request conclusion=success jobs=18 attempt=1
+  - workflow "CodeQL" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Test Ecosystem Plugins" event=pull_request conclusion=success jobs=8 attempt=1
+  - workflow "Pull Request Labeler" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-075 | github | prettier/prettier | sha 87b4530 | LABEL FAIL | msg: test: remove runtime-dependent parser error snapshot
+  web: https://github.com/prettier/prettier/commit/87b4530d7db6a67cabfd53d3c221155323eaafb2
+  - workflow "autofix.ci" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['Run automated fix / Run automated fix']
+  - workflow "Lint" event=pull_request conclusion=cancelled jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=cancelled jobs=18 attempt=1
+  - workflow "Dev" event=pull_request conclusion=cancelled jobs=6 attempt=1
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+
+cpx-079 | github | django/django | sha ad13d24 | LABEL PASS | msg: Fixed #37477 -- Ordered renamed model operations after RenameModel.
+  web: https://github.com/django/django/commit/ad13d245efb916b89761c6143feac5e49f5f13e9
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "PR Limit" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Check migrations" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Linters" event=pull_request conclusion=success jobs=5 attempt=1
+
+cpx-083 | github | tokio-rs/axum | sha 00e12ef | LABEL PASS | msg: docs: update MSRV in crate READMEs to 1.85
+  web: https://github.com/tokio-rs/axum/commit/00e12efac0e61de748231dafa4559ce027e7589a
+  - workflow "CI" event=pull_request conclusion=success jobs=17 attempt=1
+
+cpx-087 | gitlab | gitlab-org/gitlab-development-kit | sha c766745 | LABEL FAIL | msg: Merge branch 'jay-gdk-scoped-secrets-manager-policy' into 'main'
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/c766745f406bf6e20fccd0ce649a4c0e225c6c5e
+  pipeline 3039486658 status=failed source=merge_request_event
+  job status counts: {'success': 30, 'manual': 4, 'failed': 2}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+  - job "integration:performance" stage=integration status=failed allow_failure=True
+  - job "danger-review" stage=analyze status=failed allow_failure=False
+
+cpx-091 | gitlab | gitlab-org/gitlab-development-kit | sha 8e5eb18 | LABEL FAIL | msg: Inline the secrets_manager policy at reconfigure
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/8e5eb18d1a15d3bde7095d4ff0f5562294bc2c42
+  pipeline 3039486625 status=failed source=push
+  job status counts: {'manual': 4, 'success': 27, 'failed': 1}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+  - job "cells" stage=verify status=failed allow_failure=False
+
+cpx-095 | gitlab | inkscape/inkscape | sha a5dac01 | LABEL PASS | msg: Merge branch 'add-page-magins-to-align' into 'master'
+  web: https://gitlab.com/inkscape/inkscape/-/commit/a5dac01324cbe86ea9184a9523f968350bcc41d1
+  pipeline 3028660625 status=success source=merge_request_event
+  job status counts: {'success': 11, 'failed': 1, 'manual': 3}
+  - job "codequality" stage=test status=failed allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
+
+cpx-099 | github | prettier/prettier | sha 5b1e8b2 | LABEL FAIL | msg: test: keep deep AST stress cases out of browser serialization
+  web: https://github.com/prettier/prettier/commit/5b1e8b24f12b76015bc3f122276baf4e1c8d66ca
+  - workflow "autofix.ci" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['Run automated fix / Run automated fix']
+  - workflow "Dependency Review" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Check Sizes" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Prod" event=pull_request conclusion=cancelled jobs=6 attempt=1
+  - workflow "Lint" event=pull_request conclusion=cancelled jobs=1 attempt=1
+  - workflow "Dev" event=pull_request conclusion=cancelled jobs=6 attempt=1
+
+cpx-103 | github | jestjs/jest | sha c33a0aa | LABEL FAIL | msg: fix(deps): update dependency es-module-lexer to v3
+  web: https://github.com/jestjs/jest/commit/c33a0aacfaa083554cfcbb2a8b85e5d3a1115c4e
+  - workflow "Node CI" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Check Changelog" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['Check Changelog Entry']
+  - workflow "Publish Any Commit" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['publish']
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR #16435" event=dynamic conclusion=success jobs=2 attempt=1
+  - workflow "Code Quality: PR #16435" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "Publish Any Commit" event=push conclusion=failure jobs=1 attempt=1 failed_jobs=['publish']
+
+cpx-107 | github | tokio-rs/axum | sha 86aa615 | LABEL FAIL | msg: axum-macros: use std::futures::ready in typed-path (#3963)
+  web: https://github.com/tokio-rs/axum/commit/86aa6153e47b7862737acdcfe3a0eb3a162b939a
+  - workflow "github_actions in /. - Update #1656909450" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "github_actions in /. - Update #1638590300" event=dynamic conclusion=failure jobs=1 attempt=1 failed_jobs=['Dependabot']
+  - workflow "Release-plz" event=push conclusion=success jobs=2 attempt=1
+  - workflow "CI" event=push conclusion=success jobs=17 attempt=1
+
+cpx-111 | github | tokio-rs/axum | sha 7168d97 | LABEL FAIL | msg: feat: make nesting handle trailing slashes better
+  web: https://github.com/tokio-rs/axum/commit/7168d97933d705271daf0a257f4f2b2bb2885fad
+  - workflow "CI" event=pull_request conclusion=failure jobs=17 attempt=1 failed_jobs=['check-docs']
+
+cpx-115 | github | kubernetes-sigs/kind | sha 918bf38 | LABEL FAIL | msg: patch: match group-only patches against any version
+  web: https://github.com/kubernetes-sigs/kind/commit/918bf385447f0eab9969b90ba673f9d5222c6c85
+  - workflow "VM" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Nerdctl" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Docker" event=pull_request conclusion=failure jobs=0 attempt=1
+  - workflow "Podman" event=pull_request conclusion=failure jobs=0 attempt=1
+
+cpx-119 | gitlab | gitlab-org/gitlab-development-kit | sha c47531c | LABEL PASS | msg: Stop reading the AI Gateway Dockerfile for the agent list
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/c47531c6a7773a170a2c39d85901bfc87387e3f4
+  pipeline 3028201774 status=success source=push
+  job status counts: {'manual': 4, 'success': 27}
+  - job "update:macos" stage=novel status=manual allow_failure=True
+  - job "novel:macos" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=manual allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=manual allow_failure=True
+
+cpx-123 | github | eslint/eslint | sha 19211b3 | LABEL FAIL | msg: chore: replace `fs-teardown` with Node.js native APIs (#21488)
+  web: https://github.com/eslint/eslint/commit/19211b32713d2b0d0fdb0b8c894d4e776597bf51
+  - workflow "github_actions in /. - Update #1686009455" event=dynamic conclusion=success jobs=1 attempt=1
+  - workflow "npm_and_yarn in /. for minimatch - Update #1685743490" event=dynamic conclusion=failure jobs=1 attempt=1 failed_jobs=['Dependabot']
+  - workflow "Test Ecosystem Plugins" event=push conclusion=success jobs=8 attempt=1
+  - workflow "CI" event=push conclusion=success jobs=18 attempt=1
+  - workflow "CodeQL" event=push conclusion=success jobs=1 attempt=1
+  - workflow "Types Integration CI" event=push conclusion=success jobs=9 attempt=1
+
+cpx-127 | github | jestjs/jest | sha 3c1fc88 | LABEL FAIL | msg: fix(babel-plugin-jest-hoist): do not hoist braceless if statements
+  web: https://github.com/jestjs/jest/commit/3c1fc889f2d7221d45e0fb7c7b39e5fe6f4c7582
+  - workflow "Node CI" event=pull_request conclusion=success jobs=94 attempt=1
+  - workflow "Check Changelog" event=pull_request conclusion=failure jobs=1 attempt=1 failed_jobs=['Check Changelog Entry']
+  - workflow "Publish Any Commit" event=pull_request conclusion=success jobs=1 attempt=1
+  - workflow "Require Changelog" event=pull_request_target conclusion=success jobs=1 attempt=1
+
+cpx-131 | github | django/django | sha 4cb50af | LABEL FAIL | msg: Fixed #37487 -- Fixed conditional requests with the Unix epoch.
+  web: https://github.com/django/django/commit/4cb50afd53ea4d9fb8849e0fa0092d746b70f574
+  - workflow "Linters" event=pull_request conclusion=success jobs=5 attempt=1
+  - workflow "GeoDjango Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Playwright Tests" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Coverage Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Python Matrix from config file" event=pull_request conclusion=skipped jobs=2 attempt=1
+  - workflow "Visual Regression Tests" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "Labels" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "Benchmark" event=pull_request conclusion=skipped jobs=1 attempt=1
+  - workflow "PR Limit" event=pull_request_target conclusion=success jobs=1 attempt=1
+  - workflow "PR Quality Checks" event=pull_request_target conclusion=failure jobs=1 attempt=1 failed_jobs=['Run Quality Checks on a PR']
+  - workflow "Check commit prefix" event=pull_request conclusion=success jobs=2 attempt=1
+  - workflow "Tests" event=pull_request conclusion=success jobs=4 attempt=1
+
+cpx-135 | gitlab | gitlab-org/gitlab-development-kit | sha adbf934 | LABEL FAIL | msg: Merge branch 'jay-gdk-scoped-secrets-manager-policy' into 'main'
+  web: https://gitlab.com/gitlab-org/gitlab-development-kit/-/commit/adbf934fc2366b910bb552ac3ec9a8d18fa89182
+  pipeline 3039468271 status=failed source=merge_request_event
+  job status counts: {'success': 19, 'canceled': 16, 'failed': 1}
+  - job "update:macos" stage=novel status=canceled allow_failure=True
+  - job "novel:macos" stage=novel status=canceled allow_failure=True
+  - job "novel:linux-amd64: [ubuntu]" stage=novel status=canceled allow_failure=True
+  - job "novel:linux-amd64: [arch]" stage=novel status=canceled allow_failure=True
+  - job "sandbox" stage=verify status=canceled allow_failure=False
+  - job "cells" stage=verify status=canceled allow_failure=False
+  - job "geo-install" stage=verify status=canceled allow_failure=False
+  - job "update" stage=verify status=canceled allow_failure=False
+  - job "pristine" stage=verify status=canceled allow_failure=False
+  - job "reset-data" stage=verify status=canceled allow_failure=False
+  - job "reconfigure" stage=verify status=canceled allow_failure=False
+  - job "doctor" stage=verify status=canceled allow_failure=False
+  - job "start" stage=verify status=canceled allow_failure=False
+  - job "integration:performance" stage=integration status=canceled allow_failure=True
+  - job "build-integration-image" stage=pre-verify status=canceled allow_failure=False
+  - job "build-verify-image" stage=pre-verify status=canceled allow_failure=False
+  - job "danger-review" stage=analyze status=failed allow_failure=False
+
+cpx-139 | codeberg | superseriousbusiness/gotosocial | sha 0fae6b6 | LABEL PASS | msg: shut UP linter
+  web: https://codeberg.org/superseriousbusiness/gotosocial/commit/0fae6b6313d9e27eb34e3010dcad82002b967996
+  - context "ci/woodpecker/pr/pr" status=success description="Pipeline was successful"
+
+cpx-143 | gitlab | inkscape/inkscape | sha 91b487b | LABEL PASS | msg: fix: centered multicolor plate preview,reset,hue_lock box
+  web: https://gitlab.com/inkscape/inkscape/-/commit/91b487be8eadb8197369e127ce307c0a5abbfd59
+  pipeline 3033600968 status=success source=push
+  job status counts: {'success': 8, 'manual': 4}
+  - job "inkscape-signed-installers" stage=test status=manual allow_failure=True
+  - job "inkscape:android" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [msi]" stage=build status=manual allow_failure=True
+  - job "inkscape:windows: [exe]" stage=build status=manual allow_failure=True
