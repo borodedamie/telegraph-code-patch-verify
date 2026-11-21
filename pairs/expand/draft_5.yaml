@@ -1,0 +1,162 @@
+# Hard-mode batch 2: distinct CI-verdict traps not yet covered by the 161 pairs.
+#   - mass zero-job failure read as "nothing ran, so nothing failed"
+#   - GitLab: cancelled/optional jobs read as "no real failure" while a non-allowed job failed
+#   - GitLab: allow_failure=True failed job read as "optional", missing a allow_failure=False failure
+#   - Codeberg: "Has been cancelled" statuses read as "not a real failure"
+#   - re-run (attempt=2) read as "hidden failure" instead of the latest attempt
+#   - coverage-only failure read as "cosmetic"
+# Evidence: cpv-080/090/002/116/087/119 from pairs/evidence.jsonl.
+
+- ref: cpx-207
+  kind: interpretation
+  prompt: |
+    knex/knex 5dbc7f4 (fix mysql incr position modifiers). Unit Tests, Ensure labels, Coverage, Linting and
+    Types, CodeQL and CI all show failure with zero jobs. Pass or fail?
+  chosen: |
+    Failed. Six workflows — Unit Tests, Ensure labels, Coverage, Linting and Types, CodeQL and CI — each reported
+    failure with zero jobs, which means every one of them failed before a single job started. A failure with zero
+    jobs is still a failure, so the commit's CI result is red.
+  rejected: |
+    Inconclusive. None of the six workflows — Unit Tests, Ensure labels, Coverage, Linting and Types, CodeQL or
+    CI — got as far as running a job, so no test actually ran. With nothing having executed there is no result
+    to read, and the commit cannot be judged either way.
+  source_url: https://github.com/knex/knex/commit/5dbc7f46c9424af6c3681a2165b7a311c3369b47
+  source_kind: llm
+
+- ref: cpx-208
+  kind: interpretation
+  prompt: |
+    gitlab-org/cli 9949dc2 ran a full pipeline. The test and lint jobs were cancelled, the docs and checks jobs
+    succeeded, and lint_commit failed. Is it green?
+  chosen: |
+    Not green. lint_commit failed and it has allow_failure=False, so it fails the pipeline even though
+    tests:coverage, tests:integration, tests:unit and lint were cancelled rather than failed. Cancelled jobs and
+    the security jobs with allow_failure=True do not offset a failure that is not allowed to fail.
+  rejected: |
+    Passed. The tests:coverage, tests:integration, tests:unit and lint jobs were cancelled, which is not a
+    failure, and docs, check_args, check_embed and check_go_generated_code succeeded. lint_commit is a style
+    check rather than a test, so the pipeline is green.
+  source_url: https://gitlab.com/gitlab-org/cli/-/commit/9949dc2d45489d9dc8d66b9161835ce220c29fdb
+  source_kind: llm
+
+- ref: cpx-209
+  kind: interpretation
+  prompt: |
+    gitaly 965c06d ran the full pipeline. verify failed in the analyze stage, danger-review failed in the build
+    stage, and the test matrix passed. Green?
+  chosen: |
+    It failed. The verify job in the analyze stage failed with allow_failure=False, and a failure that is not
+    allowed to fail fails the whole pipeline. danger-review also failed but it carries allow_failure=True, so it
+    is not what breaks the build; verify is.
+  rejected: |
+    Passed. danger-review failed in the build stage but it has allow_failure=True, so that failure does not
+    count, and verify:docs plus the whole test matrix succeeded. With no required job failing, the pipeline is
+    green.
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/965c06d8fba9fdede8e8c897820d546440af44fb
+  source_kind: llm
+
+- ref: cpx-210
+  kind: plain
+  prompt: |
+    forgejo/forgejo b4a1878 (Add release notes for #14742 fix). CI status?
+  chosen: |
+    Failed. Codeberg's combined status is failure: requirements/merge-conditions and every testing context —
+    backend-checks, coverage, frontend-checks, security-check, test-e2e and the rest — all show failure with "Has
+    been cancelled". A cancelled pipeline is not a pass, so the commit is red.
+  rejected: |
+    Inconclusive. The pipeline was cancelled before any test finished, so there is no real test result to read.
+    requirements/merge-conditions and the testing checks show "Has been cancelled" rather than an actual failure,
+    so the commit cannot be judged.
+  source_url: https://codeberg.org/forgejo/forgejo/commit/b4a18784887c8d7f0fbc0aa0711f1e4fd5146e5a
+  source_kind: llm
+
+- ref: cpx-211
+  kind: interpretation
+  prompt: |
+    typeorm/typeorm 2a09e17 ran its workflows on attempt 2. PR preview release, CodeQL and Tests all succeeded
+    the second time. Pass or fail?
+  chosen: |
+    Passed. The record shows the latest attempt and every workflow — PR preview release, CodeQL and the 40-job
+    Tests matrix — concluded success. attempt=2 only means it was re-run; the current result is green, so the
+    commit passed CI.
+  rejected: |
+    Failed. Every workflow ran on a second attempt, which means the first attempt failed, so the change is not
+    reliable. A commit that only passes after a re-run should be treated as failing.
+  source_url: https://github.com/typeorm/typeorm/commit/2a09e1751e9ce774141d12ce81c466f8f373b553
+  source_kind: llm
+
+- ref: cpx-212
+  kind: plain
+  prompt: |
+    fastify/fastify 8e7c2b7 (test: restore 100% coverage for handlerTimeout abort paths). CI ok?
+  chosen: |
+    No. The ci workflow failed its coverage-win / check-coverage job, so coverage did not hold for this change.
+    The other ten jobs in the run do not cancel a red gate, so the commit's CI result is failure.
+  rejected: |
+    Passed. Only coverage-win / check-coverage failed, and the other ten jobs in the ci workflow passed. Coverage
+    is a reporting check rather than a test, so the functional result is green and the commit is acceptable.
+  source_url: https://github.com/fastify/fastify/commit/8e7c2b70dab41080468db0e8128da666ab2585d3
+  source_kind: llm
+
+# Balancing batch: pass commits with a wrong "fail" rejection, so the verdict
+# direction is ~50/50 across the batch and the surface probe has no direction to lean on.
+# Evidence: cpv-071/025/110/010 from pairs/evidence.jsonl.
+
+- ref: cpx-213
+  kind: plain
+  prompt: |
+    fastify/fastify 5de1b69 (test: cover handlerTimeout ended-but-not-finished path). CI ok?
+  chosen: |
+    Passed. Seven workflows succeeded — ci, integration, ci Alternative Runtimes, integration Alternative
+    Runtimes, pull request title check, Pull Request Labeler and PR #7180 — and only Test compare was skipped. A
+    skipped workflow on an otherwise-green commit is not a failure.
+  rejected: |
+    Failed. Test compare did not run, so the commit was not fully verified, and a change whose comparison
+    workflow is missing cannot be called green. The skipped Test compare job means CI is incomplete.
+  source_url: https://github.com/fastify/fastify/commit/5de1b69a72f022616c0e7900a1cc83b2bf2d88fb
+  source_kind: llm
+
+- ref: cpx-214
+  kind: interpretation
+  prompt: |
+    gitaly 8c28218 ran its pipeline. qa:benchmark:performance, build-proto-gem and the test:nightly matrix are
+    all manual, and the rest succeeded. Green?
+  chosen: |
+    Green. qa:benchmark:performance, build-proto-gem and the test:nightly matrix are all manual jobs with
+    allow_failure=True, so they never ran unless triggered and are not required. Every job that is required to
+    run succeeded, so the pipeline is green.
+  rejected: |
+    Not green. The qa:benchmark:performance, build-proto-gem and test:nightly jobs never ran, so the benchmarks
+    and nightly tests were never exercised. A commit that skips those checks is not fully verified and cannot be
+    green.
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/8c28218e21e393cf42039318c7607bd8a7862616
+  source_kind: llm
+
+- ref: cpx-215
+  kind: plain
+  prompt: |
+    gitlab-org/gitaly 96362c3 (Merge branch 'list-files-allocations'). CI status?
+  chosen: |
+    Yes. cleanup-rails-spec-test-env and rails-specs-cleanup were skipped, and both carry allow_failure=True, so
+    being skipped does not count against the commit. Every other job that is required to run succeeded, so the
+    pipeline is green.
+  rejected: |
+    Failed. cleanup-rails-spec-test-env and rails-specs-cleanup were skipped, so the rails test environment was
+    never cleaned up and the change is not fully verified. A commit with skipped jobs cannot be green.
+  source_url: https://gitlab.com/gitlab-org/gitaly/-/commit/96362c30060b3057a66578604080c29ae0f61545
+  source_kind: llm
+
+- ref: cpx-216
+  kind: interpretation
+  prompt: |
+    vitest-dev/vitest f45a57a (refactor: rename poll flag). CI appears twice — once skipped with 8 jobs, once
+    success with 22 jobs — and CR was skipped. Green?
+  chosen: |
+    Passed. The record has two CI entries from separate triggers: one skipped with 8 jobs and one that succeeded
+    with 22 jobs. The successful CI run is the real one, so the commit is green. CR being skipped is not a
+    failure.
+  rejected: |
+    It did not pass. CI was skipped, so its 8 jobs never ran, and CR was skipped too. A commit whose main CI
+    workflow did not run cannot be verified, so it is not green.
+  source_url: https://github.com/vitest-dev/vitest/commit/f45a57ac7bfd9a36ae40bc77727478d56f0e9097
+  source_kind: llm

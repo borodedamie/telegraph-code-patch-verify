@@ -1,0 +1,94 @@
+# Hard-mode batch: the two failure modes that cost the r3 adapter on the node's public pairs.
+#   1. a skipped workflow read as "incomplete / wait" on a commit that actually failed elsewhere
+#   2. "this host does not expose CI" (Codeberg) read as "unknown" when the statuses are recorded
+# Evidence: cpv-081/107/113 from pairs/evidence.jsonl; Codeberg statuses fetched 2026-11-19 via the
+# keyless combined-status API (codeberg.org/api/v1/repos/forgejo/forgejo/commits/<sha>/status).
+
+- ref: cpx-201
+  kind: interpretation
+  prompt: |
+    vitest-dev/vitest 4165143 (fix drive-letter casing). Checks: CR skipped, Zizmor, Knip and AI Policy
+    green, CI failed with three jobs down on Windows. Pass or fail?
+  chosen: |
+    Failed. CI is the run that matters and it failed three Windows jobs: Browsers rest 2/2, Test e2e and Merge
+    Reports. CR being skipped is not a failure, and Zizmor, Knip and AI Policy all passing does not cancel a red
+    CI. The commit's CI result is failure.
+  rejected: |
+    Inconclusive. CR was skipped, so the run never actually completed, and a commit cannot be called red until
+    every job has either passed or failed. Zizmor, Knip and AI Policy all passed, so wait for CR to re-run and
+    then decide; nothing here is a definitive failure.
+  source_url: https://github.com/vitest-dev/vitest/commit/41651432ae32b5168851e2c917d27af6b172ffee
+  source_kind: llm
+
+- ref: cpx-202
+  kind: plain
+  prompt: |
+    fastify/fastify e7ea2a0 (test: address review feedback on content schema canonicalization). CI ok?
+  chosen: |
+    Failed. The ci workflow failed its check-coverage jobs on both Windows and nix, so coverage did not hold for
+    this change. Test compare was skipped, which is not a failure, and the other workflows passed, but the
+    failing coverage gate is what blocks the commit.
+  rejected: |
+    Passed. Only Test compare was skipped and no other workflow reported a problem. The check-coverage failures
+    on Windows and nix are environment flakiness rather than a real code failure, so CI is effectively green and
+    the commit is safe.
+  source_url: https://github.com/fastify/fastify/commit/e7ea2a0242e7a758bc5452a18fac075ab7d4610a
+  source_kind: llm
+
+- ref: cpx-203
+  kind: interpretation
+  prompt: |
+    pydantic/pydantic 846cc23 ran CI with 67 jobs. Third party tests were skipped (18 jobs), codspeed passed,
+    and CI failed four 3.15t test jobs. Is the commit passing?
+  chosen: |
+    Failed. CI failed on the four 3.15t test jobs across Windows, macOS and Ubuntu, so the TypedDict cache change
+    broke something. Third party tests being skipped does not change that, and codspeed passing does not cancel a
+    failed CI run.
+  rejected: |
+    Passed. The only non-success was Third party tests, which was skipped rather than failed, and codspeed passed.
+    The 3.15t jobs run a pre-release interpreter most people ignore, so that failure is cosmetic and the commit is
+    fine to merge.
+  source_url: https://github.com/pydantic/pydantic/commit/846cc237875036a439f950b763cd6976606a375c
+  source_kind: llm
+
+- ref: cpx-204
+  kind: plain
+  prompt: |
+    forgejo/forgejo 158d89a bumped the cascading-pr action. CI status?
+  chosen: |
+    Passed. Codeberg's combined status for 158d89a is success: the testing and requirements checks all completed,
+    and only issue-labels/release-notes was skipped, which is not a failure. The action bump is verified.
+  rejected: |
+    Unknown. Codeberg does not expose CI results for commits through its API, so there is no status to read for
+    158d89a. The only way to check this update is to run the pipeline yourself, so nothing can be verified.
+  source_url: https://codeberg.org/forgejo/forgejo/commit/158d89a5e3b836a3326e3ffa47df7ed80ca8fc82
+  source_kind: llm
+
+- ref: cpx-205
+  kind: interpretation
+  prompt: |
+    forgejo f96235b shows the testing and requirements checks successful, but backporting, cascade and
+    release-notes are all "Has been skipped". Is this commit verified?
+  chosen: |
+    Passed. The commit's Codeberg status is success: the testing and requirements checks all succeeded, and
+    backporting, cascade and release-notes being skipped does not count against it. Skipped statuses on a passing
+    commit are not failures.
+  rejected: |
+    Failed. Three required checks — backporting, cascade and release-notes — did not run because they were
+    skipped, so the commit is not fully verified and cannot be treated as green even though the tests passed.
+  source_url: https://codeberg.org/forgejo/forgejo/commit/f96235b2ac43fc82241a5996fa0b6b94a0335a0d
+  source_kind: llm
+
+- ref: cpx-206
+  kind: plain
+  prompt: |
+    forgejo/forgejo 871a43b (fix access table for public repos). Did the tests pass?
+  chosen: |
+    Failed. Every testing job passed — semgrep, frontend-checks, backend-checks, test-unit, test-e2e and
+    test-mysql — but requirements/merge-conditions failed, so the commit's overall Codeberg status is failure and
+    it is not mergeable.
+  rejected: |
+    Passed. All the real tests passed, and requirements/merge-conditions is just a merge gate rather than a test.
+    With no test reporting a failure, the commit is verified and ready to go.
+  source_url: https://codeberg.org/forgejo/forgejo/commit/871a43b44d70b0257344a4f3b43366d831418f32
+  source_kind: llm

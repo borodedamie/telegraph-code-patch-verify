@@ -1,5 +1,5 @@
 {
   "base_url": "https://cpv-adapter.clientservices-907.workers.dev",
-  "adapter_sha256": "96949faa42f529c7be95829a0fa33f6304d3233b87a2a5baea9c915d07ba7c0d",
-  "executor_sha256": "6a454e10c9a1d5ede5a807b8067507e33b9fb1c619de1d9281a5b3c5985e76a5"
+  "adapter_sha256": "3a6440cbceb706e2bc36480b667a586ff8c4637eb759d0658b97e250e0f35d22",
+  "executor_sha256": "936a6d904a0618a80c88ad3acedb9ae22c6e9e023574e8af7ba6c914be14f61f"
 }
